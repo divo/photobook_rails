@@ -1,0 +1,11 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @photo %>
+<%= render 'canvas_template', photo: @photo %>
+
+<div>
+  <%= link_to "Edit this photo", edit_photo_path(@photo) %> |
+  <%= link_to "Back to photos", photos_path %>
+
+  <%= button_to "Destroy this photo", @photo, method: :delete %>
+</div>
