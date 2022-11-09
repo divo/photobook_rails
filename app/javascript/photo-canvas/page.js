@@ -25,7 +25,6 @@ const start = async function (parent, img_url) {
   img = await load(img_url);
   settings.parent = parent;
   CanvasSketch.canvasSketch(sketch, settings).then(() => {
-    debugger;
     const out = fs.createWriteStream('output.jpg');
     const stream = canvas.createJPEGStream();
     stream.pipe(out);
