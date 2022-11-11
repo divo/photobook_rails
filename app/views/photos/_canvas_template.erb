@@ -1,9 +1,1 @@
-<div class="center-div">
-
-  <h3>Canvas</h3>
-
-  <%= content_tag(:div, '', class: "photo-page", data: { url: (rails_storage_proxy_path(photo.image)) })  %>
-
-</div>
-
-<%= render 'canvas', photo: photo %>
+<%= content_tag(:div, '', id: "photo_" + photo.id.to_s, class: "photo-page", data: { url: (rails_storage_proxy_path(photo.image)) })  %>
