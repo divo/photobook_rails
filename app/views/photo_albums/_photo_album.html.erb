@@ -10,7 +10,10 @@
           <%= render 'photos/canvas_template', photo: left %>
         </div>
         <div class="col">
-          <%= render 'photos/canvas_template', photo: right %>
+          <% if right %>
+            <%= render 'photos/canvas_template', photo: right %>
+          <% end %>
+          <!-- Render a cover -->
         </div>
       </div>
     <% end %>
