@@ -1,7 +1,6 @@
 <div id="<%= dom_id photo_album %>">
   <p>
-    <strong>Name:</strong>
-    <%= photo_album.name %>
+    <h1 class="navbar navbar-expand-lg navbar-light bg-light container mt-3"><%= photo_album.name %></h1>
     <div class="container">
     <% @photo_album.images.each_slice(2) do |left, right| %>
       <!-- TODO: Odd check, render cover etc -->
