@@ -8,7 +8,7 @@
       <div class="col"></div>
       <div class="col">
         <strong><%= photo_album.name %></strong>
-        <%= render 'photos/canvas_template', photo: photo_album.photos.first %>
+        <%= render 'photos/canvas_template', image: photo_album.images.first %>
         <p>
         <%= link_to "Show this photo album", photo_album %>
         </p>
