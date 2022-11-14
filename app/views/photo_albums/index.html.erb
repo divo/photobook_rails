@@ -2,12 +2,19 @@
 
 <h1>Photo albums</h1>
 
-<div id="photo_albums">
+<div id="photo_albums" class="container">
   <% @photo_albums.each do |photo_album| %>
-    <%= render photo_album %>
-    <p>
-      <%= link_to "Show this photo album", photo_album %>
-    </p>
+    <div class="row">
+      <div class="col"></div>
+      <div class="col">
+        <strong><%= photo_album.name %></strong>
+        <%= render 'photos/canvas_template', photo: photo_album.photos.first %>
+        <p>
+        <%= link_to "Show this photo album", photo_album %>
+        </p>
+      </div>
+      <div class="col"></div>
+    </div>
   <% end %>
 </div>
 
