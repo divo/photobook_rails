@@ -16,9 +16,14 @@
     <%= form.text_field :name %>
   </div>
 
-  <div>
+  <div class="mb-6">
     <%= form.label :images %>
-    <%= form.file_field :images, multiple: true %>
+    <div class="dropzone dropzone-default dz-clickable" data-controller="dropzone">
+      <%= form.file_field :images, multiple: true, direct_upload: true, data: { dropzone_target: 'input' } %>
+      <div class="dropzone-msg dz-message needsclick text-grey-600">
+        <h3 class="dropzone-msg-title">Drag files to upload or click here to browse</h3>
+      </div>
+    </div>
   </div>
 
   <div>
