@@ -34,6 +34,7 @@ const start = async function (parent, img_url) {
     pixelsPerInch: 300,
     orientation: 'landscape',
     units: 'mm',
+    hotkeys: false,
   };
 
   let img = await load(img_url); // Can't use on DOM in backend, load manually
@@ -44,7 +45,6 @@ const start = async function (parent, img_url) {
 
 document.addEventListener("turbo:load", function() {
   document.querySelectorAll('.photo-page').forEach(function(canvas_tag) {
-    //TODO: Disable keyboard shortcuts
     const img_url = canvas_tag.dataset['url'];
     start(canvas_tag, img_url);
   });
