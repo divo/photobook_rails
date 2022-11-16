@@ -2,30 +2,41 @@ import Canvas from 'canvas';
 import CanvasSketch from 'canvas-sketch';
 import load from 'load-asset';
 
-const safe_area = 15;
+const safe_area = 15; // mm!
 
 const sketch = ({width, height, canvas, data}) => {
-  return ({ context, width, height, data }) => {
-    context.drawImage(data, 0, 0, width, height);
+  return ({ context, width, height, data, canvas }) => {
+    let scale;
+    let y = 0;
+    let x = 0;
+
+    if (is_landscape(data)) {
+      scale = width / data.width;
+      y = (height - (data.height * scale)) / 2;
+    } else {
+      scale = height / data.height;
+      x = (width - (data.width * scale)) / 2;
+    }
+
+    context.drawImage(data, safe_area + x, safe_area + y, (data.width * scale) - (safe_area * 2), (data.height * scale) - (safe_area * 2));
   };
 };
 
-const scale = (image, canvas) => {
-  // TODO: Get the larger dimension and scale the image by it on the correct
-  // dimension in order to handle portrait images
-  return image.width / canvas.width
-}
+const is_landscape = (image) => {
+  return image.width > image.height;
+};
 
 const start = async function (parent, img_url) {
   const canvas = Canvas.createCanvas();
   const settings = {
     canvas,
-    dimensions: '8r',
+    dimensions: [210, 210],
     pixelsPerInch: 300,
     orientation: 'landscape',
+    units: 'mm',
   };
 
-  let img = await load(img_url);
+  let img = await load(img_url); // Can't use on DOM in backend, load manually
   settings.parent = parent;
   settings.data = img;
   CanvasSketch.canvasSketch(sketch, settings);
