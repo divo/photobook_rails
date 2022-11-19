@@ -4,7 +4,7 @@
     <div class="container">
     <% @photo_album.images.each_slice(2) do |left, right| %>
       <!-- TODO: Odd check, render cover etc -->
-      <div class="row">
+      <div class="row g-0 justify-content-center">
         <div class="col">
           <%= render 'photos/canvas_template', image: left %>
         </div>

@@ -35,6 +35,7 @@ const start = async function (parent, img_url) {
     orientation: 'landscape',
     units: 'mm',
     hotkeys: false,
+    scaleToFitPadding: 0,
   };
 
   let img = await load(img_url); // Can't use on DOM in backend, load manually
