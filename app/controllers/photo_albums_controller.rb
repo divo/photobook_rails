@@ -1,5 +1,5 @@
 class PhotoAlbumsController < ApplicationController
-  before_action :set_photo_album, only: %i[ show edit update destroy ]
+  before_action :set_photo_album, only: %i[ show edit update destroy print ]
 
   # GET /photo_albums or /photo_albums.json
   def index
@@ -55,6 +55,10 @@ class PhotoAlbumsController < ApplicationController
       format.html { redirect_to photo_albums_url, notice: "Photo album was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def print
+    puts "P R I N T"
   end
 
   private
