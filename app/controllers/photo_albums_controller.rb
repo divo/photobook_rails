@@ -58,6 +58,9 @@ class PhotoAlbumsController < ApplicationController
   end
 
   def print
+    # This should use Stimulus fancyness. What should the flow even look like?
+    render_client = RenderClient.new()
+    puts render_client.ping
     puts "P R I N T"
   end
 
