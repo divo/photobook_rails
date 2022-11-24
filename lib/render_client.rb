@@ -15,23 +15,21 @@ class RenderClient
     # TODO: Create a record of the render request, an 'Order'
     ActiveStorage::Current.url_options = { host: "localhost:#{ENV.fetch('port', 3000)}" } # WHYYY
     options = build_payload
-    self.class.post("/api/render_album", options)
+    self.class.post("/api/render_album", body: options.to_json, headers: { 'Content-Type' => 'application/json' }, debug_output: $stdout )
   end
 
   private
 
   def build_payload()
-    { query:
-      {
-        photo_album: @photo_album.id,
-        pages: pages_payload
-      }
+    {
+      photo_album: @photo_album.id,
+      pages: pages_payload
     }
   end
 
   def pages_payload
-    @photo_album.images.each_with_object({}) do |image, res|
-      res[image.id] = { image_url: image.url }
+    @photo_album.images.each_with_object([]) do |image, res|
+      res << { id: image.id, image_url: image.url }
     end
   end
 end
