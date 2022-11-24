@@ -29,7 +29,12 @@ class RenderClient
 
   def pages_payload
     @photo_album.images.each_with_object([]) do |image, res|
-      res << { id: image.id, image_url: image.url }
+      res << {
+        id: image.id,
+        image_url: image.url,
+        key: image.blob.key,
+        content_type: image.blob.content_type
+      }
     end
   end
 end
