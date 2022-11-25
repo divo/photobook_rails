@@ -6,6 +6,9 @@ const safe_area = 15; // mm!
 
 const sketch = ({width, height, canvas, data}) => {
   return ({ context, width, height, data, canvas }) => {
+    context.fillStyle = 'white';
+    context.fillRect(0, 0, width, height);
+
     let scale;
     let y = 0;
     let x = 0;
@@ -38,7 +41,7 @@ const start = async function (parent, img_url) {
     scaleToFitPadding: 0,
   };
 
-  let img = await load(img_url); // Can't use on DOM in backend, load manually
+  let img = await load(img_url); // Can't use on DOM in backend, load manually. Update: Lol, fucking thing uses the window
   settings.parent = parent;
   settings.data = img;
   CanvasSketch.canvasSketch(sketch, settings);
