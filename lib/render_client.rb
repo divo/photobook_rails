@@ -23,18 +23,27 @@ class RenderClient
   def build_payload()
     {
       photo_album: @photo_album.id,
+      cover: cover,
       pages: pages_payload
     }
   end
 
+  def cover
+    page_payload(@photo_album.images.first).merge({ name: @photo_album.name })
+  end
+
   def pages_payload
     @photo_album.images.each_with_object([]) do |image, res|
-      res << {
-        id: image.id,
-        image_url: image.url,
-        key: image.blob.key,
-        content_type: image.blob.content_type
-      }
+      res << page_payload(image)
     end
+  end
+
+  def page_payload(image)
+    {
+      id: image.id,
+      image_url: image.url,
+      key: image.blob.key,
+      content_type: image.blob.content_type
+    }
   end
 end
