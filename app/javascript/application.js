@@ -6,3 +6,4 @@ import "@hotwired/turbo-rails"
 import "controllers"
 
 import "photo-canvas/page"
+import "photo-canvas/cover"
