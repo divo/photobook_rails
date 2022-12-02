@@ -8,7 +8,7 @@
       <div class="col"></div>
       <div class="col">
         <h3><%= photo_album.name %></h3>
-        <%= render 'photos/cover', image: photo_album.images.first %>
+        <%= render 'photos/cover', photo_album: photo_album %>
         <p>
         <%= link_to "Show this photo album", photo_album, class: "button btn btn-outline-primary mt-3" %>
         </p>

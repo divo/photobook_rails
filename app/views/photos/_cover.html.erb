@@ -1,1 +1,1 @@
-<%= content_tag(:div, '', id: "image_" + image.id.to_s, class: "cover-page page", data: { url: (rails_storage_proxy_path(image.variant(resize_to_fit: [600, 600]))) }) %>
+<%= content_tag(:div, '', id: "image_" + photo_album.images.first.id.to_s, class: "cover-page page", data: { url: (rails_storage_proxy_path(photo_album.images.first.variant(resize_to_fit: [600, 600]))), name: photo_album.name }) %>
