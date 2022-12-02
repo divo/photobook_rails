@@ -1,7 +1,14 @@
 <div id="<%= dom_id photo_album %>">
   <p>
-    <h1 class="navbar navbar-expand-lg navbar-light bg-light container mt-3"><%= photo_album.name %></h1>
-    <div class="container">
+  <h1 class="navbar navbar-expand-lg navbar-light bg-light container mt-3"><%= photo_album.name %></h1>
+  <div class="container">
+    <div class="row g-0 justify-content-center">
+      <div class="col"></div>
+      <div class="col">
+        <%= render 'photos/cover', photo_album: photo_album %>
+      </div>
+    </div>
+
     <% @photo_album.images.each_slice(2) do |left, right| %>
       <!-- TODO: Odd check, render cover etc -->
       <div class="row g-0 justify-content-center">
@@ -16,6 +23,6 @@
         </div>
       </div>
     <% end %>
-    </div>
+  </div>
   </p>
 </div>
