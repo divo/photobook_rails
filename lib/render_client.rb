@@ -11,17 +11,18 @@ class RenderClient
     self.class.get("/ping")
   end
 
-  def render_album()
+  def render_album(job_id)
     # TODO: Create a record of the render request, an 'Order'
     ActiveStorage::Current.url_options = { host: "localhost:#{ENV.fetch('port', 3000)}" } # WHYYY
-    options = build_payload
+    options = build_payload(job_id)
     self.class.post("/api/render_album", body: options.to_json, headers: { 'Content-Type' => 'application/json' }, debug_output: $stdout )
   end
 
   private
 
-  def build_payload()
+  def build_payload(job_id)
     {
+      job_id: job_id,
       photo_album: @photo_album.id,
       cover: cover,
       pages: pages_payload

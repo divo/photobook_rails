@@ -59,8 +59,7 @@ class PhotoAlbumsController < ApplicationController
 
   def print
     # This should use Stimulus fancyness. What should the flow even look like?
-    render_client = RenderClient.new(@photo_album)
-    puts render_client.render_album
+    RenderAlbumJob.perform_later(@photo_album)
     puts "P R I N T"
   end
 
