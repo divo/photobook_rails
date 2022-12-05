@@ -25,7 +25,8 @@ class RenderClient
       job_id: job_id,
       photo_album: @photo_album.id,
       cover: cover,
-      pages: pages_payload
+      pages: pages_payload,
+      magazine: true
     }
   end
 
