@@ -10,18 +10,27 @@ const sketch = ({width, height, canvas, data}) => {
     context.fillRect(0, 0, width, height);
 
     let scale;
+    let ratio;
     let y = 0;
     let x = 0;
+    let s_width;
+    let s_height;
 
     if (is_landscape(data)) {
       scale = width / data.width;
+      ratio = data.width / data.height;
       y = (height - (data.height * scale)) / 2;
+      s_width = (data.width * scale) - (safe_area * 2)
+      s_height = s_width / ratio;
     } else {
       scale = height / data.height;
+      ratio = data.height / data.width;
       x = (width - (data.width * scale)) / 2;
+      s_height = (data.height * scale) - (safe_area * 2)
+      s_width = s_height / ratio;
     }
 
-    context.drawImage(data, safe_area + x, safe_area + y, (data.width * scale) - (safe_area * 2), (data.height * scale) - (safe_area * 2));
+    context.drawImage(data, safe_area + x, safe_area + y, s_width, s_height);
   };
 };
 
