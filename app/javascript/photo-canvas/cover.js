@@ -1,13 +1,11 @@
-import Canvas from 'canvas';
-import CanvasSketch from 'canvas-sketch';
-import load from 'load-asset';
-
-const safe_area = 15; // mm!
+import render_setup from './render_setup.js'
 
 const sketch = ({width, height, canvas, data}) => {
   return ({ context, width, height, data, canvas }) => {
+    const safe_area = 15; // mm!
     const img = data['img'];
     const name = data['name'];
+
     context.fillStyle = 'white';
     context.fillRect(0, 0, width, height);
 
@@ -38,30 +36,8 @@ const is_landscape = (image) => {
   return image.width > image.height;
 };
 
-const start = async function (parent, dataset) {
-  const img_url = dataset['url'];
-  const name = dataset['name'];
-
-  const canvas = Canvas.createCanvas();
-  const settings = {
-    canvas,
-    dimensions: [210, 210],
-    pixelsPerInch: 300,
-    orientation: 'landscape',
-    units: 'mm',
-    hotkeys: false,
-    scaleToFitPadding: 0,
-    attributes: { antialias: true }
-  };
-
-  let img = await load(img_url);
-  settings.parent = parent;
-  settings.data = { img: img, name: name };
-  CanvasSketch.canvasSketch(sketch, settings);
-};
-
 document.addEventListener("turbo:load", function() {
   document.querySelectorAll('.cover-page').forEach(function(canvas_tag) {
-    start(canvas_tag, canvas_tag.dataset);
+    render_setup(sketch, canvas_tag);
   });
 });
