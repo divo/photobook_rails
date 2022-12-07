@@ -25,6 +25,7 @@ class PhotoAlbumsController < ApplicationController
 
     respond_to do |format|
       if @photo_album.save
+        GeocoderJob.perform_later(@photo_album)
         format.html { redirect_to photo_album_url(@photo_album), notice: "Photo album was successfully created." }
         format.json { render :show, status: :created, location: @photo_album }
       else
