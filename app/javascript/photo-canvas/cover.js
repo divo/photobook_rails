@@ -2,7 +2,6 @@ import render_setup from './render_setup.js'
 
 const sketch = ({width, height, canvas, data}) => {
   return ({ context, width, height, data, canvas }) => {
-    const safe_area = 15; // mm!
     const img = data['img'];
     const name = data['name'];
 
