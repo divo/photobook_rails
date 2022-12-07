@@ -3,7 +3,7 @@ import render_setup from './render_setup.js'
 
 const sketch = ({width, height, canvas, data}) => {
   return ({ context, width, height, data, canvas }) => {
-    const safe_area = 15; // mm!
+    const safe_area = 25; // mm!
     const img = data['img'];
 
     context.fillStyle = 'white';
