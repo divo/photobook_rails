@@ -7,6 +7,8 @@ class PhotoAlbumPresenter < SimpleDelegator
     logger.info("Presenting data for #{self.id}")
 
     pages = with_pages ? build_entires(&block) : []
+    pages = format_pages(pages)
+
     {
       photo_album: id,
       name: name,
@@ -35,6 +37,22 @@ class PhotoAlbumPresenter < SimpleDelegator
       key: image.blob.key,
       content_type: image.blob.content_type,
       address: image.blob.metadata['geocode']['address']['road'] + ', ' + image.blob.metadata['geocode']['address']['country']
+    }
+  end
+
+  def format_pages(pages)
+    # TODO: sort by country
+    remove_duplicate_addresses(pages)
+  end
+
+  def remove_duplicate_addresses(pages)
+    seen_address = []
+    pages.each { |page|
+      if seen_address.include?(page[:address])
+        page[:address] = ''
+      else
+        seen_address.push(page[:address])
+      end
     }
   end
 end
