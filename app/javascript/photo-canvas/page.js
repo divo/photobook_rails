@@ -19,18 +19,20 @@ const sketch = ({width, height, canvas, data}) => {
     if (is_landscape(img)) {
       scale = width / img.width;
       ratio = img.width / img.height;
-      y = (height - (img.height * scale)) / 2;
       s_width = (img.width * scale) - (safe_area * 2)
       s_height = s_width / ratio;
+      y = (height - s_height) / 2;
+      x = safe_area;
     } else {
       scale = height / img.height;
       ratio = img.height / img.width;
-      x = (width - (img.width * scale)) / 2;
       s_height = (img.height * scale) - (safe_area * 2)
       s_width = s_height / ratio;
+      x = (width - s_width) / 2;
+      y = safe_area;
     }
 
-    context.drawImage(img, safe_area + x, safe_area + y, s_width, s_height);
+    context.drawImage(img, x, y, s_width, s_height);
   };
 };
 
