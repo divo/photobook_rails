@@ -1,1 +1,6 @@
-<%= content_tag(:div, '', id: "image_" + image.id.to_s, class: "photo-page page", data: { url: (rails_storage_proxy_path(image.variant(resize_to_fit: [500, 500]))) }) %>
+<%= content_tag(:div, '', id: "image_" + page['id'].to_s, class: "photo-page page", data:
+  {
+    url: page['image_url'],
+    address: page['address']
+  }
+) %>

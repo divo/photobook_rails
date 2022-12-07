@@ -8,7 +8,7 @@
       <div class="col"></div>
       <div class="col">
         <h3><%= photo_album.name %></h3>
-        <%= render 'photos/cover', photo_album: photo_album %>
+        <%= render 'photos/cover', photo_album: photo_album.present(with_pages: false) { |image| rails_storage_proxy_path(image.variant(resize_to_fit: [600, 600])) } %>
         <p>
         <%= link_to "Show this photo album", photo_album, class: "button btn btn-outline-primary mt-3" %>
         </p>

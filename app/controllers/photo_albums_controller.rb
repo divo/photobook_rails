@@ -1,9 +1,10 @@
 class PhotoAlbumsController < ApplicationController
+  ActiveStorage::Current.url_options = { host: "localhost:#{ENV.fetch('port', 3000)}" } # WHYYY
   before_action :set_photo_album, only: %i[ show edit update destroy print ]
 
   # GET /photo_albums or /photo_albums.json
   def index
-    @photo_albums = PhotoAlbum.all
+    @photo_albums = PhotoAlbum.all.map(&:decorate)
   end
 
   # GET /photo_albums/1 or /photo_albums/1.json
@@ -39,6 +40,7 @@ class PhotoAlbumsController < ApplicationController
   def update
     respond_to do |format|
       if @photo_album.update(photo_album_params)
+        GeocoderJob.perform_later(@photo_album)
         format.html { redirect_to photo_album_url(@photo_album), notice: "Photo album was successfully updated." }
         format.json { render :show, status: :ok, location: @photo_album }
       else
@@ -60,14 +62,14 @@ class PhotoAlbumsController < ApplicationController
 
   def print
     # This should use Stimulus fancyness. What should the flow even look like?
-    RenderAlbumJob.perform_later(@photo_album)
+    RenderAlbumJob.perform_later(@photo_album.present { |image| image.url })
     puts "P R I N T"
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_photo_album
-      @photo_album = PhotoAlbum.find(params[:id])
+      @photo_album = PhotoAlbum.find(params[:id]).decorate
     end
 
     # Only allow a list of trusted parameters through.

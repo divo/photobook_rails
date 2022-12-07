@@ -1,23 +1,24 @@
 <div id="<%= dom_id photo_album %>">
+  <% album_hash = photo_album.present { |image| rails_storage_proxy_path(image.variant(resize_to_fit: [600, 600])) } %>
   <p>
   <h1 class="navbar navbar-expand-lg navbar-light bg-light container mt-3"><%= photo_album.name %></h1>
   <div class="container">
     <div class="row g-0 justify-content-center">
       <div class="col"></div>
       <div class="col">
-        <%= render 'photos/cover', photo_album: photo_album %>
+        <%= render 'photos/cover', photo_album: album_hash %>
       </div>
     </div>
 
-    <% @photo_album.images.each_slice(2) do |left, right| %>
+    <% album_hash['pages'].each_slice(2) do |left, right| %>
       <!-- TODO: Odd check, render cover etc -->
       <div class="row g-0 justify-content-center">
         <div class="col">
-          <%= render 'photos/canvas_template', image: left %>
+          <%= render 'photos/canvas_template', page: left %>
         </div>
         <div class="col">
           <% if right %>
-            <%= render 'photos/canvas_template', image: right %>
+            <%= render 'photos/canvas_template', page: right %>
           <% end %>
           <!-- Render a cover -->
         </div>

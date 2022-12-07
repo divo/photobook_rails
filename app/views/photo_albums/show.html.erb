@@ -1,6 +1,6 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @photo_album %>
+<%= render 'photo_album', photo_album: @photo_album %>
 
 <div class="navbar navbar-expand-lg navbar-light bg-light container mt-3">
   <%= link_to "Print this photo album", print_photo_album_path(@photo_album), class: "button btn btn-outline-primary ms-3" %>
