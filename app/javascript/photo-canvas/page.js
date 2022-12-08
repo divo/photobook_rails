@@ -1,6 +1,5 @@
 import render_setup from './render_setup.js'
 
-
 const sketch = ({width, height, canvas, data}) => {
   return ({ context, width, height, data, canvas }) => {
     // const safe_area = 15; // mm!
@@ -19,7 +18,7 @@ const sketch = ({width, height, canvas, data}) => {
     do {
       pos = calculatePositions(safe_area, img, width, height);
       scaledFontSize = fontSize * pos.scale;
-      safe_area = safe_area + 10;
+      safe_area = safe_area + 5;
     } while (address != '' && isTextCropped(pos.y, pos.s_height, textSafeArea, scaledFontSize, height))
 
     context.drawImage(img, pos.x, pos.y, pos.s_width, pos.s_height);
