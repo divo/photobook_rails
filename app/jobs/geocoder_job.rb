@@ -7,6 +7,8 @@ class GeocoderJob < ApplicationJob
       return unless image.blob.metadata.include?("latitude") &&
         image.blob.metadata.include?("longitude")
 
+      # This is using nominatim (Open streetmap) by default.
+      # TODO: Switch to a provider that allows more than 1 req/s
       geocode = Geocoder.search(
         [image.blob.metadata['latitude'],
          image.blob.metadata['longitude']]

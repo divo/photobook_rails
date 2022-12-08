@@ -5,6 +5,7 @@ import load from 'load-asset';
 const render_setup = async (sketch, parent) => {
   const img_url = parent.dataset['url'];
   const name = parent.dataset['name'];
+  const address = parent.dataset['address'];
 
   const canvas = Canvas.createCanvas();
   const settings = {
@@ -20,7 +21,7 @@ const render_setup = async (sketch, parent) => {
 
   let img = await load(img_url);
   settings.parent = parent;
-  settings.data = { img: img, name: name };
+  settings.data = { img: img, name: name, address: address };
   CanvasSketch.canvasSketch(sketch, settings);
 };
 
