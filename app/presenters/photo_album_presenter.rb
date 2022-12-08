@@ -36,13 +36,42 @@ class PhotoAlbumPresenter < SimpleDelegator
       image_url: block.call(image),
       key: image.blob.key,
       content_type: image.blob.content_type,
-      address: image.blob.metadata['geocode']['address']['road'] + ', ' + image.blob.metadata['geocode']['address']['country']
+      address: format_address(image.blob.metadata['geocode']['address']),
+      country: image.blob.metadata['geocode']['address']['country']
     }
   end
 
+  # Different countries have different ideas of what makes an address
+  def format_address(address)
+    country= address['country']
+    village = address['village'] || address['hamlet'] || address['town'] || address['city'] || ''
+
+    if village == ''
+      logger.warn("Could only find a country for #{address}")
+    end
+
+
+    village + ', ' + country
+  end
+
   def format_pages(pages)
-    # TODO: sort by country
-    remove_duplicate_addresses(pages)
+    sort_by_country(pages)
+    remove_adjacent_addresses(pages)
+  end
+
+  def sort_by_country(pages)
+    pages.sort_by! { |page| page[:country] }
+  end
+
+  def remove_adjacent_addresses(pages)
+    last_address = nil
+    pages.each { |page|
+      if last_address == page[:address]
+        page[:address] = ''
+      else
+        last_address = page[:address]
+      end
+    }
   end
 
   def remove_duplicate_addresses(pages)
