@@ -1,6 +1,1 @@
-<%= content_tag(:div, '', id: "image_" + page['id'].to_s, class: "#{page['page_class']} page", data:
-  {
-    url: page['image_url'],
-    address: page['address']
-  }
-) %>
+<%= content_tag(:div, '', id: "image_" + page['id'].to_s, class: "#{page['page_class']} page", data: page) %>
