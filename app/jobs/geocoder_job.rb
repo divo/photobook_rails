@@ -1,6 +1,10 @@
 class GeocoderJob < ApplicationJob
   queue_as :default
 
+  after_perform do |job|
+    SectionImgJob.perform_later(job.arguments.first)
+  end
+
   def perform(photo_album)
     photo_album.images.each do |image|
       image.analyze

@@ -47,7 +47,7 @@ class PhotoAlbumPresenter < SimpleDelegator
     village = address['village'] || address['hamlet'] || address['town'] || address['city'] || ''
 
     if village == ''
-      logger.warn("Could only find a country for #{address}")
+      logger.info("Could only find a country for #{address}")
     end
 
 
@@ -60,6 +60,7 @@ class PhotoAlbumPresenter < SimpleDelegator
   end
 
   def sort_by_country(pages)
+    # TODO: Add a special case for America to sort by state
     pages.sort_by! { |page| page[:country] }
   end
 
