@@ -10,14 +10,18 @@ class SectionImgJob < ApplicationJob
       # Fetch each country image and store it
       lat, lon = image.blob.metadata['geocode'].values_at('lat', 'lon')
       url = image_url(lat, lon)
-      # Check response
-      img_file = Down.download(url, extension: 'png')
-      photo_album.images.attach(io: File.open(img_file), filename: "#{image.blob.metadata['geocode']['address']['country']}.png")
 
-      section_img = photo_album.images.last # What could go wrong
-      section_img.blob.metadata['geocode'] = { 'address' => { 'country' => image.blob.metadata['geocode']['address']['country'] } } # Copy over the country
-      section_img.blob.metadata['section_image'] = true
-      section_img.blob.save!
+      # TODO: Check response
+
+      img_file = Down.download(url, extension: 'png')
+      blob = ActiveStorage::Blob.create_and_upload!(
+        io: File.open(img_file),
+        filename: "#{image.blob.metadata['geocode']['address']['country']}.png",
+      )
+      blob.metadata['geocode'] = { 'address' => { 'country' => image.blob.metadata['geocode']['address']['country'] } } # Copy over the country
+      blob.metadata['section_image'] = true
+
+      photo_album.images.attach(blob)
     end
   end
 
