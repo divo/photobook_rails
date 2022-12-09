@@ -7,3 +7,4 @@ import "controllers"
 
 import "photo-canvas/page"
 import "photo-canvas/cover"
+import "photo-canvas/section"

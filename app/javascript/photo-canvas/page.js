@@ -23,7 +23,6 @@ const sketch = ({width, height, canvas, data}) => {
 
     context.drawImage(img, pos.x, pos.y, pos.s_width, pos.s_height);
     context.fillStyle = 'rgb(126, 123, 127)';
-
     context.textAlign = 'center';
     context.textBaseline = 'middle';
     context.font = `oblique ${scaledFontSize}px Helvetica`;
