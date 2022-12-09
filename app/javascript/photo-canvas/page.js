@@ -62,7 +62,7 @@ const is_landscape = (image) => {
 };
 
 document.addEventListener("turbo:load", function() {
-  document.querySelectorAll('.photo-page').forEach(function(canvas_tag) {
+  document.querySelectorAll('.photo-content').forEach(function(canvas_tag) {
     render_setup(sketch, canvas_tag);
   });
 });

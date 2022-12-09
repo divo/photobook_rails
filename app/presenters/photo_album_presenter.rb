@@ -1,6 +1,8 @@
 class PhotoAlbumPresenter < SimpleDelegator
   ActiveStorage::Current.url_options = { host: "localhost:#{ENV.fetch('port', 3000)}" } # WHYYY can't this be in application.rb
 
+  SECTION_CLASS_TAG = 'section-page'
+
   # @param with_pages: If false only render the album cover
   # @param @block: Takes an ActiveStorage::Attachment and returns a URL. Views / API have different URL requirements
   def present(with_pages: true, &block)
@@ -21,7 +23,7 @@ class PhotoAlbumPresenter < SimpleDelegator
   private
 
   def cover(&block)
-    entry(images.first, &block).merge({ name: name })
+    entry(images.first, 'cover-page', &block).merge({ name: name })
   end
 
   def build_entires(&block)
@@ -30,7 +32,7 @@ class PhotoAlbumPresenter < SimpleDelegator
     end
   end
 
-  def entry(image, type = 'content', &block)
+  def entry(image, type = 'photo-content', &block)
     {
       id: image.id,
       image_url: block.call(image),
@@ -38,7 +40,7 @@ class PhotoAlbumPresenter < SimpleDelegator
       content_type: image.blob.content_type,
       address: format_address(image.blob.metadata['geocode']['address']),
       country: image.blob.metadata['geocode']['address']['country'],
-      page_class: image.blob.metadata['section_page'] ? 'section' : type,
+      page_class: image.blob.metadata['section_page'] ? SECTION_CLASS_TAG : type,
     }
   end
 
@@ -63,7 +65,7 @@ class PhotoAlbumPresenter < SimpleDelegator
   def sort_by_country(pages)
     # TODO: Add a special case for America to sort by state
     # Sort by country, then place each section_page and the start of each group
-    section_pages, content_pages = pages.partition { |page| page[:page_class] == 'section' }
+    section_pages, content_pages = pages.partition { |page| page[:page_class] == SECTION_CLASS_TAG }
     section_pages = section_pages.group_by { |page| page[:country] }
     content_pages = content_pages.group_by { |page| page[:country] }
     section_pages.each do |key, value|
