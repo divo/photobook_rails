@@ -19,7 +19,8 @@ class SectionImgJob < ApplicationJob
         filename: "#{image.blob.metadata['geocode']['address']['country']}.png",
       )
       blob.metadata['geocode'] = { 'address' => { 'country' => image.blob.metadata['geocode']['address']['country'] } } # Copy over the country
-      blob.metadata['section_image'] = true
+      blob.metadata['section_page'] = true
+      blob.save!
 
       photo_album.images.attach(blob)
     end

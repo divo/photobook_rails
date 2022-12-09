@@ -38,7 +38,7 @@ class PhotoAlbumPresenter < SimpleDelegator
       content_type: image.blob.content_type,
       address: format_address(image.blob.metadata['geocode']['address']),
       country: image.blob.metadata['geocode']['address']['country'],
-      section_image: image.blob.metadata['section_image'] || false
+      section_page: image.blob.metadata['section_page'] || false
     }
   end
 
@@ -63,7 +63,7 @@ class PhotoAlbumPresenter < SimpleDelegator
   def sort_by_country(pages)
     # TODO: Add a special case for America to sort by state
     # Sort by country, then place each section_page and the start of each group
-    section_pages, content_pages = pages.partition { |page| page[:section_image] }
+    section_pages, content_pages = pages.partition { |page| page[:section_page] }
     section_pages = section_pages.group_by { |page| page[:country] }
     content_pages = content_pages.group_by { |page| page[:country] }
     section_pages.each do |key, value|
