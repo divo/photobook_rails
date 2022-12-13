@@ -1,5 +1,4 @@
 class PhotoAlbumsController < ApplicationController
-  ActiveStorage::Current.url_options = { host: "localhost:#{ENV.fetch('port', 3000)}" } # WHYYY
   before_action :set_photo_album, only: %i[ show edit update destroy print ]
 
   # GET /photo_albums or /photo_albums.json
