@@ -1,34 +1,41 @@
 import render_setup from './render_setup.js'
 
 const sketch = ({width, height, canvas, data}) => {
-  return ({ context, width, height, data, canvas }) => {
-    // const safe_area = 15; // mm!
-    let safe_area = 25; // mm!
-    const fontSize = 10;
-    let scaledFontSize = fontSize;
-    const textSafeArea = 10;
-    const img = data['img'];
-    const address = data['address'];
+  let safe_area = 25; // mm!
+  const fontSize = 4;
+  const textSafeArea = 10;
+  const img = data['img'];
+  const address = data['address'];
 
+  let pos = {};
+
+  do {
+    pos = calculatePositions(safe_area, img, width, height);
+    safe_area = safe_area + 5;
+  } while (address != '' && isTextCropped(pos.y, pos.s_height, textSafeArea, fontSize, height))
+
+  return ({ context, width, height, data, canvas }) => {
     context.fillStyle = 'white';
     context.fillRect(0, 0, width, height);
 
-    let pos = {};
-
-    do {
-      pos = calculatePositions(safe_area, img, width, height);
-      scaledFontSize = fontSize * pos.scale;
-      safe_area = safe_area + 5;
-    } while (address != '' && isTextCropped(pos.y, pos.s_height, textSafeArea, scaledFontSize, height))
 
     context.drawImage(img, pos.x, pos.y, pos.s_width, pos.s_height);
-    context.fillStyle = 'rgb(126, 123, 127)';
-    context.textAlign = 'center';
-    context.textBaseline = 'middle';
-    context.font = `oblique ${scaledFontSize}px Helvetica`;
-    context.fillText(address, width / 2, pos.y + pos.s_height + 10, width);
+    draw_text(address, width, pos, fontSize, textSafeArea, context);
   };
 };
+
+const draw_text = (text, width, pos, fontSize, textSafeArea, context) => {
+  const transform = context.getTransform();
+  const x_scale = Math.ceil(transform.a);
+  const y_scale = Math.ceil(transform.d);
+  context.setTransform(1, 0, 0, 1, 0, 0); // There is a bug in Cairo related to rendering text in a transformed canvas
+  context.font = `oblique ${fontSize * x_scale}px Helvetica`;
+  context.textAlign = 'center';
+  context.fillStyle = 'rgb(126, 123, 127)';
+  context.textBaseline = 'middle';
+
+  context.fillText(text, (width / 2) * x_scale, (pos.y + pos.s_height + textSafeArea) * y_scale);
+}
 
 const isTextCropped = (y, s_height, textSafeArea, scaledFontSize, height) => {
   return (y + s_height + textSafeArea + (scaledFontSize / 2)) > height - textSafeArea;
