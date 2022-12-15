@@ -21,13 +21,14 @@ module ActiveStorage
       return unless image.type == 'JPEG'
 
       if exif = EXIFR::JPEG.new(image.path).exif
+        result = { date:  exif.fields[:date_time].to_s }
+
         if gps = exif.fields[:gps]
-          result =
-            {
-              latitude:  gps.fields[:gps_latitude].to_f,
-              longitude: gps.fields[:gps_longitude].to_f,
-              altitude:  gps.fields[:gps_altitude].to_f
-            }
+          result.merge!({
+            latitude:  gps.fields[:gps_latitude].to_f,
+            longitude: gps.fields[:gps_longitude].to_f,
+            altitude:  gps.fields[:gps_altitude].to_f
+          })
           result[:latitude] *= -1 if gps.fields[:gps_latitude_ref] == "S"
           result[:longitude]  *= -1 if gps.fields[:gps_longitude_ref] == "W"
 
