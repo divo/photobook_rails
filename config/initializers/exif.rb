@@ -22,11 +22,16 @@ module ActiveStorage
 
       if exif = EXIFR::JPEG.new(image.path).exif
         if gps = exif.fields[:gps]
-          {
-            latitude:  gps.fields[:gps_latitude].to_f,
-            longitude: gps.fields[:gps_longitude].to_f,
-            altitude:  gps.fields[:gps_altitude].to_f
-          }
+          result =
+            {
+              latitude:  gps.fields[:gps_latitude].to_f,
+              longitude: gps.fields[:gps_longitude].to_f,
+              altitude:  gps.fields[:gps_altitude].to_f
+            }
+          result[:latitude] *= -1 if gps.fields[:gps_latitude_ref] == "S"
+          result[:longitude]  *= -1 if gps.fields[:gps_longitude_ref] == "W"
+
+          return result
         end
       end
     rescue EXIFR::MalformedImage, EXIFR::MalformedJPEG
