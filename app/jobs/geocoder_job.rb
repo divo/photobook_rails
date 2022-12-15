@@ -18,6 +18,14 @@ class GeocoderJob < ApplicationJob
          image.blob.metadata['longitude']]
       )
       image.blob.metadata['geocode'] = geocode.first.data
+
+      # Hack: Treat US states like countires
+      # I have to hack this here because I'm still using ActiveStorage::Attachments
+      # and don't have a good way to add fields to this. I should really stop doing that
+      if geocode.first.data['address']['country_code'] == 'us'
+        image.blob.metadata['geocode']['address']['country'] = geocode.first.data['address']['state']
+      end
+
       image.blob.save # This info is nice to have
     end
   end
