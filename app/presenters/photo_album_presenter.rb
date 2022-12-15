@@ -47,7 +47,15 @@ class PhotoAlbumPresenter < SimpleDelegator
   # Different countries have different ideas of what makes an address
   def format_address(address)
     country= address['country']
-    village = address['village'] || address['hamlet'] || address['town'] || address['city'] || ''
+    village = address['village'] ||
+      address['hamlet'] ||
+      address['town'] ||
+      address['road'] ||
+      address['locality'] ||
+      address['city'] ||
+      address['county'] ||
+      address['state_district'] ||
+      ''
 
     if village == ''
       logger.info("Could only find a country for #{address}")
