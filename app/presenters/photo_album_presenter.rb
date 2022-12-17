@@ -68,7 +68,7 @@ class PhotoAlbumPresenter < SimpleDelegator
       return country
     end
 
-    village + ', ' + country
+    village
   end
 
   def format_pages(pages)
