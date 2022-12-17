@@ -41,11 +41,17 @@ class PhotoAlbumPresenter < SimpleDelegator
       address: format_address(image.blob.metadata['geocode']['address']),
       country: image.blob.metadata['geocode']['address']['country'],
       page_class: image.blob.metadata['section_page'] ? SECTION_CLASS_TAG : type,
+      date: image.blob.metadata['date']
     }
   end
 
   # Different countries have different ideas of what makes an address
+  # TODO: Handle no address object in geocode
   def format_address(address)
+    logger.info('\n\n')
+    logger.info(address)
+    logger.info('\n\n')
+
     country= address['country']
     village = address['village'] ||
       address['hamlet'] ||
@@ -74,10 +80,14 @@ class PhotoAlbumPresenter < SimpleDelegator
     # TODO: Add a special case for America to sort by state
     # Sort by country, then place each section_page and the start of each group
     section_pages, content_pages = pages.partition { |page| page[:page_class] == SECTION_CLASS_TAG }
+
+    content_pages.sort_by { |page| Date.parse(page[:date]) }
+
     section_pages = section_pages.group_by { |page| page[:country] }
     content_pages = content_pages.group_by { |page| page[:country] }
+
     section_pages.each do |key, value|
-      value << content_pages[key] 
+      value << content_pages[key]
     end
     section_pages.values.flatten
   end
