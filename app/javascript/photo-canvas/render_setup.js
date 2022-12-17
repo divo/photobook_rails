@@ -11,7 +11,7 @@ const render_setup = async (sketch, parent) => {
   const canvas = Canvas.createCanvas();
   const settings = {
     canvas,
-    dimensions: [210, 297],
+    dimensions: [148, 210],
     pixelsPerInch: 300,
     orientation: 'landscape',
     units: 'mm',
