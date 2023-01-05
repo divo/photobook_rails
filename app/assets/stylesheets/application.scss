@@ -22,3 +22,13 @@ div .page {
   margin-left: 0px;
   margin-right: 0px;
 }
+
+div .photo-book {
+  max-width: 30rem;
+  width: 100%;
+  position: relative;
+  background-size: cover;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
