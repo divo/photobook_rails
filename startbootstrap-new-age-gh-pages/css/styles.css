@@ -11346,6 +11346,16 @@ section {
   color: #2937f0;
 }
 
+.photo-book {
+  max-width: 30rem;
+  width: 100%;
+  position: relative;
+  background-size: cover;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /*!
  * html5-device-mockups (https://github.com/pixelsign/html5-device-mockups)
  * Copyright 2013 - 2017 pixelsign
@@ -11390,7 +11400,6 @@ section {
 
 .device[data-device=iPhoneX][data-orientation=portrait][data-color=black] {
   padding-bottom: 198.898071625%;
-  z-index: 900;
 }
 
 .device[data-device=iPhoneX][data-orientation=portrait][data-color=black] .screen {
@@ -11416,7 +11425,7 @@ section {
 section.cta {
   position: relative;
   padding: 15rem 0;
-  background-image: url("https://source.unsplash.com/5g41N3uRPf8/1500x800");
+  background-image: url("https://source.unsplash.com/bn9LeSDAQ3A/1500x800");
   background-position: center;
   background-size: cover;
 }
