@@ -11362,6 +11362,13 @@ section {
   background-size: cover;
 }
 
+.device .content {
+  display: block;
+  margin-left: -75%;
+  width: 250%;
+  z-index: -1;
+}
+
 .device::after {
   position: absolute;
   background-size: cover;
@@ -11383,6 +11390,7 @@ section {
 
 .device[data-device=iPhoneX][data-orientation=portrait][data-color=black] {
   padding-bottom: 198.898071625%;
+  z-index: 900;
 }
 
 .device[data-device=iPhoneX][data-orientation=portrait][data-color=black] .screen {
