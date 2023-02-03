@@ -5,6 +5,12 @@ class SectionImgJob < ApplicationJob
 
   def perform(photo_album)
     # Download section images and add them to the album in the correct positions
+    photo_album.images.each do |image|
+      unless image.blob.metadata['geocode']
+        Rails.logger.error "#{self.class}: #{image.blob.metadata}"
+      end
+    end
+
     countries = photo_album.images.uniq { |image| image.blob.metadata['geocode']['address']['country'] }
     countries.each do |image|
       # Fetch each country image and store it

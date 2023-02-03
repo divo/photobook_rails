@@ -13,10 +13,14 @@ class GeocoderJob < ApplicationJob
 
       # This is using nominatim (Open streetmap) by default.
       # TODO: Switch to a provider that allows more than 1 req/s
-      geocode = Geocoder.search(
-        [image.blob.metadata['latitude'],
-         image.blob.metadata['longitude']]
-      )
+      lat = image.blob.metadata.fetch("latitude")
+      lng = image.blob.metadata.fetch("longitude")
+      geocode = Geocoder.search([lat, lng])
+
+      if geocode.first.data.include?("error")
+        Rails.logger.error "#{self.class}: #{geocode.first.data}"
+      end
+
       image.blob.metadata['geocode'] = geocode.first.data
 
       # Hack: Treat US states like countires
