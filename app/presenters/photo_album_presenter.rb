@@ -38,37 +38,11 @@ class PhotoAlbumPresenter < SimpleDelegator
       image_url: block.call(image),
       key: image.blob.key,
       content_type: image.blob.content_type,
-      address: format_address(image.blob.metadata['geocode']['address']),
-      country: image.blob.metadata['geocode']['address']['country'],
+      address: image.blob.metadata['geocode']['address'],
+      country: image.blob.metadata['geocode']['country'],
       page_class: image.blob.metadata['section_page'] ? SECTION_CLASS_TAG : type,
       date: image.blob.metadata['date']
     }
-  end
-
-  # Different countries have different ideas of what makes an address
-  # TODO: Handle no address object in geocode
-  def format_address(address)
-    logger.info('\n\n')
-    logger.info(address)
-    logger.info('\n\n')
-
-    country= address['country']
-    village = address['village'] ||
-      address['hamlet'] ||
-      address['town'] ||
-      address['road'] ||
-      address['locality'] ||
-      address['city'] ||
-      address['county'] ||
-      address['state_district'] ||
-      ''
-
-    if village == ''
-      logger.info("Could only find a country for #{address}")
-      return country
-    end
-
-    village
   end
 
   def format_pages(pages)

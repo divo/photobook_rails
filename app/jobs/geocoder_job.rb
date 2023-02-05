@@ -14,20 +14,30 @@ class GeocoderJob < Gush::Job
     lng = image.blob.metadata.fetch("longitude")
     geocode = Geocoder.search([lat, lng])
 
-    if geocode.first.data.include?("error")
+    if geocode.empty?
       Rails.logger.error "#{self.class}: #{geocode.first.data}"
     end
 
-    Rails.logger.debug "#{self.class}: #{geocode.first.data}"
-    image.blob.metadata['geocode'] = geocode.first.data
+    image.blob.metadata['geocode'] = extract_geocode_info(geocode)
+    image.blob.save # This info is nice to have
+  end
 
-    # Hack: Treat US states like countires
-    # I have to hack this here because I'm still using ActiveStorage::Attachments
-    # and don't have a good way to add fields to this. I should really stop doing that
-    if geocode.first.data['address']['country_code'] == 'us' || geocode.first.data['address']['country_code'] == 'gb'
-      image.blob.metadata['geocode']['address']['country'] = geocode.first.data['address']['state']
+  private
+
+  def extract_geocode_info(geocode)
+    place = geocode.find { |x| x.data['place_type'].include?('place') }
+    address = place.data['place_name'].split(',').take(2)
+
+    country = place.data['context'].find { |x| x['id'].split('.').first == 'country' }
+    country_name = country['text']
+    country_code = country['short_code']
+    if country_code == 'us' || country_code == 'gb'
+      region = place.data['context'].find { |x| x['id'].split('.').first == 'region' }
+      country_name = region['text']
+      address = address.take(1) # Drop the redundant state name
     end
 
-    image.blob.save # This info is nice to have
+    address = address.join(',')
+    { address: address, country: country_name }
   end
 end

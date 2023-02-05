@@ -11,11 +11,11 @@ class SectionImgJob < Gush::Job
       end
     end
 
-    countries = photo_album.images.uniq { |image| image.blob.metadata['geocode']['address']['country'] }
+    countries = photo_album.images.uniq { |image| image.blob.metadata['geocode']['country'] }
     # TODO: Break this out into it's own job
     countries.each do |image|
       # Fetch each country image and store it
-      lat, lon = image.blob.metadata['geocode'].values_at('lat', 'lon')
+      lat, lon = image.blob.metadata.values_at('latitude', 'longitude')
       url = image_url(lat, lon)
 
       # TODO: Check response
@@ -25,7 +25,7 @@ class SectionImgJob < Gush::Job
         io: File.open(img_file),
         filename: "#{image.blob.metadata['geocode']['address']['country']}.png",
       )
-      blob.metadata['geocode'] = { 'address' => { 'country' => image.blob.metadata['geocode']['address']['country'] } } # Copy over the country
+      blob.metadata['geocode'] = { 'country' => image.blob.metadata['geocode']['country'] } # Copy over the country
       blob.metadata['section_page'] = true
       blob.save!
 
@@ -34,6 +34,6 @@ class SectionImgJob < Gush::Job
   end
 
   def image_url(lat, lon, zoom = 7)
-    "https://api.mapbox.com/styles/v1/divodivenson/clbfjkloe000k14qmi08wnngl/static/#{lon},#{lat},#{zoom},0/1280x1280@2x?access_token=pk.eyJ1IjoiZGl2b2RpdmVuc29uIiwiYSI6ImNqcGwzdnN0NDA5aDg0MnBrNGhvanR5MTkifQ.k4YAweTizPCJRbJiZ-7c8g"
+    "https://api.mapbox.com/styles/v1/divodivenson/clbfjkloe000k14qmi08wnngl/static/#{lon},#{lat},#{zoom},0/1280x1280@2x?access_token=#{Rails.application.credentials[:mapbox_key]}"
   end
 end
