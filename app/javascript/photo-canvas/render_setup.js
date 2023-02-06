@@ -12,7 +12,6 @@ const render_setup = async (sketch, parent) => {
   const settings = {
     canvas,
     dimensions: [148, 210],
-    pixelsPerInch: 300,
     orientation: 'landscape',
     units: 'mm',
     hotkeys: false,
