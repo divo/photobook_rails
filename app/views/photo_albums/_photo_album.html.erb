@@ -14,11 +14,11 @@
       <!-- TODO: Odd check, render cover etc -->
       <div class="row g-0 justify-content-center">
         <div class="col">
-          <%= render 'photos/canvas_template', page: left %>
+          <%= render 'photos/photo_page', page: left %>
         </div>
         <div class="col">
           <% if right %>
-            <%= render 'photos/canvas_template', page: right %>
+            <%= render 'photos/photo_page', page: right %>
           <% end %>
           <!-- Render a cover -->
         </div>
