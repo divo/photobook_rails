@@ -34,7 +34,6 @@ class PhotoAlbumPresenter < SimpleDelegator
 
   def entry(image, type = 'photo-content', &block)
     if image.blob.metadata['geocode'].nil?
-      require 'byebug'; byebug;
     end
 
     {
@@ -57,13 +56,11 @@ class PhotoAlbumPresenter < SimpleDelegator
   def sort_by_country(pages)
     # Sort by country, then place each section_page and the start of each group
     section_pages, content_pages = pages.partition { |page| page[:page_class] == SECTION_CLASS_TAG }
-
-    content_pages.sort_by { |page| Date.parse(page[:date]) }
-
     section_pages = section_pages.group_by { |page| page[:country] }
     content_pages = content_pages.group_by { |page| page[:country] }
 
     section_pages.each do |key, value|
+      # value << content_pages[key].sort_by { |x| Date.parse x[:date] }
       value << content_pages[key].sort_by { |x| Date.parse x[:date] }
     end
     section_pages.values.flatten
