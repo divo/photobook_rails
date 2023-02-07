@@ -1,6 +1,12 @@
+class String
+  def is_i?
+    !!(self =~ /\A[-+]?[0-9]+\z/)
+  end
+end
+
 class GeocoderJob < Gush::Job
-  # def perform
-  #   param
+  PLACE_TYPES = ['address', 'place', 'region', 'country']
+
   def perform
     image = PhotoAlbum.find(params[:photo_album_id]).images.find(params[:image_id])
     image.analyze
@@ -25,19 +31,41 @@ class GeocoderJob < Gush::Job
   private
 
   def extract_geocode_info(geocode)
-    place = geocode.find { |x| x.data['place_type'].include?('place') }
-    address = place.data['place_name'].split(',').take(2)
+    # Priority address - > place -> region -> country
+    # There is no gaurentee what the response will contain
+    # but it is ordered from most granular to least
+    address = extract_principle_address(geocode, PLACE_TYPES)
+    address_string = address.data['text']
 
-    country = place.data['context'].find { |x| x['id'].split('.').first == 'country' }
-    country_name = country['text']
-    country_code = country['short_code']
-    if country_code == 'us' || country_code == 'gb'
-      region = place.data['context'].find { |x| x['id'].split('.').first == 'region' }
-      country_name = region['text']
-      address = address.take(1) # Drop the redundant state name
+    # If it's just a road number try again
+    if address_string.chars.count { |x| x.is_i? }.to_f / address_string.chars.count > 0.5
+      address = extract_principle_address(geocode, PLACE_TYPES.drop(1))
+      address_string = address.data['text']
     end
 
-    address = address.join(',')
-    { address: address, country: country_name }
+    region = geocode.find { |x| x.data['place_type'].include?('region') }
+    region_string = region.data['text']
+
+    country = geocode.find { |x| x.data['place_type'].include?('country') }
+    country_string = country.data['text']
+    country_code = country.data['properties']['short_code']
+
+    # Special case for US and GB because they are so big
+    # `country` is used to create sections, the string is never displayed
+    # For these Countries, the region is so big we can present them like
+    # countries.
+    if country_code == 'us' || country_code == 'gb'
+      country_string = region_string
+    elsif address_string != region_string
+      address_string = address_string + ", " + region_string
+    end
+
+    { address: address_string, country: country_string }
+  end
+
+  def extract_principle_address(geocode, types)
+    geocode.find do |x|
+      types.include?(x.data['place_type'].first)
+    end
   end
 end
