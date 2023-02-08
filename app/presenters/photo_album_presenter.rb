@@ -23,7 +23,9 @@ class PhotoAlbumPresenter < SimpleDelegator
   private
 
   def cover(&block)
-    entry(images.first, 'cover-page', &block).merge({ name: name })
+    cover_image = images.find { |x| x.blob['metadata']['cover'] == true }
+    cover_image = images.first if cover_image.nil?
+    entry(cover_image, 'cover-page', &block).merge({ name: name })
   end
 
   def build_entires(&block)
