@@ -11,11 +11,12 @@ const render_setup = async (sketch, parent) => {
   const canvas = Canvas.createCanvas();
   const settings = {
     canvas,
-    dimensions: [148, 210],
+    dimensions: [210, 210],
     orientation: 'landscape',
     units: 'mm',
     hotkeys: false,
     scaleToFitPadding: 0,
+    bleed: 5, // Hack to get the layout to work
     attributes: { antialias: true }
   };
 
