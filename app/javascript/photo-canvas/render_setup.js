@@ -16,7 +16,7 @@ const render_setup = async (sketch, parent) => {
     units: 'mm',
     hotkeys: false,
     scaleToFitPadding: 0,
-    bleed: 5, // Hack to get the layout to work
+    bleed: 3, // Hack to get the layout to work
     attributes: { antialias: true }
   };
 

@@ -4,10 +4,10 @@ canvas {
 
 div .clip-right {
   /* top, right, bottom, left */
-  clip-path: inset(-12px -12px -12px 0px);
+  clip-path: inset(-12px -12px -12px -11px);
 }
 
 div .clip-left {
-  clip-path: inset(-12px 0px -12px -12px);
+  clip-path: inset(-12px -11px -12px -12px);
 }
 
