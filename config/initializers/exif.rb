@@ -11,7 +11,7 @@ module ActiveStorage
         end.merge(gps_from_exif(image) || {})
       end
     rescue LoadError
-      logger.info "Skipping image analysis because the mini_magick gem isn't installed"
+      logger.error "Skipping image analysis because the mini_magick gem isn't installed"
       {}
     end
 
@@ -32,8 +32,9 @@ module ActiveStorage
           result[:latitude] *= -1 if gps.fields[:gps_latitude_ref] == "S"
           result[:longitude]  *= -1 if gps.fields[:gps_longitude_ref] == "W"
 
-          return result
         end
+
+        return result
       end
     rescue EXIFR::MalformedImage, EXIFR::MalformedJPEG
     end
