@@ -1,6 +1,4 @@
 class PhotoAlbumPresenter < SimpleDelegator
-  ActiveStorage::Current.url_options = { host: "localhost:#{ENV.fetch('port', 3000)}" } # WHYYY can't this be in application.rb
-
   SECTION_CLASS_TAG = 'section-page'
 
   # @param with_pages: If false only render the album cover

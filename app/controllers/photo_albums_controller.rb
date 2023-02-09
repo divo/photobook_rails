@@ -1,4 +1,5 @@
 class PhotoAlbumsController < ApplicationController
+  include ActiveStorage::SetCurrent
   before_action :set_photo_album, only: %i[ show edit update destroy print ]
 
   # GET /photo_albums or /photo_albums.json

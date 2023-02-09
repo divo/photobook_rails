@@ -2,7 +2,6 @@ class RenderAlbumJob < ApplicationJob
   queue_as :default
 
   def perform(photo_album)
-    ActiveStorage::Current.url_options = { host: "localhost:#{ENV.fetch('port', 3000)}" } # WHYYY
     # Do something later
     render_client = RenderClient.new(photo_album)
     # Wait for rendering to finish
