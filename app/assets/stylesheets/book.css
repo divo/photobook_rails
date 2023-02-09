@@ -57,6 +57,9 @@ html, body {
   transform: translateX(-10px) translateZ(35px) translateX(35px) rotateY(30deg);
 }
 */
+.book:hover {
+  box-shadow: 0px 8px 12px -2px rgba(0, 0, 0, 0.15);
+}
 .book-cover { 
   position: relative; 
   z-index: 10; 

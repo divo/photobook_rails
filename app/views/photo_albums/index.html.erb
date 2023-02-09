@@ -1,22 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
+  <div class="container px-5">
+    <a class="navbar-brand fw-bold" href="/">Mementos</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="bi-list"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+        <li class="nav-item"><a class="nav-link me-lg-3" href="#features">Getting Started</a></li>
+        <li class="nav-item"><%= link_to "New photo album", new_photo_album_path, class: "button btn btn-outline-primary" %></li>
+      </ul>
+      <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal" data-bs-target="#feedbackModal">
+        <span class="d-flex align-items-center">
+          <i class="bi-chat-text-fill me-2"></i>
+          <span class="small">Send Feedback</span>
+        </span>
+      </button>
+    </div>
+  </div>
+</nav>
+
 <p style="color: green"><%= notice %></p>
 
-<h1 class="navbar navbar-expand-lg navbar-light bg-light container mt-3">Photo Albums</h1>
-
-<div id="photo_albums" class="container mt-3">
-  <% @photo_albums.each do |photo_album| %>
-    <div class="row">
-      <div class="col"></div>
-      <div class="col">
-        <%= render 'photos/cover', photo_album: photo_album.present(with_pages: false) { |image| rails_storage_proxy_path(image.variant(resize_to_fit: [600, 600])) } %>
-        <p>
-        <%= link_to "Show this photo album", photo_album, class: "button btn btn-outline-primary mt-3" %>
-        </p>
+<div class="masthead">
+  <div id="photo_albums" class="container mt-3">
+    <% @photo_albums.each do |photo_album| %>
+      <div class="row">
+        <div class="col"></div>
+        <div class="col">
+          <p>
+          <%= link_to photo_album do %>
+            <%= render 'photos/cover', photo_album: photo_album.present(with_pages: false) { |image| rails_storage_proxy_path(image.variant(resize_to_fit: [600, 600])) } %>
+          <% end %>
+          </p>
+        </div>
+        <div class="col"></div>
       </div>
-      <div class="col"></div>
-    </div>
-  <% end %>
-</div>
-
-<div class="navbar navbar-expand-lg navbar-light bg-light container mt-3">
-  <%= link_to "New photo album", new_photo_album_path, class: "button btn btn-outline-primary" %>
+    <% end %>
+  </div>
 </div>
