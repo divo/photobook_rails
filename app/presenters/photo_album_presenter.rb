@@ -9,7 +9,7 @@ class PhotoAlbumPresenter < SimpleDelegator
     logger.info("Presenting data for #{self.id}")
 
     pages = with_pages ? build_entires(&block) : []
-    pages = format_pages(pages)
+    pages = format_pages(pages) if with_pages
 
     {
       photo_album: id,
@@ -35,18 +35,15 @@ class PhotoAlbumPresenter < SimpleDelegator
   end
 
   def entry(image, type = 'photo-content', &block)
-    if image.blob.metadata['geocode'].nil?
-    end
-
     {
       id: image.id,
       image_url: block.call(image),
       key: image.blob.key,
       content_type: image.blob.content_type,
-      address: image.blob.metadata['geocode']['address'],
-      country: image.blob.metadata['geocode']['country'],
+      address: image.blob.metadata['geocode']&.fetch('address', nil) || '',
+      country: image.blob.metadata['geocode']&.fetch('country', nil) || '',
       page_class: image.blob.metadata['section_page'] ? SECTION_CLASS_TAG : type,
-      date: image.blob.metadata['date']
+      date: image.blob.metadata['date'] || Date.new(0).to_s # Some images don't have a date
     }
   end
 
@@ -57,12 +54,16 @@ class PhotoAlbumPresenter < SimpleDelegator
 
   def sort_by_country(pages)
     # Sort by country, then place each section_page and the start of each group
-    section_pages, content_pages = pages.partition { |page| page[:page_class] == SECTION_CLASS_TAG }
+    content_pages, section_pages = pages.partition { |page| page[:page_class] == 'photo-content' }
+    # section_pages, content_pages = pages.partition { |page| page[:page_class] == SECTION_CLASS_TAG }
     section_pages = section_pages.group_by { |page| page[:country] }
     content_pages = content_pages.group_by { |page| page[:country] }
 
+    # Insert section of nil country to capture photos without gps data
+    # Place it at the start of the hash
+    section_pages = {'' => []}.merge(section_pages) if content_pages[''].present?
+
     section_pages.each do |key, value|
-      # value << content_pages[key].sort_by { |x| Date.parse x[:date] }
       value << content_pages[key].sort_by { |x| Date.parse x[:date] }
     end
     section_pages.values.flatten

@@ -11,8 +11,13 @@ class GeocoderJob < Gush::Job
     image = PhotoAlbum.find(params[:photo_album_id]).images.find(params[:image_id])
     image.analyze
 
-    return unless image.blob.metadata.include?("latitude") &&
+    unless image.blob.metadata.include?("latitude") &&
       image.blob.metadata.include?("longitude")
+      Rails.logger.error "#{params[:photo_album_id]}:#{params[:image_id]} No GPS data found"
+      image.blob.metadata['geocode'] = { country: nil }
+      image.blob.save
+      return
+    end
 
     # This is using nominatim (Open streetmap) by default.
     # TODO: Switch to a provider that allows more than 1 req/s

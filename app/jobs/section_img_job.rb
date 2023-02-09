@@ -13,7 +13,11 @@ class SectionImgJob < Gush::Job
 
     countries = photo_album.images.uniq { |image| image.blob.metadata['geocode']['country'] }
     # TODO: Break this out into it's own job
+    # Use the GPS data from the first image in each country to get a map
     countries.each do |image|
+      # Treat images without GPS data as if they are in the same "nil" country
+      next if image.blob.metadata['geocode']['country'] == nil
+
       # Fetch each country image and store it
       lat, lon = image.blob.metadata.values_at('latitude', 'longitude')
       url = image_url(lat, lon)
