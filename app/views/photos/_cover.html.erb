@@ -6,6 +6,9 @@
     <div class="book-cover">
       <%= content_tag(:div, '', id: "image_" + photo_album['cover']['id'].to_s, class: "cover-page page", data: photo_album['cover']) %>
     </div>
-  </div> 
+    <div class="book-spine">
+      <h1><%= "#{photo_album['name']}" %></h1>
+    </div>
+  </div>
 </div>
 </h1>

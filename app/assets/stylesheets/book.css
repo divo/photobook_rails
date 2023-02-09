@@ -45,16 +45,16 @@ html, body {
   bottom: 0; 
   left: 3px; 
   width: 7px; 
-  background: url(https://3.bp.blogspot.com/-9KyPk9T8yko/U2bDJq8s52I/AAAAAAAAPzM/OvSY7JUf-tY/s1600/ridge.png) repeat-y; 
+  background: url("assets/img/ridge.png")  repeat-y; 
   z-index: 20;
   -webkit-transform: translateZ(1px);
   /* Fix for flickering in Chrome  */
 }
 /*
 .book:hover {
-  -webkit-transform: translateX(-10px) translateZ(35px) translateX(35px) rotateY(60deg);
-  -moz-transform: translateX(-10px) translateZ(35px) translateX(35px) rotateY(60deg);
-  transform: translateX(-10px) translateZ(35px) translateX(35px) rotateY(60deg);
+  -webkit-transform: translateX(-10px) translateZ(35px) translateX(35px) rotateY(30deg);
+  -moz-transform: translateX(-10px) translateZ(35px) translateX(35px) rotateY(30deg);
+  transform: translateX(-10px) translateZ(35px) translateX(35px) rotateY(30deg);
 }
 */
 .book-cover { 
@@ -89,7 +89,6 @@ html, body {
   z-index: 5; 
   overflow: hidden; 
   /*box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);*/
-  background: url(https://1.bp.blogspot.com/-_LC9R5Ri9Zo/U2bIX1W4qrI/AAAAAAAAPzc/ZM3T4IWWgd0/s1600/lomo.jpg) -64px 0 no-repeat;
   background-size: auto 100%;
   -webkit-transform: rotateY(-90deg) translateX(-49px);
   -moz-transform: rotateY(-90deg) translateX(-49px);
