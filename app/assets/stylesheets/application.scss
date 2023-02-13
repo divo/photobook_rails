@@ -36,3 +36,21 @@ div .photo-book {
   padding-top: 3.5rem;
   padding-bottom: 5rem;
 }
+
+.btn-transparent {
+  color: #f8f9fa;
+  background-color: #f8f9fa;
+  border-color: #f8f9fa;
+}
+
+.btn-transparent:hover {
+  color: #f8f9fa;
+  background-color: #f8f9fa;
+}
+
+.simple-field {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #000000;
+  border-radius: 0px;
+}

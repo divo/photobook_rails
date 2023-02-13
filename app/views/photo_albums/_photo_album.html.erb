@@ -10,7 +10,7 @@
     </div>
     <div class="row g-0 justify-content-center">
       <div class="col-md-3">
-        <%= text_field_tag :name, params[:email], class: "form-control mb-5", value: "#{album_hash[:name]}" %>
+        <%= text_field_tag :name, params[:email], class: "form-control mb-5 simple-field", style: "text-align: center;", autocomplete: false, value: "#{album_hash[:name]}" %>
       </div>
     </div>
 
@@ -30,15 +30,19 @@
         <div class="col-md-3">
           <div class="row g-0 mb-3">
             <div class="col">
-              <%= text_field_tag :address, params["#{left['id']}_address".to_sym], class: "form-control", value: "#{left['address']}" %>
+                <%= text_field_tag :address, params["#{left['id']}_address".to_sym], class: "form-control simple-field", style: "text-align: center;", autocomplete: false, value: "#{left['address']}" %>
             </div>
           </div>
           <div class="row g-0 justify-content-around">
             <div class="col" align="center">
-              <button type="button" class="btn btn-danger">Remove Photo</button>
+              <button type="button" class="btn btn-outline-danger btn-transparent p-2" title="Delete page">
+                <img src="../assets/img/trash.png" style="width:1.3rem; height:1.3rem" class="m-1">
+              </button>
             </div>
             <div class="col" align="center">
-              <button type="button" class="btn btn-secondary">Make Cover</button>
+              <button type="button" class="btn btn-outline-secondary btn-transparent p-2" title="Make Cover">
+                <img src="../assets/img/book.png" style="width:1.3rem; height:1.3rem" class="m-1">
+              </button>
             </div>
           </div>
         </div>
@@ -47,19 +51,23 @@
           <div class="row g-0 mb-3">
             <div class="col">
               <% if right %>
-                <%= text_field_tag :address, params["#{left['id']}_address".to_sym], class: "form-control", value: "#{left['address']}" %>
+                <%= text_field_tag :address, params["#{right['id']}_address".to_sym], class: "form-control simple-field", style: "text-align: center;", autocomplete: false, value: "#{right['address']}" %>
               <% end %>
             </div>
           </div>
           <div class="row g-0 justify-content-around mb-5">
             <div class="col" align="center">
               <% if right %>
-                <button type="button" class="btn btn-danger">Remove Photo</button>
+                <button type="button" class="btn btn-outline-danger btn-transparent p-2" title="Delete page">
+                  <img src="../assets/img/trash.png" style="width:1.3rem; height:1.3rem" class="m-1">
+                </button>
               <% end %>
             </div>
             <div class="col" align="center">
               <% if right %>
-                <button type="button" class="btn btn-secondary">Make Cover</button>
+                <button type="button" class="btn btn-outline-secondary btn-transparent p-2" title="Make Cover">
+                  <img src="../assets/img/book.png" style="width:1.3rem; height:1.3rem" class="m-1">
+                </button>
               <% end %>
             </div>
           </div>
