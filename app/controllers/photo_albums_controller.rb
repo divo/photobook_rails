@@ -1,6 +1,6 @@
 class PhotoAlbumsController < ApplicationController
   include ActiveStorage::SetCurrent
-  before_action :set_photo_album, only: %i[ show edit update destroy print set_cover ]
+  before_action :set_photo_album, only: %i[ show edit update destroy print set_cover delete_page]
 
   # GET /photo_albums or /photo_albums.json
   def index
@@ -74,6 +74,14 @@ class PhotoAlbumsController < ApplicationController
     @photo_album.set_cover(params[:cover_id])
     respond_to do |format|
       format.html { redirect_to photo_album_url(@photo_album) }
+      format.json { head :no_content }
+    end
+  end
+
+  def delete_page
+    @photo_album.delete_image(params[:image_id])
+    respond_to do |format|
+      format.html { redirect_to photo_album_url(@photo_album), alert: "Photo was successfully deleted." }
       format.json { head :no_content }
     end
   end

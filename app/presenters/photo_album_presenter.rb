@@ -33,6 +33,12 @@ class PhotoAlbumPresenter < SimpleDelegator
     new_cover_image.save
   end
 
+  def delete_image(image_id)
+    image = images.find { |x| x.id == image_id.to_i }
+    raise "Image not found" unless image.present?
+    image.destroy
+  end
+
   private
 
   def cover(&block)

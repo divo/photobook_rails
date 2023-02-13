@@ -37,9 +37,7 @@
           </div>
           <div class="row g-0 justify-content-around">
             <div class="col" align="center" data-controller="album">
-              <button type="button" class="btn btn-outline-danger btn-transparent p-2" title="Delete page" data-action="click->album#delete">
-                <img src="../assets/img/trash.png" style="width:1.3rem; height:1.3rem" class="m-1">
-              </button>
+              <%= render 'delete_button', photo_album: @photo_album, image: left %>
             </div>
             <div class="col" align="center">
               <%= render 'cover_button', photo_album: @photo_album, image: left %>
@@ -58,9 +56,7 @@
           <div class="row g-0 justify-content-around mb-5">
             <div class="col" align="center">
               <% if right %>
-                <button type="button" class="btn btn-outline-danger btn-transparent p-2" title="Delete page">
-                  <img src="../assets/img/trash.png" style="width:1.3rem; height:1.3rem" class="m-1">
-                </button>
+                <%= render 'delete_button', photo_album: @photo_album, image: right %>
               <% end %>
             </div>
             <div class="col" align="center">
