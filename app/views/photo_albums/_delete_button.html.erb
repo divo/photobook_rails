@@ -1,5 +1,5 @@
 <div class="col" align="center" data-controller="album">
-  <%= link_to delete_page_photo_album_path(photo_album, image_id: image['id']), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this page? This cannot be undone" }, class: "btn btn-outline-danger btn-transparent p-2" do %>
+    <%= link_to delete_page_photo_album_path(photo_album, image_id: image['id']), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this page? This cannot be undone" }, class: "btn btn-outline-danger btn-transparent p-2", title: "Delete this page" do %>
     <img src="../assets/img/trash.png" style="width:1.3rem; height:1.3rem" class="m-1">
   <% end %>
 </div>
