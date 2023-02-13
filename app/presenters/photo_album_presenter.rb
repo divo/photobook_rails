@@ -18,6 +18,21 @@ class PhotoAlbumPresenter < SimpleDelegator
     }.with_indifferent_access
   end
 
+  # This is no longer a presenter
+  # TODO: Move this to some mixen so I can pretend I'm working with a class
+  def set_cover(cover_id)
+    cover_image = images.find { |x| x.blob['metadata']['cover'] == true }
+    if cover_image.present?
+      cover_image.blob.metadata['cover'] = false
+      cover_image.save
+    end
+
+    new_cover_image = images.find { |x| x.id == cover_id.to_i }
+    raise "Cover image not found" unless new_cover_image.present?
+    new_cover_image.blob.metadata['cover'] = true
+    new_cover_image.save
+  end
+
   private
 
   def cover(&block)

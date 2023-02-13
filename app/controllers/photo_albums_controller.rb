@@ -1,6 +1,6 @@
 class PhotoAlbumsController < ApplicationController
   include ActiveStorage::SetCurrent
-  before_action :set_photo_album, only: %i[ show edit update destroy print ]
+  before_action :set_photo_album, only: %i[ show edit update destroy print set_cover ]
 
   # GET /photo_albums or /photo_albums.json
   def index
@@ -66,6 +66,14 @@ class PhotoAlbumsController < ApplicationController
     RenderAlbumJob.perform_later(@photo_album.present { |image| image.url })
     respond_to do |format|
       format.html { redirect_to photo_album_url(@photo_album), notice: "Photo album was successfully queued for printing." }
+      format.json { head :no_content }
+    end
+  end
+
+  def set_cover
+    @photo_album.set_cover(params[:cover_id])
+    respond_to do |format|
+      format.html { redirect_to photo_album_url(@photo_album) }
       format.json { head :no_content }
     end
   end
