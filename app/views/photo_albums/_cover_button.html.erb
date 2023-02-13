@@ -1,5 +1,5 @@
 <div class="col" align="center">
-  <%= link_to set_cover_photo_album_path(photo_album, cover_id: image['id']), method: :put, class: "btn btn-outline-secondary btn-transparent p-2" do %>
+  <%= link_to set_cover_photo_album_path(photo_album, cover_id: image['id']), data: { "turbo-method": :put }, class: "btn btn-outline-secondary btn-transparent p-2" do %>
     <img src="../assets/img/book.png" style="width:1.3rem; height:1.3rem" class="m-1">
   <% end %>
 </div>
