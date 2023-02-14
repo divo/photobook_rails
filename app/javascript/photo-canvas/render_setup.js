@@ -7,6 +7,7 @@ const render_setup = async (sketch, parent) => {
   const name = parent.dataset['name'];
   const address = parent.dataset['address'];
   const country = parent.dataset['country'];
+  const caption = parent.dataset['caption'];
 
   const canvas = Canvas.createCanvas();
   const settings = {
@@ -27,6 +28,7 @@ const render_setup = async (sketch, parent) => {
     name: name,
     address: address,
     country: country,
+    caption: caption,
   };
   CanvasSketch.canvasSketch(sketch, settings);
 };

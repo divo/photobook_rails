@@ -1,11 +1,12 @@
 
-<div data-controller="album">
+<div>
+  <% caption = image['caption'].present? ? image['caption'] : image['address'] %>
   <%= text_field_tag :address,
     params["#{image['id']}_address".to_sym],
     class: "form-control simple-field",
     style: "text-align: center;",
     autocomplete: false,
-    value: "#{image['address']}",
+    value: caption,
     "data-action" => "keydown.enter->album#update_address",
     "data-id" => "#{image['id']}",
     "data-album-id" => "#{photo_album['id']}"

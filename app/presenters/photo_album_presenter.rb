@@ -60,6 +60,7 @@ class PhotoAlbumPresenter < SimpleDelegator
       key: image.blob.key,
       content_type: image.blob.content_type,
       address: image.blob.metadata['geocode']&.fetch('address', nil) || '',
+      caption: image.blob.metadata['caption'],
       country: image.blob.metadata['geocode']&.fetch('country', nil) || '',
       page_class: image.blob.metadata['section_page'] ? SECTION_CLASS_TAG : type,
       date: image.blob.metadata['date'] || Date.new(0).to_s # Some images don't have a date
