@@ -32,7 +32,7 @@
         <div class="col-md-3">
           <div class="row g-0 mb-3">
             <div class="col">
-                <%= text_field_tag :address, params["#{left['id']}_address".to_sym], class: "form-control simple-field", style: "text-align: center;", autocomplete: false, value: "#{left['address']}" %>
+              <%= render 'address_field', photo_album: @photo_album, image: left %>
             </div>
           </div>
           <div class="row g-0 justify-content-around">
@@ -49,7 +49,7 @@
           <div class="row g-0 mb-3">
             <div class="col">
               <% if right %>
-                <%= text_field_tag :address, params["#{right['id']}_address".to_sym], class: "form-control simple-field", style: "text-align: center;", autocomplete: false, value: "#{right['address']}" %>
+                <%= render 'address_field', photo_album: @photo_album, image: right %>
               <% end %>
             </div>
           </div>

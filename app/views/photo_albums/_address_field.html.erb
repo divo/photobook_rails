@@ -1,0 +1,13 @@
+
+<div data-controller="album">
+  <%= text_field_tag :address,
+    params["#{image['id']}_address".to_sym],
+    class: "form-control simple-field",
+    style: "text-align: center;",
+    autocomplete: false,
+    value: "#{image['address']}",
+    "data-action" => "keydown.enter->album#update_address",
+    "data-id" => "#{image['id']}",
+    "data-album-id" => "#{photo_album['id']}"
+  %>
+</div>
