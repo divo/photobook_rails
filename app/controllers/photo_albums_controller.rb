@@ -39,18 +39,14 @@ class PhotoAlbumsController < ApplicationController
 
   # PATCH/PUT /photo_albums/1 or /photo_albums/1.json
   def update
-    if params[:photo_album].empty?
-      head :not_modified
-    else
-      respond_to do |format|
-        if @photo_album.update(photo_album_params)
-          # TODO: Start the metadata workflow??
-          format.html { redirect_to photo_album_url(@photo_album), notice: "Photo album was successfully updated." }
-          format.json { render :show, status: :ok, location: @photo_album }
-        else
-          format.html { render :edit, status: :unprocessable_entity }
-          format.json { render json: @photo_album.errors, status: :unprocessable_entity }
-        end
+    respond_to do |format|
+      if @photo_album.update(photo_album_params)
+        # TODO: Start the metadata workflow??
+        format.html { redirect_to photo_album_url(@photo_album), notice: "Photo album was successfully updated." }
+        format.json { render :show, status: :ok, location: @photo_album }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @photo_album.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -98,7 +94,8 @@ class PhotoAlbumsController < ApplicationController
     image.metadata[:caption] = params[:caption]
     image.save
     respond_to do |format|
-      format.html { redirect_to action: :show, id: photo_album.id }
+      # 303 because https://api.rubyonrails.org/v7.0.4/classes/ActionController/Redirecting.html#method-i-redirect_to
+      format.html { redirect_to action: :show, status: 303, id: photo_album.id }
       format.json { head :no_content }
     end
   end
