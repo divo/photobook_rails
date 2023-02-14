@@ -2,7 +2,7 @@
   <% album_hash = photo_album.present { |image| rails_storage_proxy_path(image.variant(resize_to_fit: [600, 600])) } %>
   <p>
 
-  <div class="container">
+  <div class="container" data-controller="album">
     <div class="row g-0 justify-content-center">
       <div class="col-md-6">
         <turbo-frame id="cover">
@@ -36,7 +36,7 @@
             </div>
           </div>
           <div class="row g-0 justify-content-around">
-            <div class="col" align="center" data-controller="album">
+            <div class="col" align="center">
               <%= render 'delete_button', photo_album: @photo_album, image: left %>
             </div>
             <div class="col" align="center">
