@@ -6,3 +6,8 @@ document.addEventListener("turbo:load", function() {
     render_setup(photo_sketch, canvas_tag);
   });
 });
+
+document.addEventListener("turbo:frame-render", function(event) {
+  const canvas_tag = event.target.querySelectorAll('.photo-content')[0]
+  render_setup(photo_sketch, canvas_tag);
+});

@@ -23,7 +23,7 @@ const render_setup = async (sketch, parent) => {
 
   let img = await load(img_url);
   settings.parent = parent;
-  settings.data = { 
+  settings.data = {
     img: img,
     name: name,
     address: address,

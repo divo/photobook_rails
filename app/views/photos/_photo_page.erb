@@ -1,1 +1,3 @@
-<%= content_tag(:div, '', id: "image_" + page['id'].to_s, class: "#{page['page_class']} page #{pos_class}", style: style, data: page) %>
+<turbo-frame id="image_frame_<%= page['id'] %>">
+  <%= content_tag(:div, '', id: "image_" + page['id'].to_s, class: "#{page['page_class']} page #{pos_class}", style: style, data: page) %>
+</turbo-frame>
