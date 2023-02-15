@@ -17,19 +17,43 @@
 <p style="color: green"><%= notice %></p>
 
 <div class="masthead-small">
-  <div id="photo_albums" class="container mt-3">
-    <% @photo_albums.each do |photo_album| %>
-      <div class="row">
-        <div class="col"></div>
-        <div class="col">
-          <p>
-          <%= link_to photo_album do %>
-            <%= render 'photos/cover', photo_album: photo_album.present(with_pages: false) { |image| rails_storage_proxy_path(image.variant(resize_to_fit: [600, 600])) } %>
-          <% end %>
-          </p>
+  <% if @photo_albums.empty? %>
+    <div class="masthead container px-5">
+      <div class="row gx-5 align-items-center">
+        <div class="col-lg-6">
+          <!-- Mashead text and app badges-->
+          <div class="mb-5 mb-lg-0 text-center text-lg-start">
+            <h1 class="display-5 lh-1 mb-3">Create your first photo albums in just a few minutes.</h1>
+            <p class="lead fw-normal text-muted mb-5">View <a href="#">Getting Started</a> to learn how to prepare your photos, or click <%= link_to "New photo album", new_photo_album_path, class: "button btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" %> to upload and create your album.</p>
+            <div class="d-flex flex-column flex-lg-row align-items-center">
+              <!-- maybe one day I'll create an app too-->
+              <!--<a class="me-lg-3 mb-4 mb-lg-0" href="#!"><img class="app-badge" src="assets/img/google-play-badge.svg" alt="..." /></a>
+                <a href="#!"><img class="app-badge" src="assets/img/app-store-badge.svg" alt="..." /></a>-->
+            </div>
+          </div>
         </div>
-        <div class="col"></div>
+        <div class="col-lg-6">
+          <div class="features-device-mockup">
+            <img src="assets/img/photo-book.png" class="photo-book"/>
+          </div>
+        </div>
       </div>
-    <% end %>
-  </div>
+    </div>
+  <% else %>
+    <div id="photo_albums" class="container mt-3">
+      <% @photo_albums.each do |photo_album| %>
+        <div class="row">
+          <div class="col"></div>
+          <div class="col">
+            <p>
+            <%= link_to photo_album do %>
+              <%= render 'photos/cover', photo_album: photo_album.present(with_pages: false) { |image| rails_storage_proxy_path(image.variant(resize_to_fit: [600, 600])) } %>
+            <% end %>
+            </p>
+          </div>
+          <div class="col"></div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>
