@@ -1,9 +1,20 @@
-<h1>New photo album</h1>
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
+    <div class="container px-5">
+      <a class="navbar-brand fw-bold" href="/">< Mementos</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="bi-list"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+          <li class="nav-item"><a class="nav-link me-lg-3" href="#features">Getting Started</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-<%= render "form", photo_album: @photo_album %>
-
-<br>
-
-<div>
-  <%= link_to "Back to photo albums", photo_albums_path %>
+  <div class="masthead-small container px-5 mt-5">
+    <%= render "form", photo_album: @photo_album %>
+  </div>
 </div>

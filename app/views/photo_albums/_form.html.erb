@@ -12,22 +12,22 @@
   <% end %>
 
   <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+    <%= form.label :name, style: "display: block", class: "col-form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
   </div>
 
-  <div class="mb-6">
-    <%= form.label :images %>
-    <div class="dropzone dropzone-default dz-clickable" data-controller="dropzone">
+  <div class="mb-6 form-group">
+    <%= form.label :images, class: "col-form-label" %>
+    <div class="dropzone dropzone-default dz-clickable form-control" data-controller="dropzone">
       <%= form.file_field :images, multiple: true, direct_upload: true, data: { dropzone_target: 'input' } %>
       <div class="dropzone-msg dz-message needsclick text-grey-600">
-        <h3 class="dropzone-msg-title">Drag files to upload or click here to browse</h3>
+        <p class="col-form-label">Drag files to upload or click here to browse</p>
       </div>
     </div>
-    <p>Upload at least <%= "#{PhotoAlbum.min_images}" %> images to get started</p>
+    <p class="form-text text-muted">Upload at least <%= "#{PhotoAlbum.min_images}" %> images to get started</p>
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>
