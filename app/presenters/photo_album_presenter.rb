@@ -83,10 +83,11 @@ class PhotoAlbumPresenter < SimpleDelegator
     # Place it at the start of the hash
     section_pages = {'' => []}.merge(section_pages) if content_pages[''].present?
 
-    section_pages.each do |key, value|
-      value << content_pages[key].sort_by { |x| Date.parse x[:date] }
+    content_pages.each do |key, value|
+      value.sort_by! { |x| Date.parse x[:date] }
+      value.unshift(section_pages[key].first) if section_pages[key].present?
     end
-    section_pages.values.flatten
+    content_pages.values.flatten
   end
 
   def remove_adjacent_addresses(pages)
