@@ -25,7 +25,7 @@ class PhotoAlbumsController < ApplicationController
     @photo_album = PhotoAlbum.new(photo_album_params)
 
     respond_to do |format|
-      if @photo_album.save
+      if @photo_album.save(context: :app)
         flow = UploadMetadataWorkflow.create(@photo_album.id)
         flow.start!
         format.html { redirect_to photo_album_url(@photo_album), notice: "Photo album was successfully created." }
@@ -40,7 +40,8 @@ class PhotoAlbumsController < ApplicationController
   # PATCH/PUT /photo_albums/1 or /photo_albums/1.json
   def update
     respond_to do |format|
-      if @photo_album.update(photo_album_params)
+      @photo_album.assign_attributes(photo_album_params)
+      if @photo_album.save(context: :app)
         # TODO: Start the metadata workflow??
         format.html { redirect_to photo_album_url(@photo_album), notice: "Photo album was successfully updated." }
         format.json { render :show, status: :ok, location: @photo_album }

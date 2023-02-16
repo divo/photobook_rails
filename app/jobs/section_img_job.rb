@@ -27,7 +27,7 @@ class SectionImgJob < Gush::Job
       img_file = Down.download(url, extension: 'png')
       blob = ActiveStorage::Blob.create_and_upload!(
         io: File.open(img_file),
-        filename: "#{image.blob.metadata['geocode']['address']['country']}.png",
+        filename: "#{image.blob.metadata['geocode']['country']}.png",
       )
       blob.metadata['geocode'] = { 'country' => image.blob.metadata['geocode']['country'] } # Copy over the country
       blob.metadata['section_page'] = true
