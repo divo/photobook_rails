@@ -18,25 +18,8 @@ class PhotoAlbumPresenter < SimpleDelegator
     }.with_indifferent_access
   end
 
-  # This is no longer a presenter
-  # TODO: Move this to some mixen so I can pretend I'm working with a class
-  def set_cover(cover_id)
-    cover_image = images.find { |x| x.blob['metadata']['cover'] == true }
-    if cover_image.present?
-      cover_image.blob.metadata['cover'] = false
-      cover_image.save
-    end
-
-    new_cover_image = images.find { |x| x.id == cover_id.to_i }
-    raise "Cover image not found" unless new_cover_image.present?
-    new_cover_image.blob.metadata['cover'] = true
-    new_cover_image.save
-  end
-
-  def delete_image(image_id)
-    image = images.find { |x| x.id == image_id.to_i }
-    raise "Image not found" unless image.present?
-    image.destroy
+  def valid_cover?(image)
+    image['width'] - 100 >= image['height']
   end
 
   private
@@ -48,7 +31,7 @@ class PhotoAlbumPresenter < SimpleDelegator
   end
 
   def build_entires(&block)
-    images.each_with_object([]) do |image, res|
+    images.includes(:blob).each_with_object([]) do |image, res|
       res << entry(image, &block)
     end
   end
@@ -58,6 +41,8 @@ class PhotoAlbumPresenter < SimpleDelegator
       id: image.id,
       image_url: block.call(image),
       key: image.blob.key,
+      width: image.metadata['width'],
+      height: image.metadata['height'],
       content_type: image.blob.content_type,
       address: image.blob.metadata['geocode']&.fetch('address', nil) || '',
       caption: image.blob.metadata['caption'],

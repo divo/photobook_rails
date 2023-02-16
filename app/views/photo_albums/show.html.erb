@@ -16,10 +16,11 @@
 
 <p style="color: green"><%= notice %></p>
 
-<div class="masthead-small">
+<div class="masthead-small" data-controller="album">
   <%= render 'photo_album', photo_album: @photo_album %>
 </div>
 
 <div class="navbar navbar-expand-lg navbar-light bg-light container mt-3 justify-content-center">
   <%= button_to "Delete this album", @photo_album, method: :delete, class: "button btn btn-danger ms-3", data: { turbo_confirm: "Are you sure? This cannot be undone" } %>
 </div>
+
