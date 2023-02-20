@@ -16,6 +16,10 @@
 
 <p style="color: green"><%= notice %></p>
 
+<div id='album_building', class="fader overlay", style="display: block">
+  <%= render 'album_building', data_controller: 'album' %>
+</div>
+
 <div class="masthead-small" data-controller="album">
   <%= render 'photo_album', photo_album: @photo_album %>
 </div>
