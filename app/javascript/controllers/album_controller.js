@@ -18,6 +18,7 @@ export default class extends Controller {
       },
       body: JSON.stringify({ caption: event.target.value, image_id: image_id })
     }).then(response => {
+      $('.tooltip').remove()
       Turbo.visit("/photo_albums/" + album_id, { frame: "image_frame_" + image_id, action: "replace" })
       Turbo.visit("/photo_albums/" + album_id, { frame: "input_field_" + image_id, action: "replace" })
     })
