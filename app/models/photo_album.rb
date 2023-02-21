@@ -1,5 +1,6 @@
 class PhotoAlbum < ApplicationRecord
   include PhotoAlbumPresenter
+  belongs_to :user
   has_many_attached :images
   validates :name, presence: true
   validate :min_images

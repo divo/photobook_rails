@@ -1,10 +1,11 @@
 class PhotoAlbumsController < ApplicationController
   include ActiveStorage::SetCurrent
   before_action :set_photo_album, only: %i[ show edit update destroy print set_cover delete_page]
+  before_action :authenticate_user!
 
   # GET /photo_albums or /photo_albums.json
   def index
-    @photo_albums = PhotoAlbum.all
+    @photo_albums = current_user.photo_albums.all
   end
 
   # GET /photo_albums/1 or /photo_albums/1.json
@@ -22,7 +23,7 @@ class PhotoAlbumsController < ApplicationController
 
   # POST /photo_albums or /photo_albums.json
   def create
-    @photo_album = PhotoAlbum.new(photo_album_params)
+    @photo_album = PhotoAlbum.new(photo_album_params.merge(user_id: current_user.id))
 
     respond_to do |format|
       if @photo_album.save(context: :app)
@@ -90,7 +91,7 @@ class PhotoAlbumsController < ApplicationController
   # TODO: Move to dedicated controller? My hacky datamodel makes this
   # requirement ambiguous. But I'll contrinue to ignore it
   def set_page_caption
-    photo_album = PhotoAlbum.find(params[:photo_album_id])
+    photo_album = current_user.photo_albums.find(params[:photo_album_id])
     image = photo_album.images.find(params[:image_id])
     image.metadata[:caption] = params[:caption]
     image.save
@@ -103,13 +104,13 @@ class PhotoAlbumsController < ApplicationController
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_photo_album
-      @photo_album = PhotoAlbum.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_photo_album
+    @photo_album = current_user.photo_albums.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def photo_album_params
-      params.require(:photo_album).permit(:name, images: [])
-    end
+  # Only allow a list of trusted parameters through.
+  def photo_album_params
+    params.require(:photo_album).permit(:name, images: [])
+  end
 end
