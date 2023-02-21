@@ -33,17 +33,17 @@
           <div class="row g-0 mb-3">
             <div class="col">
               <% if left['page_class'] == 'photo-content' %>
-                <%= render 'address_field', photo_album: photo_album, image: left %>
+                <%= render 'photo_albums/address_field', photo_album: photo_album, image: left %>
               <% end%>
             </div>
           </div>
           <div class="row g-0 justify-content-around">
             <div class="col" align="center">
-              <%= render 'delete_button', photo_album: photo_album, image: left %>
+              <%= render 'photo_albums/delete_button', photo_album: photo_album, image: left %>
             </div>
             <% if left['page_class'] == 'photo-content' && photo_album.valid_cover?(left) %>
               <div class="col" align="center">
-                <%= render 'cover_button', photo_album: photo_album, image: left %>
+                <%= render 'photo_albums/cover_button', photo_album: photo_album, image: left %>
               </div>
             <% end %>
           </div>
@@ -54,7 +54,7 @@
             <div class="col">
               <% if right %>
                 <% if right['page_class'] == 'photo-content' %>
-                  <%= render 'address_field', photo_album: photo_album, image: right %>
+                  <%= render 'photo_albums/address_field', photo_album: photo_album, image: right %>
                 <% end %>
               <% end %>
             </div>
@@ -62,13 +62,13 @@
           <div class="row g-0 justify-content-around mb-5">
             <div class="col" align="center">
               <% if right %>
-                <%= render 'delete_button', photo_album: photo_album, image: right %>
+                <%= render 'photo_albums/delete_button', photo_album: photo_album, image: right %>
               <% end %>
             </div>
             <% if right %>
               <% if right['page_class'] == 'photo-content' && photo_album.valid_cover?(right) %>
                 <div class="col" align="center">
-                  <%= render 'cover_button', photo_album: photo_album, image: right %>
+                  <%= render 'photo_albums/cover_button', photo_album: photo_album, image: right %>
                 </div>
               <% end %>
             <% end %>
