@@ -9,6 +9,10 @@
       <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
         <li class="nav-item"><a class="nav-link me-lg-3" href="#features">Getting Started</a></li>
         <li class="nav-item"><%= link_to "New photo album", new_photo_album_path, class: "button btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" %></li>
+        <li class="nav-item"><%= link_to edit_user_registration_path(current_user), class: "button btn btn-outline-secondary rounded-pill px-3 mx-3 mb-lg-0" do %>
+          <i class="bi-person-circle"></i>
+        <% end %>
+        </li>
       </ul>
     </div>
   </div>
