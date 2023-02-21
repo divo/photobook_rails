@@ -1,20 +1,5 @@
-#class AlbumValidator < ActiveModel::Validator
-#  def validate(record)
-#    require 'byebug'; byebug;
-#    if !record.name.present?
-#      record.errors.add :name, "The album must have a name"
-#    end
-#
-#    if record.images.length < record.class.min_images
-#      record.errors.add :images, "Album must have at least #{record.class.min_images} images"
-#    elsif record.images.length > record.class.max_images
-#      record.errors.add :images, "Album must have at most 200 images"
-#    end
-#  end
-#end
-
 class PhotoAlbum < ApplicationRecord
-  include Presentable
+  include PhotoAlbumPresenter
   has_many_attached :images
   validates :name, presence: true
   validate :min_images

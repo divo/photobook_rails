@@ -1,6 +1,5 @@
-class PhotoAlbumPresenter < SimpleDelegator
+module PhotoAlbumPresenter
   SECTION_CLASS_TAG = 'section-page'
-
   # @param with_pages: If false only render the album cover
   # @param @block: Takes an ActiveStorage::Attachment and returns a URL. Views / API have different URL requirements
   def present(with_pages: true, &block)

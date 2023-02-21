@@ -4,7 +4,7 @@ class PhotoAlbumsController < ApplicationController
 
   # GET /photo_albums or /photo_albums.json
   def index
-    @photo_albums = PhotoAlbum.all.map(&:decorate)
+    @photo_albums = PhotoAlbum.all
   end
 
   # GET /photo_albums/1 or /photo_albums/1.json
@@ -105,7 +105,7 @@ class PhotoAlbumsController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_photo_album
-      @photo_album = PhotoAlbum.find(params[:id]).decorate
+      @photo_album = PhotoAlbum.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
