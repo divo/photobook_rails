@@ -4,6 +4,7 @@ class PhotoAlbum < ApplicationRecord
   validates :name, presence: true
   validate :min_images
   validate :max_images, on: :app
+  after_save :broadcast_album_built
 
   def self.min_images
     5
@@ -24,6 +25,16 @@ class PhotoAlbum < ApplicationRecord
     if images.length > self.class.max_images
       errors.add :images, "Album must have at most 200 images"
     end
+  end
+
+  def broadcast_album_built
+    if saved_changes['build_complete'] == [false, true]
+      broadcast_action :build_complete
+    end
+  end
+
+  def building?
+    !build_complete
   end
 
   def set_cover(cover_id)
