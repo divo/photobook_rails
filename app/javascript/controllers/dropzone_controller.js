@@ -17,6 +17,8 @@ export default class extends Controller {
     this.hideFileInput();
     this.bindEvents();
     Dropzone.autoDiscover = false; // necessary quirk for Dropzone error in console
+    this.totalFiles = 0;
+    this.completedFiles = 0;
   }
 
   // Private
@@ -27,18 +29,46 @@ export default class extends Controller {
 
   bindEvents() {
     this.dropZone.on("addedfile", file => {
+      this.totalFiles++;
+      this.updateProgress();
       setTimeout(() => {
         file.accepted && createDirectUploadController(this, file).start();
       }, 500);
     });
 
     this.dropZone.on("removedfile", file => {
+      this.totalFiles--;
+      this.updateProgress();
       file.controller && removeElement(file.controller.hiddenInput);
     });
 
     this.dropZone.on("canceled", file => {
+      this.totalFiles--;
+      this.updateProgress();
       file.controller && file.controller.xhr.abort();
     });
+
+    this.dropZone.on("success", file => {
+      this.completedFiles++;
+      this.updateProgress();
+    });
+  }
+
+  updateProgress() {
+    if (this.totalFiles === 1) {
+    }
+
+    findElement("#progress-bar").style.width = `${(this.completedFiles / this.totalFiles) * 100}%`;
+
+    if (this.completedFiles === this.totalFiles) {
+      setTimeout(function(){
+        findElement("#progress-container").style.opacity = 0;
+      }, 1000);
+      findElement("#submit-button").disabled = false;
+    } else {
+      findElement("#progress-container").style.opacity = 1;
+      findElement("#submit-button").disabled = true;
+    }
   }
 
   get headers() {

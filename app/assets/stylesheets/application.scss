@@ -83,3 +83,8 @@ div .photo-book {
 .fullheight {
   height: 100%; /* Full height (cover the whole page) */
 }
+
+#progress-container {
+  opacity: 0;
+  transition: opacity 0.3s linear;
+}
