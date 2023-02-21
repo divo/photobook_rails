@@ -1,10 +1,7 @@
-import render_setup from './render_setup.js'
-import { cover_sketch } from '../sketches/cover-sketch.js';
+import { render_cover } from '../album_builder.js'
 
 document.addEventListener("turbo:load", function(e) {
-  document.querySelectorAll('.cover-page').forEach(function(canvas_tag) {
-    render_setup(cover_sketch, canvas_tag);
-  });
+  render_cover();
 });
 
 document.addEventListener("turbo:before-cache", function() {
