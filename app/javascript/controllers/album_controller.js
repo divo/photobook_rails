@@ -3,13 +3,6 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   connect(event) {
     $('[data-toggle="tooltip"]').tooltip()
-    $('#album_building').each(function () {
-      this.style.display = "block";
-    })
-
-    setTimeout(function(){
-      $('#album_building').toggleClass('fadedOut');
-    }, 2000);
   }
 
   update_address(event) {
