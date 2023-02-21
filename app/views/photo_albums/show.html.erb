@@ -23,7 +23,7 @@
     <%= render 'album_building', data_controller: 'album' %>
   </div>
 <% else %>
-  <div class="masthead-small">
+  <div data-controller="album" class="masthead-small">
     <%= render 'photo_album', photo_album: @photo_album %>
   </div>
 <% end %>
