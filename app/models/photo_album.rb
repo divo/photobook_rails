@@ -8,7 +8,7 @@ class PhotoAlbum < ApplicationRecord
   after_save :broadcast_album_built
 
   def self.min_images
-    5
+    1
   end
 
   def min_images
