@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
   <div class="container px-5">
-    <%= link_to "<  Mementos", :back, class: "navbar-brand fw-bold"%>
+    <%= link_to "<  Mementos", root_path, class: "navbar-brand fw-bold"%>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       Menu
@@ -17,6 +17,7 @@
 </nav>
 
 <div class="container masthead">
+  <%= render "devise/shared/error_messages", resource: resource %>
   <div class="row justify-content-center">
     <div class="card border-secondary m-3 col-sm-3 p-0">
       <div class="text-lg-start">
@@ -25,7 +26,6 @@
 
       <div class="p-3">
         <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-          <%= render "devise/shared/error_messages", resource: resource %>
 
           <div class="field">
             <%= f.label :email, style: "display: block", class: "col-form-label"  %>

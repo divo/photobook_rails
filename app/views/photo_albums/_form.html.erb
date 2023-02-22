@@ -1,16 +1,5 @@
 <%= form_with(model: photo_album) do |form| %>
-  <% if photo_album.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(photo_album.errors.count, "error") %> prohibited this photo_album from being saved:</h2>
-
-      <ul>
-        <% photo_album.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+  <%= render "shared/error", resource: photo_album %>
   <div>
     <%= form.label :name, style: "display: block", class: "col-form-label" %>
     <%= form.text_field :name, class: "form-control" %>

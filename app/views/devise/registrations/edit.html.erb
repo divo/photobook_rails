@@ -17,6 +17,7 @@
 </nav>
 
 <div class="container masthead">
+  <%= render "devise/shared/error_messages", resource: resource %>
   <div class="row justify-content-center">
     <div class="col-sm-5">
       <div class="text-lg-start">
@@ -28,7 +29,6 @@
       </div>
 
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-        <%= render "devise/shared/error_messages", resource: resource %>
 
         <div class="field card border-secondary mb-3" style="max-width: 200rem;">
           <div class="card-header">

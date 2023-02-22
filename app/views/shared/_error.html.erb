@@ -1,5 +1,5 @@
 <% if resource.errors.any? %>
-  <div id="error_explanation" data-turbo-cache="false" class="container col-6 notice alert alert-dismissible alert-warning">
+  <div id="error_explanation" data-turbo-cache="false" class="container notice alert alert-dismissible alert-warning">
     <h2>
       <%= I18n.t("errors.messages.not_saved",
                  count: resource.errors.count,
