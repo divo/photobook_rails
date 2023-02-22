@@ -1,16 +1,46 @@
-<h2>Forgot your password?</h2>
+<nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
+  <div class="container px-5">
+    <%= link_to "<  Mementos", :back, class: "navbar-brand fw-bold"%>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="bi-list"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+        <li class="nav-item button btn btn-outline-secondary disabled rounded-pill px-3 mx-3 mb-lg-0">
+          <i class="bi-person-circle"></i>
+        </li>
+      </ul>
+    </div>
   </div>
+</nav>
 
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
+<div class="container masthead">
+  <div class="row justify-content-center">
+    <div class="card border-secondary m-3 col-sm-3 p-0">
+      <div class="text-lg-start">
+        <h2 class="mb-3 card-header">Forgot your password?</h2>
+      </div>
+
+      <div class="p-3">
+
+
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
+
+          <div class="field mb-3">
+            <%= f.label :email, style: "display: block", class: "col-form-label" %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control simple-field" %>
+          </div>
+
+          <div class="actions mb-3">
+            <%= f.submit "Send me reset password instructions", class: "button btn btn-primary" %>
+          </div>
+        <% end %>
+
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
   </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
