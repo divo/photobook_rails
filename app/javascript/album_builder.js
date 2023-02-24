@@ -1,7 +1,7 @@
 import render_setup from './photo-canvas/render_setup.js'
-import { cover_sketch } from './sketches/cover-sketch.js';
-import { photo_sketch } from './sketches/photo-sketch.js'
-import { section_sketch } from './sketches/section-sketch.js'
+import { cover_sketch } from '@divo/photobook-sketches'
+import { photo_sketch } from '@divo/photobook-sketches'
+import { section_sketch } from '@divo/photobook-sketches'
 
 export const render_cover = () => {
   document.querySelectorAll('.cover-page').forEach(function(canvas_tag) {

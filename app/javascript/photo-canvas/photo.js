@@ -1,6 +1,6 @@
 import { render_photo } from '../album_builder.js'
 import render_setup from './render_setup.js'
-import { photo_sketch } from '../sketches/photo-sketch.js'
+import { photo_sketch } from '@divo/photobook-sketches'
 
 document.addEventListener("turbo:load", function() {
   render_photo();
