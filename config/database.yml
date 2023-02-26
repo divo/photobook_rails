@@ -22,4 +22,9 @@ test:
 
 production:
   <<: *default
-  database: photobook_rails_production
+  encoding: utf8
+  database: database-1  # Which you have entered you creating database
+  username: <%= ENV['RDS_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] %>
+  host: <%= ENV['RDS_HOST'] %>
+  post: 5432
