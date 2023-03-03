@@ -1,4 +1,4 @@
-import { render_photo } from '../album_builder.js'
+import { render_photo } from './album_builder.js'
 import render_setup from './render_setup.js'
 import { photo_sketch } from '@divo/photobook-sketches'
 

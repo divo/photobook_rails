@@ -1,4 +1,4 @@
-import render_setup from './photo-canvas/render_setup.js'
+import render_setup from './render_setup.js'
 import { cover_sketch } from '@divo/photobook-sketches'
 import { photo_sketch } from '@divo/photobook-sketches'
 import { section_sketch } from '@divo/photobook-sketches'
