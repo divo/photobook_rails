@@ -1,4 +1,4 @@
-import { render_cover } from './album_builder.js'
+import { render_cover } from './album_builder'
 
 document.addEventListener("turbo:load", function(e) {
   render_cover();

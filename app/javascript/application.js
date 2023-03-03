@@ -5,8 +5,8 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
+import "photo-canvas/album_builder"
 import "photo-canvas/photo"
 import "photo-canvas/cover"
 import "photo-canvas/section"
 import "@divo/photobook-sketches"
-import "photo-canvas/album_builder"
