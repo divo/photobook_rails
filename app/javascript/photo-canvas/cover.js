@@ -1,4 +1,4 @@
-import { render_cover } from './album_builder'
+import { render_cover } from 'photo-canvas/album_builder'
 
 document.addEventListener("turbo:load", function(e) {
   render_cover();
