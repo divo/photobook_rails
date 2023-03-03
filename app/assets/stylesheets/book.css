@@ -45,7 +45,7 @@ html, body {
   bottom: 0; 
   left: 3px; 
   width: 7px; 
-  background: url("assets/img/ridge.png")  repeat-y; 
+  background: url("assets/ridge.png")  repeat-y; 
   z-index: 20;
   -webkit-transform: translateZ(1px);
   /* Fix for flickering in Chrome  */
