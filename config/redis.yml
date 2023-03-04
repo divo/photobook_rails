@@ -5,5 +5,5 @@ test:
   host: 'localhost'
   port: '6379'
 production:
-  host: <%= ENV.fetch("REDIS_URL") %>
+  host: 'redis-cluster.p2zl6e.ng.0001.euw1.cache.amazonaws.com'
   port: '6379'
