@@ -75,6 +75,8 @@ gem 'devise'
 # S3 SDK
 gem 'aws-sdk-s3'
 
+# Fix for rails console not working with ruby 3.0.4
+gem 'irb'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
