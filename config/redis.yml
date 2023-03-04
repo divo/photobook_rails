@@ -1,0 +1,9 @@
+development:
+  host: 'localhost'
+  port: '6379'
+test:
+  host: 'localhost'
+  port: '6379'
+production:
+  host: 'redis-cluster.p2zl6e.ng.0001.euw1.cache.amazonaws.com:6379'
+  port: '6379'
