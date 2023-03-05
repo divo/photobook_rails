@@ -4,5 +4,5 @@ redis_config.merge! redis_config.fetch(Rails.env, {})
 redis_config.symbolize_keys!
 
 Gush.configure do |config|
-  config.redis_url = "redis://#{redis_config[:host]}:#{redis_config[:port]}"
+  config.redis_url = "redis://#{redis_config[:host]}:#{redis_config[:port]}/0"
 end
