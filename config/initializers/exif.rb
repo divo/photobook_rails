@@ -1,5 +1,3 @@
-require 'exifr/jpeg'
-
 module ActiveStorage
   class Analyzer::ImageAnalyzer < Analyzer
     def metadata
@@ -34,7 +32,7 @@ module ActiveStorage
 
         return result
       end
-    rescue Vips::Error, Exif::Error
+    rescue ::Vips::Error, ::Exif::Error
       {}
     end
 
