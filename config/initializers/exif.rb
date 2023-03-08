@@ -3,6 +3,8 @@ require 'exifr/jpeg'
 module ActiveStorage
   class Analyzer::ImageAnalyzer < Analyzer
     def metadata
+      Rails.application.config.active_storage.variant_processor = :mini_magick
+
       read_image do |image|
         if rotated_image?(image)
           { width: image.height, height: image.width }
@@ -13,6 +15,8 @@ module ActiveStorage
     rescue LoadError
       logger.error "Skipping image analysis because the mini_magick gem isn't installed"
       {}
+    ensure
+      Rails.application.config.active_storage.variant_processor = :vips
     end
 
     private

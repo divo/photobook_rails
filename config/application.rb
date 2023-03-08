@@ -20,7 +20,7 @@ module PhotobookRails
     # config.eager_load_paths << Rails.root.join("extras")
     config.autoload_paths += paths["lib"].to_a
 
-    config.active_storage.variant_processor = :mini_magick
+    config.active_storage.variant_processor = :vips
 
     config.active_job.queue_adapter = :sidekiq
   end

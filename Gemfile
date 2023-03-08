@@ -48,6 +48,7 @@ gem "sassc-rails"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
+gem "ruby-vips"
 
 # B O O T S T R A P
 gem 'bootstrap', '~> 5.0'
