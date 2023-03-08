@@ -35,9 +35,6 @@ class SectionImgJob < Gush::Job
 
       photo_album.images.attach(blob)
     end
-
-    photo_album.build_complete = true
-    photo_album.save!
   end
 
   def image_url(lat, lon, zoom = 7)

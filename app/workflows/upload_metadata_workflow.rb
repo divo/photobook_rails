@@ -11,5 +11,7 @@ class UploadMetadataWorkflow < Gush::Workflow
     run CoverSelectionJob, params: { photo_album_id: photo_album.id }, after: geocode_jobs
 
     run SectionImgJob, params: { photo_album_id: photo_album.id }, after: CoverSelectionJob
+
+    run BuildCompleteJob, params: { photo_album_id: photo_album.id }, after: [SectionImgJob, VariantJob]
   end
 end
