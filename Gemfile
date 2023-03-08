@@ -58,7 +58,7 @@ gem 'jquery-rails'
 gem 'httparty'
 
 # exif analyzer to read image metadata
-gem 'exifr'
+gem 'exif'
 
 # geocoder for place name
 gem 'geocoder'

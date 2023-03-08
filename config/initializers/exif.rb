@@ -3,8 +3,6 @@ require 'exifr/jpeg'
 module ActiveStorage
   class Analyzer::ImageAnalyzer < Analyzer
     def metadata
-      Rails.application.config.active_storage.variant_processor = :mini_magick
-
       read_image do |image|
         if rotated_image?(image)
           { width: image.height, height: image.width }
@@ -15,32 +13,33 @@ module ActiveStorage
     rescue LoadError
       logger.error "Skipping image analysis because the mini_magick gem isn't installed"
       {}
-    ensure
-      Rails.application.config.active_storage.variant_processor = :vips
     end
 
     private
 
     def gps_from_exif(image)
-      return unless image.type == 'JPEG'
+      #      return unless image.type == 'JPEG'
+      if exif = Exif::Data.new(image.get_value("exif-data"))
+        result = { date:  exif.date_time }
 
-      if exif = EXIFR::JPEG.new(image.path).exif
-        result = { date:  exif.fields[:date_time].to_s }
-
-        if gps = exif.fields[:gps]
+        if exif.gps_latitude && exif.gps_longitude
           result.merge!({
-            latitude:  gps.fields[:gps_latitude].to_f,
-            longitude: gps.fields[:gps_longitude].to_f,
-            altitude:  gps.fields[:gps_altitude].to_f
+            latitude:  convert_coord(exif.gps_latitude),
+            longitude: convert_coord(exif.gps_longitude),
           })
-          result[:latitude] *= -1 if gps.fields[:gps_latitude_ref] == "S"
-          result[:longitude]  *= -1 if gps.fields[:gps_longitude_ref] == "W"
+          result[:latitude] *= -1 if exif.gps_latitude_ref == "S"
+          result[:longitude]  *= -1 if exif.gps_longitude_ref == "W"
 
         end
 
         return result
       end
-    rescue EXIFR::MalformedImage, EXIFR::MalformedJPEG
+    rescue Vips::Error, Exif::Error
+      {}
+    end
+
+    def convert_coord(coord)
+      coord[0].to_f + coord[1].to_f / 60 + coord[2].to_f / 3600
     end
   end
 end
