@@ -38,6 +38,10 @@ export default class extends Controller {
 
     this.dropZone.on("removedfile", file => {
       this.totalFiles--;
+      if (file.status === Dropzone.SUCCESS) {
+        this.completedFiles--;
+      }
+
       this.updateProgress();
       file.controller && removeElement(file.controller.hiddenInput);
     });
@@ -55,9 +59,6 @@ export default class extends Controller {
   }
 
   updateProgress() {
-    if (this.totalFiles === 1) {
-    }
-
     findElement("#progress-bar").style.width = `${(this.completedFiles / this.totalFiles) * 100}%`;
 
     if (this.completedFiles === this.totalFiles) {
