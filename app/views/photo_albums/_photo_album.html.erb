@@ -3,15 +3,27 @@
   <p>
 
   <div class="container">
-    <div class="row g-0 justify-content-center">
+    <div class="row g-0 mt-5 align-items-end justify-content-center">
       <div class="col-md-6">
         <turbo-frame id="cover">
           <%= render 'photos/cover', photo_album: album_hash %>
         </turbo-frame>
       </div>
-    </div>
-    <div class="row g-0 justify-content-center">
       <div class="col-md-3">
+        <div class="card border-secondary" style="max-width: 20rem;">
+          <div class="card-header">Specification</div>
+          <div class="card-body">
+            <p class="card-text">
+            <b>200</b> x <b>200</b>mm<br/>
+            <b>250gsm</b> cover, silk finish<br/>
+            <b><%= "#{album_hash[:pages].count}" %></b> pages <br/>
+            <b>170gsm</b>, silk finish<br/>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row g-0 justify-content-center">
+      <div class="col-md-3 mt-4">
         <%= text_field_tag :name, params[:email], class: "form-control mb-5 simple-field", style: "text-align: center;", autocomplete: false, value: "#{album_hash[:name]}" %>
       </div>
     </div>
