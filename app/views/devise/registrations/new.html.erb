@@ -27,9 +27,15 @@
       <div class="p-3">
         <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
 
-          <div class="field">
+          <div class="field mb-3">
             <%= f.label :email, style: "display: block", class: "col-form-label"  %>
             <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control simple-field" %>
+          </div>
+
+          <div class="field mb-3">
+            <%= f.label :country, style: "display: block", class: "col-form-label"  %>
+            <%= f.country_select :country_code, { priority_countries: ["IE"] }, { class: "form-control simple-field" } %>
+            <small class="form-text text-muted">For shipping cost calculation</small>
           </div>
 
           <div class="field">

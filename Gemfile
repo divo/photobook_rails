@@ -78,6 +78,9 @@ gem 'aws-sdk-s3'
 # Fix for rails console not working with ruby 3.0.4
 gem 'irb'
 
+# Country select during user registration so shipping can be estimated
+gem "country_select", "~> 8.0"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
