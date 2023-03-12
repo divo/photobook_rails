@@ -12,6 +12,8 @@ class BuildAlbumWorkflow < Gush::Workflow
 
     run SectionImgJob, params: { photo_album_id: photo_album.id }, after: CoverSelectionJob
 
+    run OrderEstimateJob, params: { photo_album_id: photo_album.id }, after: SectionImgJob
+
     run BuildCompleteJob, params: { photo_album_id: photo_album.id }, after: [SectionImgJob, VariantJob]
   end
 end
