@@ -6,14 +6,14 @@ module Gelato
     { 'X-API-KEY' => Rails.application.credentials[:gelato_api_key] }
   end
 
-  def quote_params(order_ref, customer, item_ref, page_count)
+  def quote_params(order_ref, user, item_ref, page_count)
     {
       orderReferenceId: order_ref,
-      customerReferenceId: customer.ref,
+      customerReferenceId: user.id,
       currency: 'EUR',
       allowMultipleQuotes: false,
       recipient: {
-        "country": customer.country
+        "country": user.country_code
       },
       products: [
         {
