@@ -1,4 +1,4 @@
-class UploadMetadataWorkflow < Gush::Workflow
+class BuildAlbumWorkflow < Gush::Workflow
   def configure(photo_album_id)
     photo_album = PhotoAlbum.find(photo_album_id)
 

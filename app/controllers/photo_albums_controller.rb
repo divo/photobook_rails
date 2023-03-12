@@ -27,7 +27,7 @@ class PhotoAlbumsController < ApplicationController
 
     respond_to do |format|
       if @photo_album.save(context: :app)
-        flow = UploadMetadataWorkflow.create(@photo_album.id)
+        flow = BuildAlbumWorkflow.create(@photo_album.id)
         flow.start!
         format.html { redirect_to photo_album_url(@photo_album), notice: "Photo album was successfully created." }
         format.json { render :show, status: :created, location: @photo_album }
@@ -89,7 +89,7 @@ class PhotoAlbumsController < ApplicationController
   end
 
   # TODO: Move to dedicated controller? My hacky datamodel makes this
-  # requirement ambiguous. But I'll contrinue to ignore it
+  # requirement ambiguous. But I'll continue to ignore it
   def set_page_caption
     photo_album = current_user.photo_albums.find(params[:photo_album_id])
     image = photo_album.images.find(params[:image_id])
@@ -100,6 +100,11 @@ class PhotoAlbumsController < ApplicationController
       format.html { redirect_to action: :show, status: 303, id: photo_album.id }
       format.json { head :no_content }
     end
+  end
+
+  def estimate_cost
+    order_client = OrderClient.new(SecureRandom.uuid, current_user, @photo_album.id)
+    res = order_client.quote(@photo_album.images.count)
   end
 
   private
