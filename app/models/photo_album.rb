@@ -46,14 +46,14 @@ class PhotoAlbum < ApplicationRecord
       cover_image.save
     end
 
-    new_cover_image = images.find { |x| x.id == cover_id.to_i }
+    new_cover_image = images.find { |x| x.id == cover_id }
     raise "Cover image not found" unless new_cover_image.present?
     new_cover_image.blob.metadata['cover'] = true
     new_cover_image.save
   end
 
   def delete_image(image_id)
-    image = images.find { |x| x.id == image_id.to_i }
+    image = images.find { |x| x.id == image_id }
     raise "Image not found" unless image.present?
     image.destroy
   end
