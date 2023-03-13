@@ -6,7 +6,7 @@ class OrderEstimate < ApplicationRecord
   end
 
   def currency_symbol
-    Money.new(currency).symbol
+    Money.new(0, currency).symbol
   end
 
   def self.build_estimate(photo_album, quotes)
