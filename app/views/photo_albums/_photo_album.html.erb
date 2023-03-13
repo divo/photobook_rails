@@ -13,12 +13,13 @@
         <div class="card border-secondary" style="max-width: 20rem;">
           <div class="card-header">Specification</div>
           <div class="card-body">
-            <p class="card-text">
+            <div class="card-text">
             <b>200</b> x <b>200</b>mm<br/>
             <b>250gsm</b> cover, silk finish<br/>
             <b><%= "#{album_hash[:pages].count}" %></b> pages <br/>
             <b>170gsm</b>, silk finish<br/>
-            </p>
+            <%= render 'order_estimates/order_estimate', order_estimate: photo_album.order_estimate %><br/>
+            </div>
           </div>
         </div>
       </div>

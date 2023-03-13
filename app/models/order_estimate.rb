@@ -1,6 +1,14 @@
 class OrderEstimate < ApplicationRecord
   belongs_to :photo_album
 
+  def total_price
+    "#{price + shipping_price}"
+  end
+
+  def currency_symbol
+    Money.new(currency).symbol
+  end
+
   def self.build_estimate(photo_album, quotes)
     quote = quotes['quotes'].first
     OrderEstimate.new(

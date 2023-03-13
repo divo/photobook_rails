@@ -81,6 +81,9 @@ gem 'irb'
 # Country select during user registration so shipping can be estimated
 gem "country_select", "~> 8.0"
 
+# For displaying currency symbols
+gem "money-rails", "~> 1.15"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]

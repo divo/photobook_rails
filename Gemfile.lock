@@ -188,6 +188,15 @@ GEM
     mini_magick (4.12.0)
     mini_mime (1.1.2)
     minitest (5.17.0)
+    monetize (1.12.0)
+      money (~> 6.12)
+    money (6.16.0)
+      i18n (>= 0.6.4, <= 2)
+    money-rails (1.15.0)
+      activesupport (>= 3.0)
+      monetize (~> 1.9)
+      money (~> 6.13)
+      railties (>= 3.0)
     msgpack (1.6.0)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -351,6 +360,7 @@ DEPENDENCIES
   irb
   jbuilder
   jquery-rails
+  money-rails (~> 1.15)
   pg
   puma (~> 5.0)
   rails (~> 7.0.4)
