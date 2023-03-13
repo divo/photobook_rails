@@ -1,6 +1,8 @@
 class OrderEstimate < ApplicationRecord
   belongs_to :photo_album
 
+  after_commit -> { broadcast_replace_to photo_album, partial: "order_estimates/order_estimate", locals: { order_estimate: self }, target: "estimate" }
+
   def total_price
     "#{price + shipping_price}"
   end

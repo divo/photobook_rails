@@ -16,8 +16,9 @@
 
 <p style="color: green"><%= notice %></p>
 
+<%= turbo_stream_from @photo_album %>
+
 <% if @photo_album.building? %>
-  <%= turbo_stream_from @photo_album %>
   <div id="photo_album_content" data-controller="album" class="masthead-small"></div>
   <div id='album_building', class="fader overlay", style="display: block">
     <%= render 'album_building', data_controller: 'album' %>
