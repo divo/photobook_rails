@@ -1,6 +1,6 @@
 <div id="estimate">
   <% if order_estimate %>
-    <%= order_estimate.currency_symbol %><b><%= order_estimate&.total_price %></b>
+    <%= order_estimate.currency_symbol %><b><%= order_estimate&.total_price %></b> total
     <small class="form-text text-muted">Estimated</small>
   <% else %>
     <small class="form-text text-muted">Fetching price</small>
