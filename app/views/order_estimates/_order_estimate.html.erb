@@ -1,3 +1,6 @@
-<%= order_estimate.currency_symbol %><b><%= order_estimate&.total_price %></b>
-<small class="form-text text-muted">Estimated</small>
-
+<% if order_estimate %>
+  <%= order_estimate.currency_symbol %><b><%= order_estimate&.total_price %></b>
+  <small class="form-text text-muted">Estimated</small>
+<% else %>
+  <small class="form-text text-muted">Fetching price</small>
+<% end %>
