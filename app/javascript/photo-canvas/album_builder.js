@@ -22,9 +22,9 @@ export const render_section = () => {
 }
 
 addEventListener("turbo:before-stream-render", ((event) => {
-  event.detail.render = function (streamElement) {
-    if (streamElement.action == "build_complete") {
-      $("#album_building").bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
+  if (event.target.action == "build_complete") {
+    event.detail.render = function (streamElement) {
+      $("#album_building").bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function () {
         $('#album_building').remove();
       });
 
