@@ -20,7 +20,7 @@ module Gelato
           itemReferenceId: item_ref,
           productUid: SOFTCOVER_UUID,
           quantity: 1,
-          pageCount: page_count,
+          pageCount: page_count, # TODO: Page count needs the node logic or Gelato will refuse to give a quote
           files: [
             type: 'default',
             url: 'https://s3-eu-west-1.amazonaws.com/developers.gelato.com/product-examples/test_print_job_BX_4-4_hor_none.pdf'

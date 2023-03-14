@@ -45,10 +45,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_12_182815) do
 
   create_table "order_estimates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.decimal "price"
+    t.decimal "gelato_price"
     t.decimal "shipping_price"
     t.integer "min_delivery_days"
     t.integer "max_delivery_days"
     t.string "currency"
+    t.string "shipping_name"
     t.uuid "photo_album_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
