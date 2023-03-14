@@ -57,4 +57,28 @@ class PhotoAlbum < ApplicationRecord
     raise "Image not found" unless image.present?
     image.destroy
   end
+
+  # Mirror of logic in Node rendering app to bulk out with empty pages
+  # The equality opertions might look backwards compared to the JS, but
+  # that's because JS is a deceptive piece of shit
+  def final_page_count
+    count = 2 # Cover and inside cover
+
+    json_album = present { |i| '' }
+    json_album[:pages].each do |page|
+      if page[:page_class] == 'section-page'
+        if (count % 2) == 0
+          count += 1
+        end
+        count += 1
+      end
+
+      count += 1
+    end
+
+    if (count % 2) != 0
+      count += 1
+    end
+    count += 2 # Back cover and inside back cover
+  end
 end
