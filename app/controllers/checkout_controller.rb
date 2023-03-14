@@ -3,7 +3,11 @@ class CheckoutController < ApplicationController
 
   skip_before_action :verify_authenticity_token, :only => [:create]
 
-  DOMAIN = 'https://mementos.ink'
+  if Rails.env.development?
+    DOMAIN = 'http://localhost:3000'
+  else
+    DOMAIN = 'https://mementos.ink'
+  end
 
   def create
     @session = Stripe::Checkout::Session

@@ -17,4 +17,6 @@ Rails.application.routes.draw do
   delete 'photo_albums/:id/delete_page', to: 'photo_albums#delete_page', as: 'delete_page_photo_album'
 
   post 'checkout/create', to: 'checkout#create', as: 'checkout_create'
+  get 'checkout/success', to: 'checkout#success', as: 'checkout_success'
+  get 'checkout/cancel', to: 'checkout#cancel', as: 'checkout_cancel'
 end
