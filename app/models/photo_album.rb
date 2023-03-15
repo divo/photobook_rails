@@ -21,12 +21,12 @@ class PhotoAlbum < ApplicationRecord
 
   # TODO: Surface this in UI
   def self.max_images
-    200
+    180
   end
 
   def max_images
     if images.length > self.class.max_images
-      errors.add :images, "Album must have at most 200 images"
+      errors.add :images, "Album must have at most #{PhotoAlbum.max_images} images"
     end
   end
 

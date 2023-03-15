@@ -102,11 +102,6 @@ class PhotoAlbumsController < ApplicationController
     end
   end
 
-  def estimate_cost
-    order_client = OrderClient.new(SecureRandom.uuid, current_user, @photo_album.id)
-    res = order_client.quote(@photo_album.images.count)
-  end
-
   private
 
   # Use callbacks to share common setup or constraints between actions.

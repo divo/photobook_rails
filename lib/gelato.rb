@@ -10,7 +10,7 @@ module Gelato
     {
       orderReferenceId: order_ref,
       customerReferenceId: user.id,
-      currency: 'EUR',
+      currency: 'EUR', # TODO: Currency needs to be dynamic
       allowMultipleQuotes: false,
       recipient: {
         "country": user.country_code
