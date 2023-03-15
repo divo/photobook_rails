@@ -6,6 +6,7 @@ class PhotoAlbum < ApplicationRecord
   validates :name, presence: true
   validate :min_images
   validate :max_images, on: :app
+  before_save :update_final_page_count
   after_save :broadcast_album_built
 
   def self.min_images
@@ -58,10 +59,14 @@ class PhotoAlbum < ApplicationRecord
     image.destroy
   end
 
+  def update_final_page_count
+    update_column(:final_page_count, calculate_final_page_count) if build_complete
+  end
+
   # Mirror of logic in Node rendering app to bulk out with empty pages
   # The equality opertions might look backwards compared to the JS, but
   # that's because JS is a deceptive piece of shit
-  def final_page_count
+  def calculate_final_page_count
     count = 2 # Cover and inside cover
 
     json_album = present { |i| '' }

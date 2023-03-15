@@ -59,6 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_12_182815) do
 
   create_table "photo_albums", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
+    t.integer "final_page_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "build_complete", default: false
