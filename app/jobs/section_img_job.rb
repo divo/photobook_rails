@@ -31,7 +31,7 @@ class SectionImgJob < Gush::Job
       )
       blob.metadata['geocode'] = { 'country' => image.blob.metadata['geocode']['country'] } # Copy over the country
       blob.metadata['section_page'] = true
-      blob.save!
+      blob.save! # TODO: Handle adding more section than allowed max_image. Probably just stop the job here
 
       photo_album.images.attach(blob)
     end

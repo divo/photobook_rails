@@ -22,6 +22,7 @@ export const render_section = () => {
 }
 
 addEventListener("turbo:before-stream-render", ((event) => {
+  // TODO: Enable the order button when the estimate comes back
   if (event.target.action == "build_complete") {
     event.detail.render = function (streamElement) {
       $("#album_building").bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function () {
