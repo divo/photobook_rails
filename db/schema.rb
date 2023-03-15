@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_12_182815) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_15_113131) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -57,6 +57,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_12_182815) do
     t.index ["photo_album_id"], name: "index_order_estimates_on_photo_album_id"
   end
 
+  create_table "orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "photo_album_id", null: false
+    t.uuid "order_estimate_id", null: false
+    t.integer "state", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_estimate_id"], name: "index_orders_on_order_estimate_id"
+    t.index ["photo_album_id"], name: "index_orders_on_photo_album_id"
+  end
+
   create_table "photo_albums", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "final_page_count"
@@ -88,4 +98,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_12_182815) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "order_estimates", "photo_albums"
+  add_foreign_key "orders", "order_estimates"
+  add_foreign_key "orders", "photo_albums"
 end
