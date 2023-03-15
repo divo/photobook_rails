@@ -1,7 +1,7 @@
 class RenderAlbumJob < ApplicationJob
   queue_as :default
 
-  def perform(photo_album)
+  def perform(photo_album, order)
     # Do something later
     render_client = RenderClient.new(photo_album)
     # Wait for rendering to finish
