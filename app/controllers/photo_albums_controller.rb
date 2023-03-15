@@ -65,7 +65,7 @@ class PhotoAlbumsController < ApplicationController
 
   def print
     # This should use Stimulus fancyness. What should the flow even look like?
-    RenderAlbumJob.perform_later(@photo_album.present { |image| image.url })
+    RenderAlbumJob.perform_later(@photo_album.present { |image| image.url }, nil)
     respond_to do |format|
       format.html { redirect_to photo_album_url(@photo_album), notice: "Photo album was successfully queued for printing." }
       format.json { head :no_content }
