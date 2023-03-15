@@ -17,6 +17,23 @@ class CheckoutController < ApplicationController
     order_estimate = photo_album.order_estimate
     render json: { error: 'Order estimate not found' }, status: :internal_server_error and return unless order_estimate
 
+    order = create_order(photo_album)
+    build_stripe_session(order_estimate, photo_album, order)
+    redirect_to @session.url, status: 303, allow_other_host: true
+  end
+
+  private
+
+  def create_order(photo_album)
+    dup_estimate = photo_album.order_estimate.dup.tap { |e| e.save }
+
+    Order.new(
+      photo_album: photo_album,
+      order_estimate: dup_estimate
+    ).tap { |order| order.save}
+  end
+
+  def build_stripe_session(order_estimate, photo_album, order)
     @session = Stripe::Checkout::Session
                  .create({
                            success_url: "#{DOMAIN}/checkout/success.html",
@@ -49,13 +66,12 @@ class CheckoutController < ApplicationController
                                           quantity: 1
                                         }],
                            mode: 'payment',
-                           metadata: { photo_album_id: photo_album.id },
+                           metadata: {
+                             order_id: order.id
+                           },
                            customer_email: current_user.email,
                          })
-    redirect_to @session.url, status: 303, allow_other_host: true
   end
-
-  private
 
   def unit_amount_to_cents(amount)
     (amount.to_f * 100).to_i
