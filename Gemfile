@@ -86,6 +86,11 @@ gem "money-rails", "~> 1.15"
 
 # For checkout
 gem "stripe", "~> 8.3"
+
+# State machine. I don't think this is overkill, I need a decent way to control order state
+gem "aasm", "~> 5.5"
+gem "after_commit_everywhere", "~> 1.3"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
