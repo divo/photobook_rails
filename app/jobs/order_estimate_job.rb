@@ -3,7 +3,7 @@ class OrderEstimateJob < Gush::Job
     photo_album = PhotoAlbum.find(params[:photo_album_id])
     user = photo_album.user
     order_client = OrderClient.new("#{photo_album.id}_estimate", user, photo_album.id)
-    res = order_client.quote(photo_album.images.count)
+    res = order_client.quote(photo_album.final_page_count)
 
     estimate = OrderEstimate.build_estimate(photo_album, res)
     estimate.save
