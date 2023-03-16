@@ -16,5 +16,6 @@ class OrderClient
               headers: {
                 'Content-Type' => 'application/json'
               }.merge(api_key_header))
+        .tap { |respone| raise "Error: #{respone}" unless respone.success? }
   end
 end

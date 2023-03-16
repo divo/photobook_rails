@@ -69,7 +69,11 @@ module PhotoAlbumPresenter
     section_pages = {'' => []}.merge(section_pages) if content_pages[''].present?
 
     content_pages.each do |key, value|
-      value.sort_by! { |x| Date.parse x[:date] }
+      value.sort_by! do |x|
+        Date.parse x[:date]
+      rescue Date::Error
+        Date.new(0) # Not sure why some dates are failing to parse, they look fine
+      end
       value.unshift(section_pages[key].first) if section_pages[key].present?
     end
     content_pages.values.flatten

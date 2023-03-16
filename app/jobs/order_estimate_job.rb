@@ -6,7 +6,8 @@ class OrderEstimateJob < Gush::Job
     res = order_client.quote(photo_album.final_page_count)
 
     estimate = OrderEstimate.build_estimate(photo_album, res)
-    estimate.save
+    estimate.save!
+
     photo_album.order_estimate = estimate
     photo_album.save
   end

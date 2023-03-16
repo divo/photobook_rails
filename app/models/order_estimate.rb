@@ -1,6 +1,6 @@
 class OrderEstimate < ApplicationRecord
   belongs_to :photo_album
-  #  validates :price, numericality: { greater_than: 0 } # TODO: Enable and handle this
+  validates :gelato_price, numericality: { greater_than: 0 } # TODO: Enable and handle this
 
   after_commit -> { broadcast_replace_to photo_album, partial: "order_estimates/order_estimate", locals: { order_estimate: self }, target: "estimate" }
 
