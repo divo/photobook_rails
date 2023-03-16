@@ -20,9 +20,9 @@ class PhotoAlbum < ApplicationRecord
     end
   end
 
-  # TODO: Surface this in UI
+  # TODO: This is possibly a bigger issue. How to limit the no. of images before I know the number?
   def self.max_images
-    180
+    150
   end
 
   def max_images
