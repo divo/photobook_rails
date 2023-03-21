@@ -20,10 +20,10 @@ class WebhooksController < ApplicationController
         payload, sig_header, secret
       )
     rescue JSON::ParserError => e
-      render :nothing, status: :bad_request
+      head :bad_request
     rescue Stripe::SignatureVerificationError => e
       Rails.logger.error "⚠️  Webhook signature verification failed: #{e.message}"
-      render :nothing, status: :bad_request
+      head :bad_request
     end
 
     case event.type
