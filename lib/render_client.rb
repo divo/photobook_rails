@@ -19,11 +19,12 @@ class RenderClient
     # TODO: Stop abusing long timeout. If I need to serve any level of
     # concurrency I need to use a queueing system, with something to
     # track and check job progress
-    self.class.post("/api/render_album",
+    response = self.class.post("/api/render_album",
                     body: options.to_json,
                     headers: { 'Content-Type' => 'application/json' },
                     timeout: 60 * 60, # Allow render 5 minutes to complete
                     debug_output: $stdout )
     Rails.logger.info "Rendered album #{job_id}"
+    response
   end
 end

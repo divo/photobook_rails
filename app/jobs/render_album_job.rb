@@ -6,8 +6,20 @@ class RenderAlbumJob < ApplicationJob
     render_client = RenderClient.new(photo_album)
     # Wait for rendering to finish
     logger.info "Begin rendering album #{photo_album['id']}"
-    render_client.render_album(self.job_id)
-    logger.info "Finished rendering album #{photo_album['id']}"
+    response = render_client.render_album(self.job_id)
+    if response.success?
+      logger.info "Finished rendering album #{photo_album['id']}"
+      # Store the rendered album in the order
+      blob = ActiveStorage::Blob.create_and_upload!(
+        io: StringIO.new(response.body),
+        filename: "order_#{order.id}.pdf"
+      )
+      blob.save!
+      order.rendered_album.attach(blob)
+      order.save!
+    else
+      raise "Error rendering album #{photo_album['id']} with error #{response.error}"
+    end
     # then download the created album
   end
 end

@@ -4,6 +4,8 @@ class Order < ApplicationRecord
   belongs_to :photo_album
   belongs_to :order_estimate # This should be a clone of the PhotoAlbum's OrderEstimate, as to lock it in time
 
+  has_one_attached :rendered_album
+
   enum state: {
     draft: 0,
     paid: 1,
@@ -18,7 +20,6 @@ class Order < ApplicationRecord
     event :pay do
       transitions from: :draft, to: :paid
       after do
-        byebug
         RenderAlbumJob.perform_later(photo_album.present { |image| image.url }, self)
       end
     end
