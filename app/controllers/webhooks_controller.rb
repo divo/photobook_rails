@@ -3,6 +3,7 @@ class WebhooksController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
+    Rails.logger.info("Webhook received")
     payload = request.body.read
     sig_header = request.env['HTTP_STRIPE_SIGNATURE']
     event = nil
@@ -80,13 +81,16 @@ class WebhooksController < ApplicationController
       #   "total_details": {"amount_discount":0,"amount_shipping":421,"amount_tax":0},
       #   "url": null
       # }
+      Rails.logger.info("Webhook #{session.id} metadata: #{session.metadata}")
       order = Order.find(session.metadata.order_id)
 
       Rails.logger.error("Order not found! #{session}") unless order
 
       if session.payment_status == 'paid'
+        Rails.logger.info("Webhook #{session.id} Order paid!")
         order.pay
       else
+        Rails.logger.warn("Webhook #{session.id} Order payment failed")
         order.payment_failed
       end
     end
