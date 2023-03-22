@@ -30,7 +30,7 @@ class CheckoutController < ApplicationController
     Order.new(
       photo_album: photo_album,
       order_estimate: dup_estimate
-    ).tap { |order| order.save}
+    ).tap { |order| order.save }
   end
 
   def build_stripe_session(order_estimate, photo_album, order)
