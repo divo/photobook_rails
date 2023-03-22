@@ -12,7 +12,8 @@ class RenderAlbumJob < ApplicationJob
       # Store the rendered album in the order
       blob = ActiveStorage::Blob.create_and_upload!(
         io: StringIO.new(response.body),
-        filename: "order_#{order.id}.pdf"
+        filename: "order_#{order.id}.pdf",
+        service_name: :orders_bucket
       )
       blob.save!
       order.rendered_album.attach(blob)
