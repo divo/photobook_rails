@@ -53,8 +53,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_22_152652) do
     t.string "country"
     t.string "email"
     t.string "phone"
+    t.uuid "order_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_addresses_on_order_id"
   end
 
   create_table "order_estimates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -113,6 +115,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_22_152652) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "addresses", "orders"
   add_foreign_key "order_estimates", "photo_albums"
   add_foreign_key "orders", "order_estimates"
   add_foreign_key "orders", "photo_albums"
