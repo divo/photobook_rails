@@ -8,6 +8,7 @@ class CreateOrderEstimates < ActiveRecord::Migration[7.0]
       t.integer :max_delivery_days
       t.string :currency
       t.string :shipping_name
+      t.string :shipping_method_uuid
       t.references :photo_album, null: false, foreign_key: true, type: :uuid
 
       t.timestamps

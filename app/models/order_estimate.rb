@@ -22,7 +22,8 @@ class OrderEstimate < ApplicationRecord
       min_delivery_days: quote['shipmentMethods'].first['minDeliveryDays'],
       max_delivery_days: quote['shipmentMethods'].first['maxDeliveryDays'],
       currency: quote['products'].first['currency'],
-      shipping_name: quote['shipmentMethods'].first['name']
+      shipping_name: quote['shipmentMethods'].first['name'],
+      shipping_method_uuid: quote['shipmentMethods'].first['shipmentMethodUid'],
     )
   end
 
