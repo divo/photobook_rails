@@ -13,6 +13,7 @@
 :queues:
   - default
   - gush
+  - render_album
 
 # you can override concurrency based on environment
 production:

@@ -1,5 +1,5 @@
 class RenderAlbumJob < ApplicationJob
-  queue_as :default
+  queue_as :render_album
 
   def perform(photo_album, order)
     # Do something later
