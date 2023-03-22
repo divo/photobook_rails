@@ -96,6 +96,8 @@ class WebhooksController < ApplicationController
 
       if session.payment_status == 'paid'
         Rails.logger.info("Webhook #{session.id} Order paid!")
+        address = Address.build_from_stripe(session, order)
+        address.save!
         order.pay!
       else
         Rails.logger.warn("Webhook #{session.id} Order payment failed")
