@@ -2,8 +2,8 @@ class PhotoAlbum < ApplicationRecord
   include PhotoAlbumPresenter
   belongs_to :user
   has_many_attached :images # TODO: Should this be dependent: :destroy?
-  has_one :order_estimate, dependent: :destroy
   has_many :orders, dependent: :destroy
+  has_one :order_estimate, dependent: :destroy
   validates :name, presence: true
   validate :min_images
   validate :max_images, on: :app
