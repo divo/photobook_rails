@@ -29,6 +29,7 @@ const render_setup = async (sketch, parent) => {
     address: address,
     country: country,
     caption: caption,
+    width_offset: 0
   };
   CanvasSketch.canvasSketch(sketch, settings);
 };
