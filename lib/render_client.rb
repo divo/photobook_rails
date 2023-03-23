@@ -4,8 +4,9 @@ class RenderClient
   base_uri ENV['RENDER_APP_URL'] + ":" + ENV['RENDER_APP_PORT']
 
   # @param Hash
-  def initialize(photo_album)
+  def initialize(photo_album, spine_width)
     @photo_album = photo_album
+    @spine_width = spine_width
   end
 
   def ping
@@ -15,7 +16,8 @@ class RenderClient
   def render_album(job_id)
     # TODO: Create a record of the render request, an 'Order'
     options = @photo_album.merge(job_id: job_id)
-    options[:size] = [210, 210]
+    options[:size] = [206, 206] # Passing the bleed here, doesn't scale correctly in the render app
+    options[:spine_width] = @spine_width
     # TODO: Stop abusing long timeout. If I need to serve any level of
     # concurrency I need to use a queueing system, with something to
     # track and check job progress

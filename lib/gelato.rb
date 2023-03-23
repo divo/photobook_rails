@@ -1,6 +1,7 @@
 module Gelato
   QUOTE_URL = 'https://order.gelatoapis.com/v4/orders:quote'.freeze
   SOFTCOVER_UUID = 'photobooks-softcover_pf_200x200-mm-8x8-inch_pt_170-gsm-65lb-coated-silk_cl_4-4_ccl_4-4_bt_glued-left_ct_matt-lamination_prt_1-0_cpt_250-gsm-100-lb-cover-coated-silk_ver'.freeze
+  COVER_URL = "https://product.gelatoapis.com/v3/products/#{SOFTCOVER_UUID}/cover-dimensions"
 
   def api_key_header
     { 'X-API-KEY' => Rails.application.credentials[:gelato_api_key] }

@@ -16,6 +16,17 @@ class OrderClient
               headers: {
                 'Content-Type' => 'application/json'
               }.merge(api_key_header))
-        .tap { |respone| raise "Error: #{respone}" unless respone.success? }
+      .tap { |response| raise "Error: #{response}" unless response.success? }
+  end
+
+  def cover_dimensions(page_count)
+    self.class
+        .get(COVER_URL,
+             headers: {
+               'Content-Type' => 'application/json'
+             }.merge(api_key_header),
+             query: { pageCount: page_count } )
+        .tap { |response| raise "Error: #{response}" unless response.success? }
+  end
   end
 end

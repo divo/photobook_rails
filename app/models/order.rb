@@ -21,7 +21,16 @@ class Order < ApplicationRecord
     event :pay do
       transitions from: :draft, to: :paid
       after do
-        RenderAlbumJob.perform_later(photo_album.present { |image| image.url }, self)
+        order_client = OrderClient.new(self.id, self.photo_album.user, self.photo_album.id)
+        res = order_client.cover_dimensions(self.photo_album.final_page_count)
+
+        if res.success? && res['spineSize']
+          RenderAlbumJob.perform_later(photo_album.present { |image| image.url }, self, res['spineSize']['width'])
+        else
+          self.render_failed!
+        end
+      end
+    end
       end
     end
 
