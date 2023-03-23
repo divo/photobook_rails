@@ -85,6 +85,6 @@ class PhotoAlbum < ApplicationRecord
     if (count % 2) != 0
       count += 1
     end
-    count += 2 # Back cover and inside back cover
+    count += 1 # Back cover and inside back cover
   end
 end
