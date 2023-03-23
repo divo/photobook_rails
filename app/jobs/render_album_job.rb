@@ -18,8 +18,11 @@ class RenderAlbumJob < ApplicationJob
       blob.save!
       order.rendered_album.attach(blob)
       order.save!
+
+      order.render!
     else
       raise "Error rendering album #{photo_album['id']} with error #{response.error}"
+      order.render_failed!
     end
     # then download the created album
   end
