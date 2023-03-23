@@ -64,6 +64,13 @@ class PhotoAlbum < ApplicationRecord
     update_column(:final_page_count, calculate_final_page_count) if build_complete
   end
 
+  # Gelato requires the _content_ page count to create a quote
+  # It does not count the cover spread and inside cover as content
+  # This is not documented so posssibly incorrect
+  def content_page_count
+    calculate_final_page_count - 3
+  end
+
   # Mirror of logic in Node rendering app to bulk out with empty pages
   # The equality opertions might look backwards compared to the JS, but
   # that's because JS is a deceptive piece of shit
