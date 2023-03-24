@@ -1,0 +1,26 @@
+<div id="order_list">
+
+</div>
+
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th scope="col">ID</th>
+    <th scope="col">Order Date</th>
+    <th scope="col">Destination</th>
+    <th scope="col">Status</th>
+    <th scope="col">Total</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @orders.each do |order| %>
+    <tr class="table-active">
+      <td class="order_id"><%= order.id %></td>
+      <td class="order_date"><%= order.created_at %></tdj>
+      <td class="address"><%= order.address&.post_code  %></dilv>
+      <td class="order_status"><%= order.state %></td>
+      <td class="price"><% '' %></dilv>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

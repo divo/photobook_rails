@@ -18,10 +18,12 @@
 
 <div class="container masthead">
   <%= render "devise/shared/error_messages", resource: resource %>
+
   <div class="row justify-content-center">
-    <div class="col-sm-5">
+    <div class="col-md-7">
       <div class="text-lg-start">
         <h2 class="mb-3">Orders</h2>
+        <%= render 'orders/orders' %>
       </div>
 
       <div class="text-lg-start">
