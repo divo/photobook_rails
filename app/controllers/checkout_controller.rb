@@ -25,14 +25,11 @@ class CheckoutController < ApplicationController
   private
 
   def create_order(photo_album)
-    dup_estimate = photo_album.order_estimate.dup
-    dup_estimate.photo_album = nil
-    dup_estimate.order = self
-    dup_estimate.save!
-
-    Order.new(
-      photo_album: photo_album,
-    ).tap { |order| order.save }
+    estimate = photo_album.order_estimate.dup
+    order = Order.new(photo_album: photo_album).tap { |order| order.save }
+    estimate.estimateable = order
+    estimate.save!
+    order
   end
 
   def build_stripe_session(order_estimate, photo_album, order)
