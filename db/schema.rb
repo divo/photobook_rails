@@ -68,10 +68,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_22_152652) do
     t.string "currency"
     t.string "shipping_name"
     t.string "shipping_method_uuid"
-    t.uuid "photo_album_id"
+    t.string "estimateable_type"
+    t.uuid "estimateable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["photo_album_id"], name: "index_order_estimates_on_photo_album_id"
+    t.index ["estimateable_type", "estimateable_id"], name: "index_order_estimates_on_estimateable"
   end
 
   create_table "orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -116,7 +117,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_22_152652) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "orders"
-  add_foreign_key "order_estimates", "photo_albums"
   add_foreign_key "orders", "order_estimates"
   add_foreign_key "orders", "photo_albums"
 end

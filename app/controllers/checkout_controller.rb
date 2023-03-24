@@ -26,12 +26,12 @@ class CheckoutController < ApplicationController
 
   def create_order(photo_album)
     dup_estimate = photo_album.order_estimate.dup
-    dup_estimate.photo_album = nil # Hack for cicrular dependency, meh
-    dup_estimate.save
+    dup_estimate.photo_album = nil
+    dup_estimate.order = self
+    dup_estimate.save!
 
     Order.new(
       photo_album: photo_album,
-      order_estimate: dup_estimate
     ).tap { |order| order.save }
   end
 

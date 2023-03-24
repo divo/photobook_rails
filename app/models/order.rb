@@ -2,7 +2,7 @@ class Order < ApplicationRecord
   include AASM
 
   belongs_to :photo_album
-  belongs_to :order_estimate # This is kinda backwards but is kind of dictated by the order of events
+  has_one :order_estimate, as: :estimateable
   has_one :address, dependent: :destroy
 
   has_one_attached :rendered_album, service: :orders_bucket

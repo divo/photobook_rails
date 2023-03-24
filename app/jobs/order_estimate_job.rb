@@ -7,8 +7,5 @@ class OrderEstimateJob < Gush::Job
 
     estimate = OrderEstimate.build_estimate(photo_album, res)
     estimate.save!
-
-    photo_album.order_estimate = estimate
-    photo_album.save
   end
 end
