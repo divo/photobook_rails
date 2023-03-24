@@ -21,7 +21,7 @@ class RenderAlbumJob < ApplicationJob
 
       order.render!
     else
-      raise "Error rendering album #{photo_album['id']} with error #{response.error}"
+      raise "Error rendering album #{photo_album['id']} with response #{response}"
       order.render_failed!
     end
     # then download the created album
