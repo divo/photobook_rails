@@ -36,7 +36,7 @@ class CheckoutController < ApplicationController
     @session = Stripe::Checkout::Session
       .create({
         success_url: "#{DOMAIN}/photo_albums/#{photo_album.id}?cancel=success",
-        cancel_url: "#{DOMAIN}/photo_albums/#{photo_album.id}?cancel=true",
+        cancel_url: "#{DOMAIN}/photo_albums/#{photo_album.id}?cancel=true&order_id=#{order.id}",
         payment_method_types: ['card'],
         automatic_tax: { enabled: true },
         shipping_address_collection: { allowed_countries: [current_user.country_code] }, # TODO: Allow user to change this, they are gifts after all

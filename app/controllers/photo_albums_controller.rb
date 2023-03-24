@@ -11,6 +11,10 @@ class PhotoAlbumsController < ApplicationController
   # GET /photo_albums/1 or /photo_albums/1.json
   def show
     if cancel_params[:cancel] == 'true'
+      order = @photo_album.orders.find(success_params[:order_id])
+      Rails.logger.info("Destroying order #{order.id}")
+      order.destroy
+
       redirect_to photo_album_url(@photo_album), alert: "Order cancelled"
     elsif success_params[:success] == 'true'
       redirect_to photo_album_url(@photo_album), notice: "Order placed successfully. You can track your order from your account overview"
@@ -120,7 +124,7 @@ class PhotoAlbumsController < ApplicationController
   end
 
   def cancel_params
-    params.permit(:id, :cancel)
+    params.permit(:id, :cancel, :order_id)
   end
 
   def success_params
