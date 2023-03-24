@@ -10,7 +10,6 @@ class RenderAlbumJob < ApplicationJob
     begin
       response = render_client.render_album(self.job_id)
     rescue => e
-      byebug
       logger.error "Error rendering album #{photo_album['id']}: #{e}"
       order.render_failed!
       return

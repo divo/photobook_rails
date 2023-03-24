@@ -10,6 +10,11 @@ class PhotoAlbumsController < ApplicationController
 
   # GET /photo_albums/1 or /photo_albums/1.json
   def show
+    if cancel_params[:cancel] == 'true'
+      redirect_to photo_album_url(@photo_album), alert: "Order cancelled"
+    elsif success_params[:success] == 'true'
+      redirect_to photo_album_url(@photo_album), notice: "Order placed successfully. You can track your order from your account overview"
+    end
   end
 
   # GET /photo_albums/new
@@ -111,6 +116,14 @@ class PhotoAlbumsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def photo_album_params
-    params.require(:photo_album).permit(:name, images: [])
+    params.require(:photo_album).permit(:name, :cancel, images: [])
+  end
+
+  def cancel_params
+    params.permit(:id, :cancel)
+  end
+
+  def success_params
+    params.permit(:id, :success, :order_id)
   end
 end
