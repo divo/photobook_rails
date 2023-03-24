@@ -34,42 +34,44 @@ class CheckoutController < ApplicationController
 
   def build_stripe_session(order_estimate, photo_album, order)
     @session = Stripe::Checkout::Session
-                 .create({
-                           success_url: "#{DOMAIN}/checkout/success.html",
-                           cancel_url: "#{DOMAIN}/checkout/cancel.html",
-                           payment_method_types: ['card'],
-                           shipping_address_collection: { allowed_countries: [current_user.country_code] },
-                           shipping_options: [
-                             {
-                               shipping_rate_data: {
-                                 type: 'fixed_amount',
-                                 fixed_amount: {
-                                   amount: unit_amount_to_cents(order_estimate.shipping_price),
-                                   currency: order_estimate.currency.downcase
-                                 },
-                                 display_name: order_estimate.shipping_name,
-                                 delivery_estimate: {
-                                   minimum: { unit: 'day', value: order_estimate.min_delivery_days },
-                                   maximum: { unit: 'day', value: order_estimate.max_delivery_days }
-                                 }
-                               }
-                             }
-                           ],
-                           line_items: [{
-                                          price_data: {
-                                            product_data: { name: "Album: #{photo_album.name}" },
-                                            unit_amount: unit_amount_to_cents(order_estimate.price),
-                                            currency: order_estimate.currency.downcase,
-                                            tax_behavior: 'exclusive',
-                                          },
-                                          quantity: 1
-                                        }],
-                           mode: 'payment',
-                           metadata: {
-                             order_id: order.id
-                           },
-                           customer_email: current_user.email,
-                         })
+      .create({
+        success_url: "#{DOMAIN}/checkout/success.html",
+        cancel_url: "#{DOMAIN}/checkout/cancel.html",
+        payment_method_types: ['card'],
+        automatic_tax: { enabled: true },
+        shipping_address_collection: { allowed_countries: [current_user.country_code] }, # TODO: Allow user to change this, they are gifts after all
+        shipping_options: [
+          {
+            shipping_rate_data: {
+              type: 'fixed_amount',
+              tax_behavior: 'inclusive',
+              fixed_amount: {
+                amount: unit_amount_to_cents(order_estimate.shipping_price),
+                currency: order_estimate.currency.downcase
+              },
+              display_name: order_estimate.shipping_name,
+              delivery_estimate: {
+                minimum: { unit: 'day', value: order_estimate.min_delivery_days },
+                maximum: { unit: 'day', value: order_estimate.max_delivery_days }
+              }
+            }
+          }
+        ],
+        line_items: [{
+          price_data: {
+            product_data: { name: "Album: #{photo_album.name}" },
+            unit_amount: unit_amount_to_cents(order_estimate.price),
+            currency: order_estimate.currency.downcase,
+            tax_behavior: 'exclusive'
+          },
+          quantity: 1
+        }],
+        mode: 'payment',
+        metadata: {
+          order_id: order.id
+        },
+        customer_email: current_user.email,
+      })
   end
 
   def unit_amount_to_cents(amount)
