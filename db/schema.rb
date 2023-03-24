@@ -68,7 +68,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_22_152652) do
     t.string "currency"
     t.string "shipping_name"
     t.string "shipping_method_uuid"
-    t.uuid "photo_album_id", null: false
+    t.uuid "photo_album_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["photo_album_id"], name: "index_order_estimates_on_photo_album_id"
