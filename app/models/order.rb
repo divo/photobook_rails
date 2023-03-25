@@ -47,6 +47,7 @@ class Order < ApplicationRecord
         order_client = OrderClient.new(self.id, self.photo_album.user, self.photo_album.id)
         res = order_client.place_order(self, self.photo_album.content_page_count)
         if res.success?
+          save_order_details(res)
           self.order_created!
         else
           self.order_creation_failed!
@@ -68,6 +69,22 @@ class Order < ApplicationRecord
         Rails.logger.error "Render failed for order #{id}"
       end
     end
+  end
+
+  private
+
+  def save_order_details(res)
+    self.update(
+      fulfillment_status: res['fulfillmentStatus'],
+      financial_status: res['financialStatus'],
+      gelato_id: res['id'],
+      gelato_price: res['receipts'].first['productsPrice'],
+      gelato_price_incl_vat: res['receipts'].first['productsPriceInclVat'],
+      total_gelato_price_incl_vat: res['receipts'].first['totalInclVat'],
+      shipping_method_uid: res['shipment']['shippingMethodUid'],
+      shipping_price: res['receipts'].first['shippingPrice'],
+      shipping_price_incl_vat: res['receipts'].first['shippingPriceInclVat']
+    )
   end
 end
 
