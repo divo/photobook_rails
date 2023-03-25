@@ -24,8 +24,7 @@ class RenderClient
     response = self.class.post("/api/render_album",
                     body: options.to_json,
                     headers: { 'Content-Type' => 'application/json' },
-                    timeout: 60 * 60, # Allow render 5 minutes to complete
-                    debug_output: $stdout )
+                    timeout: 60 * 60) # Allow render 5 minutes to complete
     Rails.logger.info "Rendered album #{job_id}"
     response
   end
