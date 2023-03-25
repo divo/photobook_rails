@@ -14,7 +14,7 @@
   </thead>
   <tbody>
   <% @orders.each do |order| %>
-    <tr class="table-active">
+    <tr class="table-default">
       <td class="order_id"><%= order.id %></td>
       <td class="order_date"><%= order.created_at %></tdj>
       <td class="address"><%= order.address&.post_code  %></dilv>
