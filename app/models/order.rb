@@ -80,10 +80,12 @@ class Order < ApplicationRecord
       gelato_id: res['id'],
       gelato_price: res['receipts'].first['productsPrice'],
       gelato_price_incl_vat: res['receipts'].first['productsPriceInclVat'],
-      total_gelato_price_incl_vat: res['receipts'].first['totalInclVat'],
+      total_gelato_price_incl_vat: res['receipts'].first['totalInclVat'] + Prices.margin,
       shipping_method_uid: res['shipment']['shippingMethodUid'],
       shipping_price: res['receipts'].first['shippingPrice'],
-      shipping_price_incl_vat: res['receipts'].first['shippingPriceInclVat']
+      shipping_price_incl_vat: res['receipts'].first['shippingPriceInclVat'],
+      margin: Prices.margin,
+      total_price: Prices.margin + res['receipts'].first['shippingPriceInclVat']
     )
   end
 end

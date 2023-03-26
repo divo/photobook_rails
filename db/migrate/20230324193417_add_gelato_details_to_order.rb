@@ -9,5 +9,7 @@ class AddGelatoDetailsToOrder < ActiveRecord::Migration[7.0]
     add_column :orders, :shipping_method_uid, :string
     add_column :orders, :shipping_price, :decimal
     add_column :orders, :shipping_price_incl_vat, :decimal
+    add_column :orders, :margin, :decimal
+    add_column :orders, :total_price, :decimal
   end
 end

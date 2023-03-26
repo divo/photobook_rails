@@ -19,7 +19,7 @@
       <td class="order_date"><%= order.created_at %></tdj>
       <td class="address"><%= order.address&.post_code  %></dilv>
       <td class="order_status"><%= order.state %></td>
-      <td class="price"><% '' %></dilv>
+      <td class="price"><% order.total_price %></dilv>
     </tr>
   <% end %>
   </tbody>

@@ -32,6 +32,6 @@ class OrderEstimate < ApplicationRecord
   private
 
   def self.calculate_price(gelato_price)
-    (gelato_price + 5).ceil
+    (gelato_price + Price.margin)
   end
 end

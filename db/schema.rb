@@ -90,6 +90,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_193417) do
     t.string "shipping_method_uid"
     t.decimal "shipping_price"
     t.decimal "shipping_price_incl_vat"
+    t.decimal "margin"
+    t.decimal "total_price"
     t.index ["photo_album_id"], name: "index_orders_on_photo_album_id"
   end
 
