@@ -14,17 +14,23 @@ class Order < ApplicationRecord
     rendered: 3,
     render_failed: 4,
     order_created: 5,
-    order_creation_failed: 6
+    order_creation_failed: 6,
+    draft_canceled: 7,
   }
 
   aasm column: :state, enum: true do
     state :draft, initial: true
+    state :draft_canceled
     state :paid
     state :payment_failed
     state :rendered
     state :render_failed
     state :order_created
     state :order_creation_failed
+
+    event :cancel_draft do
+      transitions from: :draft, to: :draft_canceled
+    end
 
     event :pay do
       transitions from: :draft, to: :paid

@@ -12,8 +12,8 @@ class PhotoAlbumsController < ApplicationController
   def show
     if cancel_params[:cancel] == 'true'
       order = @photo_album.orders.find(success_params[:order_id])
-      Rails.logger.info("Destroying order #{order.id}")
-      order.destroy
+      Rails.logger.info("Canceling order #{order.id}")
+      order.cancel_draft!
 
       redirect_to photo_album_url(@photo_album), alert: "Order cancelled"
     elsif success_params[:success] == 'true'
