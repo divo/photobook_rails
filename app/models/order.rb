@@ -84,14 +84,15 @@ class Order < ApplicationRecord
       fulfillment_status: res['fulfillmentStatus'],
       financial_status: res['financialStatus'],
       gelato_id: res['id'],
-      gelato_price: res['receipts'].first['productsPrice'],
-      gelato_price_incl_vat: res['receipts'].first['productsPriceInclVat'],
-      total_gelato_price_incl_vat: res['receipts'].first['totalInclVat'] + Prices.margin,
+      gelato_price: res['receipts'].first['productsPrice'], # Prices for item (no shipping)
+      gelato_price_incl_vat: res['receipts'].first['productsPriceInclVat'], # Price for item incl vat (no shipping)
+      total_gelato_price_incl_vat: res['receipts'].first['totalInclVat'], # Price + vat + shipping + shipping_vat
       shipping_method_uid: res['shipment']['shippingMethodUid'],
       shipping_price: res['receipts'].first['shippingPrice'],
       shipping_price_incl_vat: res['receipts'].first['shippingPriceInclVat'],
       margin: Prices.margin,
-      total_price: Prices.margin + res['receipts'].first['shippingPriceInclVat']
+      total_price: Prices.margin + res['receipts'].first['total'], # Margin + Gelato price + shipping (no vat on any)
+      total_price_incl_vat: Prices.margin_incl_vat + res['receipts'].first['totalInclVat']
     )
   end
 end
