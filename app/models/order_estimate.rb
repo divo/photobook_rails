@@ -5,8 +5,12 @@ class OrderEstimate < ApplicationRecord
   # Broadcast to the photo_album channel. There is no order channel
   after_commit -> { broadcast_replace_to estimateable, partial: "order_estimates/order_estimate", locals: { order_estimate: self }, target: "estimate" }
 
-  def total_price
-    "#{price + shipping_price}"
+  def total
+    "#{price.round(2)}"
+  end
+
+  def total_vat
+    Prices.vat(price).round(2)
   end
 
   def currency_symbol
@@ -18,7 +22,7 @@ class OrderEstimate < ApplicationRecord
     quote = quotes['quotes'].first
     OrderEstimate.new(
       estimateable: photo_album,
-      price: calculate_price(quote['products'].first['price']),
+      price: calculate_price(quote['products'].first['price'], quote['shipmentMethods'].first['price']),
       gelato_price: quote['products'].first['price'],
       shipping_price: quote['shipmentMethods'].first['price'],
       min_delivery_days: quote['shipmentMethods'].first['minDeliveryDays'],
@@ -31,7 +35,7 @@ class OrderEstimate < ApplicationRecord
 
   private
 
-  def self.calculate_price(gelato_price)
-    (gelato_price + Price.margin)
+  def self.calculate_price(gelato_price, shipping_price)
+    (gelato_price + Prices.vat(gelato_price) + shipping_price + Prices.vat(shipping_price) + Prices.margin_incl_vat )
   end
 end
