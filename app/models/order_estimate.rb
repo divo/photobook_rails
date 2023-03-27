@@ -6,11 +6,19 @@ class OrderEstimate < ApplicationRecord
   after_commit -> { broadcast_replace_to estimateable, partial: "order_estimates/order_estimate", locals: { order_estimate: self }, target: "estimate" }
 
   def total
-    "#{price.round(2)}"
+    "#{price_incl_vat.round(2)}"
   end
 
   def total_vat
     Prices.vat(price).round(2)
+  end
+
+  def unit_price
+    gelato_price + Prices.margin
+  end
+
+  def price_incl_vat
+    price + Prices.vat(price)
   end
 
   def currency_symbol
@@ -36,6 +44,6 @@ class OrderEstimate < ApplicationRecord
   private
 
   def self.calculate_price(gelato_price, shipping_price)
-    (gelato_price + Prices.vat(gelato_price) + shipping_price + Prices.vat(shipping_price) + Prices.margin_incl_vat )
+    gelato_price + shipping_price + Prices.margin
   end
 end

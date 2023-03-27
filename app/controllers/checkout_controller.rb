@@ -60,7 +60,7 @@ class CheckoutController < ApplicationController
         line_items: [{
           price_data: {
             product_data: { name: "Album: #{photo_album.name}" },
-            unit_amount: unit_amount_to_cents(order_estimate.price),
+            unit_amount: unit_amount_to_cents(order_estimate.unit_price),
             currency: order_estimate.currency.downcase,
             tax_behavior: 'exclusive'
           },
