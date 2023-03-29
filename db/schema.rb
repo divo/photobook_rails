@@ -94,6 +94,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_193417) do
     t.decimal "total_price"
     t.decimal "total_price_incl_vat"
     t.string "currency"
+    t.string "tracking_url"
     t.index ["photo_album_id"], name: "index_orders_on_photo_album_id"
   end
 

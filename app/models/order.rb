@@ -16,6 +16,11 @@ class Order < ApplicationRecord
     order_created: 5,
     order_creation_failed: 6,
     draft_canceled: 7,
+    printing: 8,
+    printing_failed: 9,
+    printing_cancelled: 10,
+    printed: 11,
+    shipped: 12
   }
 
   aasm column: :state, enum: true do
@@ -27,6 +32,12 @@ class Order < ApplicationRecord
     state :render_failed
     state :order_created
     state :order_creation_failed
+    state :draft_canceled
+    state :printing
+    state :printing_failed
+    state :printing_cancelled
+    state :printed
+    state :shipped
 
     event :cancel_draft do
       transitions from: :draft, to: :draft_canceled
@@ -74,6 +85,58 @@ class Order < ApplicationRecord
       after do
         Rails.logger.error "Render failed for order #{id}"
       end
+    end
+
+    event :awaiting_print do
+      transitions from: :order_created, to: :printing
+      after do
+        Rails.logger.info "Order #{id} is awaiting print"
+      end
+    end
+
+    event :printing_failed do
+      transitions from: :printing, to: :printing_failed
+      transitions from: :order_created, to: :printing_failed
+      after do
+        Rails.logger.error "Printing failed for order #{id}"
+      end
+    end
+
+    event :printing_cancelled do
+      transitions from: :printing, to: :printing_cancelled
+      transitions from: :order_created, to: :printing_cancelled
+      after do
+        Rails.logger.error "Printing cancelled for order #{id}"
+      end
+    end
+
+    event :printed do
+      transitions from: :printing, to: :printed
+      after do
+        Rails.logger.info "Order #{id} has been printed"
+      end
+    end
+
+    event :shipped do
+      transitions from: :printed, to: :shipped
+      after do
+        Rails.logger.info "Order #{id} has been shipped"
+      end
+    end
+  end
+
+  def update_gelato_state(status)
+    case status
+    when 'passed'
+      self.awaiting_print!
+    when 'failed'
+      self.printing_failed!
+    when 'canceled'
+      self.printing_cancelled!
+    when 'printed'
+      self.printed!
+    when 'shipped'
+      self.shipped!
     end
   end
 

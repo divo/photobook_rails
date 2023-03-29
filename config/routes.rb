@@ -27,4 +27,6 @@ Rails.application.routes.draw do
   get 'checkout/cancel', to: 'checkout#cancel', as: 'checkout_cancel'
 
   resources :stripe_webhooks, only: [:create]
+
+  resources :gelato_webhooks, only: [:create]
 end

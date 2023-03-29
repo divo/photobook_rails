@@ -13,5 +13,6 @@ class AddGelatoDetailsToOrder < ActiveRecord::Migration[7.0]
     add_column :orders, :total_price, :decimal
     add_column :orders, :total_price_incl_vat, :decimal
     add_column :orders, :currency, :string
+    add_column :orders, :tracking_url, :string
   end
 end

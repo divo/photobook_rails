@@ -12,6 +12,7 @@
       <th scope="col">Order Date</th>
       <th scope="col">Destination</th>
       <th scope="col">Status</th>
+      <th scope="col">Tracking</th>
       <th scope="col">Total</th>
     </tr>
     </thead>
@@ -22,6 +23,13 @@
         <td class="order_date"><%= order.created_at %></tdj>
         <td class="address"><%= order.address&.post_code  %></dilv>
         <td class="order_status"><%= order.state %></td>
+        <td class="tracking">
+          <% if order.state == :shipped %>
+            <%= link_to "Link", order.tracking_url %>
+          <% else %>
+            Not shipped
+          <% end %>
+        </td>
         <td class="price"><%= "#{order.currency_symbol}#{order.amount_paid}" %></div>
       </tr>
     <% end %>
