@@ -96,7 +96,7 @@ class Order < ApplicationRecord
       end
     end
 
-    event :printing_failed do
+    event :fail_printing do
       transitions from: :printing, to: :printing_failed
       transitions from: :order_created, to: :printing_failed
       after do
@@ -104,7 +104,7 @@ class Order < ApplicationRecord
       end
     end
 
-    event :printing_cancelled do
+    event :cancel_printing do
       transitions from: :printing, to: :printing_cancelled
       transitions from: :order_created, to: :printing_cancelled
       after do
@@ -132,9 +132,9 @@ class Order < ApplicationRecord
     when 'passed'
       self.awaiting_print!
     when 'failed'
-      self.printing_failed!
+      self.fail_printing!
     when 'canceled'
-      self.printing_cancelled!
+      self.cancel_printing!
     when 'printed'
       self.print!
     when 'shipped'
