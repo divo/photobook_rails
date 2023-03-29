@@ -3,7 +3,7 @@
 </div>
 
 <% if @orders.empty? %>
-  <h5 class="text-muted" align="center">No orders yet<h5>
+  <h5 class="text-muted" align="center">No orders yet</h5>
 <% else %>
   <table class="table table-hover">
     <thead>
@@ -20,8 +20,8 @@
     <% @orders.each do |order| %>
       <tr class="table-default">
         <td class="order_id"><%= order.id %></td>
-        <td class="order_date"><%= order.created_at %></tdj>
-        <td class="address"><%= order.address&.post_code  %></dilv>
+        <td class="order_date"><%= order.created_at %></td>
+        <td class="address"><%= order.address&.post_code  %></td>
         <td class="order_status"><%= order.state.humanize %></td>
         <td class="tracking">
           <% if order.state == :shipped %>
@@ -30,7 +30,7 @@
             Not shipped
           <% end %>
         </td>
-        <td class="price"><%= "#{order.currency_symbol}#{order.amount_paid}" %></div>
+        <td class="price"><%= "#{order.currency_symbol}#{order.amount_paid}" %></td>
       </tr>
     <% end %>
     </tbody>
