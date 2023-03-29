@@ -27,6 +27,7 @@ class GelatoWebhooksController < ApplicationController
     if payload['fulfillmentStatus'] == "shipped"
       item = payload['items'].first
       order.tracking_url = item['fulfillments'].first['trackingUrl']
+      order.save
     end
   end
 end
