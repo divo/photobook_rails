@@ -2,25 +2,29 @@
 
 </div>
 
-<table class="table table-hover">
-  <thead>
-  <tr>
-    <th scope="col">ID</th>
-    <th scope="col">Order Date</th>
-    <th scope="col">Destination</th>
-    <th scope="col">Status</th>
-    <th scope="col">Total</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @orders.each do |order| %>
-    <tr class="table-default">
-      <td class="order_id"><%= order.id %></td>
-      <td class="order_date"><%= order.created_at %></tdj>
-      <td class="address"><%= order.address&.post_code  %></dilv>
-      <td class="order_status"><%= order.state %></td>
-      <td class="price"><% order.total_price %></dilv>
+<% if @orders.empty? %>
+  <h5 class="text-muted" align="center">No orders yet<h5>
+<% else %>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Order Date</th>
+      <th scope="col">Destination</th>
+      <th scope="col">Status</th>
+      <th scope="col">Total</th>
     </tr>
-  <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+    <% @orders.each do |order| %>
+      <tr class="table-default">
+        <td class="order_id"><%= order.id %></td>
+        <td class="order_date"><%= order.created_at %></tdj>
+        <td class="address"><%= order.address&.post_code  %></dilv>
+        <td class="order_status"><%= order.state %></td>
+        <td class="price"><%= order.total_price_incl_vat.to_f.round(2) %></dilv>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
