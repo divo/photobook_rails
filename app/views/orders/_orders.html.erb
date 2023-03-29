@@ -24,7 +24,7 @@
         <td class="address"><%= order.address&.post_code  %></td>
         <td class="order_status"><%= order.state.humanize %></td>
         <td class="tracking">
-          <% if order.state == :shipped %>
+          <% if order.state == 'shipped' %>
             <%= link_to "Link", order.tracking_url %>
           <% else %>
             Not shipped
