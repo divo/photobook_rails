@@ -77,6 +77,18 @@ class Order < ApplicationRecord
     end
   end
 
+  # Need a little bit of logic to determine if the final price differes from the estimated price, due to order lifecycle
+  def amount_paid
+    unless total_price_incl_vat == order_estimate.price_incl_vat
+      Rails.logger.warn "Order #{id} has a different price than the estimate"
+    end
+    order_estimate.total
+  end
+
+  def currency_symbol
+    Money.new(0, currency).symbol
+  end
+
   private
 
   def save_order_details(res)
@@ -92,7 +104,8 @@ class Order < ApplicationRecord
       shipping_price_incl_vat: res['receipts'].first['shippingPriceInclVat'],
       margin: Prices.margin,
       total_price: Prices.margin + res['receipts'].first['total'], # Margin + Gelato price + shipping (no vat on any)
-      total_price_incl_vat: Prices.margin_incl_vat + res['receipts'].first['totalInclVat']
+      total_price_incl_vat: Prices.margin_incl_vat + res['receipts'].first['totalInclVat'],
+      currency: res['currency']
     )
   end
 end

@@ -22,7 +22,7 @@
         <td class="order_date"><%= order.created_at %></tdj>
         <td class="address"><%= order.address&.post_code  %></dilv>
         <td class="order_status"><%= order.state %></td>
-        <td class="price"><%= order.total_price_incl_vat.to_f.round(2) %></dilv>
+        <td class="price"><%= "#{order.currency_symbol}#{order.amount_paid}" %></div>
       </tr>
     <% end %>
     </tbody>
