@@ -1,4 +1,4 @@
-class WebhooksController < ApplicationController
+class StripeWebhooksController < ApplicationController
   include ActiveStorage::SetCurrent
   skip_before_action :verify_authenticity_token
 
@@ -30,7 +30,6 @@ class WebhooksController < ApplicationController
     case event.type
     when 'checkout.session.completed'
       session = event.data.object
-      # TODO: Kickoff render job, send the result to Gelato
       # a notification to the user and a notification to me
       # #<Stripe::Checkout::Session:0xffb4 id=cs_test_a1pP54PsvNqhBRBX2yCOv5lKCmrTMbT2cTQSB63h086gfsMXVTKKivKI1M> JSON: {
       #   "id": "cs_test_a1pP54PsvNqhBRBX2yCOv5lKCmrTMbT2cTQSB63h086gfsMXVTKKivKI1M",
@@ -38,6 +37,7 @@ class WebhooksController < ApplicationController
       #   "after_expiration": null,
       #   "allow_promotion_codes": null,
       #   "amount_subtotal": 1800,
+      #   # TODO: Store the amount the pay me!
       #   "amount_total": 2221,
       #   "automatic_tax": {"enabled":false,"status":null},
       #   "billing_address_collection": null,
@@ -53,12 +53,9 @@ class WebhooksController < ApplicationController
       #   "custom_text": {"shipping_address":null,"submit":null},
       #   "customer": null,
       #   "customer_creation": "if_required",
-      #    # TODO: I'll need to store the customer details for the order
       #   "customer_details": {"address":{"city":"Dublin","country":"IE","line1":"8 Caledon Court","line2":"East Wall","postal_code":"D03 DC60","state":"County Dublin"},"email":"divodivenson@gmail.com","name":"Steven Diviney","phone":null,"tax_exempt":"none","tax_ids":[]},
-      #    # TODO: If this is something they can change I'll need to store it
       #   "customer_email": "divodivenson@gmail.com",
       #   "expires_at": 1678899913,
-      #   # TODO: Do I need an invoice?
       #   "invoice": null,
       #   "invoice_creation": {"enabled":false,"invoice_data":{"account_tax_ids":null,"custom_fields":null,"description":null,"footer":null,"metadata":{},"rendering_options":null}},
       #   "livemode": false,

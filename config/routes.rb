@@ -26,5 +26,5 @@ Rails.application.routes.draw do
   get 'checkout/success', to: 'checkout#success', as: 'checkout_success'
   get 'checkout/cancel', to: 'checkout#cancel', as: 'checkout_cancel'
 
-  resources :webhooks, only: [:create]
+  resources :stripe_webhooks, only: [:create]
 end
