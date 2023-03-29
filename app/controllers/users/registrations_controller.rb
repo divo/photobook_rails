@@ -14,7 +14,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def set_orders
     @orders = current_user.photo_albums.map do |album|
-      album.orders.reject { |order| order.state == 'draft' }
+      album.orders.reject { |order| order.state == 'draft' || order.state == 'draft_canceled' }
     end.flatten
   end
 end
