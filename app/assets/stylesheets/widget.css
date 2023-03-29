@@ -1,9 +1,4 @@
 *{padding:0;margin:0;}
-body{
-    font-family:Verdana, Geneva, sans-serif;
-    background-color:#CCC;
-    font-size:24px;
-}
 
 .label-container{
     position:fixed;
@@ -39,7 +34,6 @@ body{
     box-shadow: 2px 2px 3px #999;
     z-index:1000;
 }
-
 
 .my-float{
     font-size:24px;
