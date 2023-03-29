@@ -112,14 +112,14 @@ class Order < ApplicationRecord
       end
     end
 
-    event :printed do
+    event :print do
       transitions from: :printing, to: :printed
       after do
         Rails.logger.info "Order #{id} has been printed"
       end
     end
 
-    event :shipped do
+    event :ship do
       transitions from: :printed, to: :shipped
       after do
         Rails.logger.info "Order #{id} has been shipped"
@@ -136,9 +136,9 @@ class Order < ApplicationRecord
     when 'canceled'
       self.printing_cancelled!
     when 'printed'
-      self.printed!
+      self.print!
     when 'shipped'
-      self.shipped!
+      self.ship!
     end
   end
 
