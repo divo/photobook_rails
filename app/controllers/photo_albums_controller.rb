@@ -11,7 +11,7 @@ class PhotoAlbumsController < ApplicationController
   # GET /photo_albums/1 or /photo_albums/1.json
   def show
     if cancel_params[:cancel] == 'true'
-      order = @photo_album.orders.find(success_params[:order_id])
+      order = @photo_album.orders.find(cancel_params[:order_id])
       Rails.logger.info("Canceling order #{order.id}")
       order.cancel_draft!
 
