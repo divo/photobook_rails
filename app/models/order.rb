@@ -66,8 +66,10 @@ class Order < ApplicationRecord
         if res.success?
           save_order_details(res)
           self.order_created!
+          Rails.logger.info "Order #{id} created"
         else
           self.order_creation_failed!
+          Rails.logger.error "Order #{id} creation failed"
         end
       end
     end

@@ -10,6 +10,7 @@ class PhotoAlbumsController < ApplicationController
 
   # GET /photo_albums/1 or /photo_albums/1.json
   def show
+    # TODO: Update the order estimate if it's over a day old
     if cancel_params[:cancel] == 'true'
       order = @photo_album.orders.find(cancel_params[:order_id])
       Rails.logger.info("Canceling order #{order.id}")

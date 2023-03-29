@@ -3,7 +3,7 @@ class StripeWebhooksController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
-    Rails.logger.info("Webhook received")
+    Rails.logger.info("Stripe webhook received")
     payload = request.body.read
     sig_header = request.env['HTTP_STRIPE_SIGNATURE']
     event = nil
