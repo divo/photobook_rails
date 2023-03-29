@@ -128,6 +128,6 @@ class PhotoAlbumsController < ApplicationController
   end
 
   def success_params
-    params.permit(:id, :success, :order_id)
+    params.permit(:id, :success)
   end
 end
