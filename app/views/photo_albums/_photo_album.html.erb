@@ -14,81 +14,88 @@
           <div class="card-header">Specification</div>
           <div class="card-body">
             <div class="card-text">
-            <b>200</b> x <b>200</b>mm<br/>
-            <b>250gsm</b> cover, silk finish<br/>
-            <b><%= "#{album_hash[:pages].count}" %></b> pages <br/>
-            <b>170gsm</b>, silk finish<br/>
-            <%= render 'order_estimates/order_estimate', order_estimate: photo_album.order_estimate %>
+              <b>200</b> x <b>200</b>mm<br/>
+              <b>250gsm</b> cover, silk finish<br/>
+              <b><%= "#{album_hash[:pages].count}" %></b> pages <br/>
+              <b>170gsm</b>, silk finish<br/>
+              <%= render 'order_estimates/order_estimate', order_estimate: photo_album.order_estimate %>
             </div>
           </div>
         </div>
       </div>
       <div class="row g-0 justify-content-center">
-      <div class="col-md-3 mt-4">
-        <%= text_field_tag :name, params[:email], class: "form-control mb-5 simple-field", style: "text-align: center;", autocomplete: false, value: "#{album_hash[:name]}" %>
-      </div>
-    </div>
-
-    <% album_hash['pages'].each_slice(2) do |left, right| %>
-      <div class="row g-0 justify-content-center">
-        <div class="col-md-6">
-          <%= render 'photos/photo_page', page: left, style: "margin-right: 0px !important;", pos_class: 'clip-left' %>
-        </div>
-        <div class="col-md-6">
-          <% if right %>
-            <%= render 'photos/photo_page', page: right, style: "margin-left: 0px !important;", pos_class: 'clip-right' %>
-          <% end %>
+        <div class="col-md-3 mt-4">
+          <%= text_field_tag :name, params[:email], class: "form-control mb-5 simple-field", style: "text-align: center;", autocomplete: false, value: "#{album_hash[:name]}" %>
         </div>
       </div>
 
-      <div class="row g-0 justify-content-around mt-4">
-        <div class="col-md-3">
-          <div class="row g-0 mb-3">
-            <div class="col">
-              <% if left['page_class'] == 'photo-content' %>
-                <%= render 'photo_albums/address_field', photo_album: photo_album, image: left %>
-              <% end%>
+      <% album_hash['pages'].each_slice(2) do |left, right| %>
+        <div class="row g-0">
+          <div class="col">
+            <div class="row">
+              <div class="col">
+                <%= render 'photos/photo_page', page: left, style: "margin-right: 0px !important;", pos_class: 'clip-left' %>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col col-md-6 mt-4">
+                <div class="row g-0 mb-3">
+                  <div class="col">
+                    <% if left['page_class'] == 'photo-content' %>
+                      <%= render 'photo_albums/address_field', photo_album: photo_album, image: left %>
+                    <% end%>
+                  </div>
+                </div>
+
+                <div class="row g-0 justify-content-around">
+                  <div class="col" align="center">
+                    <%= render 'photo_albums/delete_button', photo_album: photo_album, image: left %>
+                  </div>
+                  <% if left['page_class'] == 'photo-content' && photo_album.valid_cover?(left) %>
+                    <div class="col" align="center">
+                      <%= render 'photo_albums/cover_button', photo_album: photo_album, image: left %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="row g-0 justify-content-around">
-            <div class="col" align="center">
-              <%= render 'photo_albums/delete_button', photo_album: photo_album, image: left %>
-            </div>
-            <% if left['page_class'] == 'photo-content' && photo_album.valid_cover?(left) %>
-              <div class="col" align="center">
-                <%= render 'photo_albums/cover_button', photo_album: photo_album, image: left %>
+
+
+          <div class="col">
+            <% if right %>
+              <div class="row">
+                <div class="col">
+                  <%= render 'photos/photo_page', page: right, style: "margin-left: 0px !important;", pos_class: 'clip-right' %>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col col-md-6 mt-4">
+                  <div class="row g-0 mb-3">
+                    <div class="col">
+                      <% if right['page_class'] == 'photo-content' %>
+                        <%= render 'photo_albums/address_field', photo_album: photo_album, image: right %>
+                      <% end %>
+                    </div>
+                  </div>
+
+                  <div class="row g-0 justify-content-around mb-5">
+                    <div class="col" align="center">
+                      <%= render 'photo_albums/delete_button', photo_album: photo_album, image: right %>
+                    </div>
+                    <% if right['page_class'] == 'photo-content' && photo_album.valid_cover?(right) %>
+                      <div class="col" align="center">
+                        <%= render 'photo_albums/cover_button', photo_album: photo_album, image: right %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
               </div>
             <% end %>
           </div>
         </div>
-
-        <div class="col-md-3">
-          <div class="row g-0 mb-3">
-            <div class="col">
-              <% if right %>
-                <% if right['page_class'] == 'photo-content' %>
-                  <%= render 'photo_albums/address_field', photo_album: photo_album, image: right %>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
-          <div class="row g-0 justify-content-around mb-5">
-            <div class="col" align="center">
-              <% if right %>
-                <%= render 'photo_albums/delete_button', photo_album: photo_album, image: right %>
-              <% end %>
-            </div>
-            <% if right %>
-              <% if right['page_class'] == 'photo-content' && photo_album.valid_cover?(right) %>
-                <div class="col" align="center">
-                  <%= render 'photo_albums/cover_button', photo_album: photo_album, image: right %>
-                </div>
-              <% end %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
+    </p>
   </div>
-  </p>
 </div>
