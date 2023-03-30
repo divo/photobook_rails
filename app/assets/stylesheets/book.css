@@ -18,12 +18,12 @@ html, body {
   left: 10px;
 }
 .book-container { 
-  width: 600px; 
   display: block;
   -webkit-perspective: 1200px;
   -moz-perspective: 1200px;
   perspective: 1200px;
 }
+
 .book { 
   z-index: 5; 
   /* box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7); */
