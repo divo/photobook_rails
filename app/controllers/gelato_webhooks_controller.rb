@@ -4,11 +4,6 @@ class GelatoWebhooksController < ApplicationController
   def create
     Rails.logger.info("Gelato webhook received")
     payload = JSON.parse(request.body.read)
-    sig_header = request.headers['GELATO_TOKEN']
-    unless sig_header == Rails.application.credentials[:gelato_webhook_secret]
-      Rails.logger.error "⚠️  Webhook signature verification failed"
-      return head :bad_request
-    end
 
     if payload['object'] == 'orderStatus'
       update_order(payload)
