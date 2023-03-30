@@ -44,10 +44,9 @@
       </div>
     </div>
   <% else %>
-    <div id="photo_albums" class="container mt-3">
+    <div id="photo_albums" class="container">
       <% @photo_albums.each do |photo_album| %>
         <div class="row">
-          <div class="col"></div>
           <div class="col">
             <p>
             <%= link_to photo_album do %>
@@ -55,7 +54,6 @@
             <% end %>
             </p>
           </div>
-          <div class="col"></div>
         </div>
       <% end %>
     </div>

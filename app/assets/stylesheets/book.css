@@ -17,7 +17,8 @@ html, body {
   bottom: 10px;
   left: 10px;
 }
-.book-container { 
+
+.book-container {
   display: block;
   -webkit-perspective: 1200px;
   -moz-perspective: 1200px;
@@ -124,8 +125,7 @@ html, body {
 .book-spine:before { 
   display: block; 
   content: ""; 
-  width: 100%; 
-  height: 100%; 
-  background: rgba(0, 0, 0, 0.3); 
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
 }
 
