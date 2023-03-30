@@ -18,6 +18,10 @@ class PhotoAlbumsController < ApplicationController
 
       redirect_to photo_album_url(@photo_album), alert: "Order cancelled"
     elsif success_params[:success] == 'true'
+      order = @photo_album.orders.find(success_params[:order_id])
+      Rails.logger.info("Order #{order.id} checkout success")
+      order.checkout! unless order.paid?
+
       redirect_to photo_album_url(@photo_album), notice: "Order placed successfully. You can track your order from your account overview"
     end
   end
@@ -129,6 +133,6 @@ class PhotoAlbumsController < ApplicationController
   end
 
   def success_params
-    params.permit(:id, :success)
+    params.permit(:id, :success, :order_id)
   end
 end

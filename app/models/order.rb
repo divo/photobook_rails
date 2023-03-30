@@ -9,6 +9,7 @@ class Order < ApplicationRecord
 
   enum state: {
     draft: 0,
+    checkout_success: 13,
     paid: 1,
     payment_failed: 2,
     rendered: 3,
@@ -25,6 +26,7 @@ class Order < ApplicationRecord
 
   aasm column: :state, enum: true do
     state :draft, initial: true
+    state :checkout_success
     state :draft_canceled
     state :paid
     state :payment_failed
@@ -41,17 +43,32 @@ class Order < ApplicationRecord
 
     event :cancel_draft do
       transitions from: :draft, to: :draft_canceled
+      after do
+        Rails.logger.info "✅ Order #{id} canceled"
+      end
+    end
+
+    # PhotoAlbumsController will not attempt to checkout an order that is already paid
+    # Sad that logic is in the controller
+    event :checkout do
+      transitions from: :draft, to: :checkout_success
+      after do
+        Rails.logger.info "✅ Order #{id} checkout success"
+      end
     end
 
     event :pay do
       transitions from: :draft, to: :paid
+      transitions from: :checkout_success, to: :paid
       after do
+        Rails.logger.info "✅ Order #{id} paid"
         order_client = OrderClient.new(self.id, self.photo_album.user, self.photo_album.id)
         res = order_client.cover_dimensions(self.photo_album.final_page_count)
 
         if res.success? && res['spineSize']
           RenderAlbumJob.perform_later(photo_album.present { |image| image.url }, self, res['spineSize']['width'])
         else
+          Rails.logger.error "⚠️ Order #{id} render failed, unable to get spine size."
           self.render_failed!
         end
       end
@@ -62,45 +79,46 @@ class Order < ApplicationRecord
       after do
         # Create the order with gelato
         order_client = OrderClient.new(self.id, self.photo_album.user, self.photo_album.id)
-        res = order_client.place_order(self, self.photo_album.content_page_count)
-        if res.success?
+        # DO NOT CHECK THIS IN
+        #res = order_client.place_order(self, self.photo_album.content_page_count)
+        # if res.success?
+        if true
           save_order_details(res)
           self.order_created!
-          Rails.logger.info "Order #{id} created"
+          Rails.logger.info "✅ Order #{id} created"
         else
+          Rails.logger.error "⚠️ Order #{id} creation failed"
           self.order_creation_failed!
-          Rails.logger.error "Order #{id} creation failed"
         end
       end
     end
 
     event :payment_failed do
-      transitions from: :draft, to: :payment_failed
+      transitions to: :payment_failed
       after do
         # TODO: Send email to me and probably the user
-        Rails.logger.error "Payment failed for order #{id}"
+        Rails.logger.error "⚠️ Payment failed for order #{id}"
       end
     end
 
     event :render_failed do
-      transitions from: :paid, to: :render_failed
+      transitions to: :render_failed
       after do
-        Rails.logger.error "Render failed for order #{id}"
+        Rails.logger.error "⚠️ Render failed for order #{id}"
       end
     end
 
     event :awaiting_print do
       transitions from: :order_created, to: :printing
       after do
-        Rails.logger.info "Order #{id} is awaiting print"
+        Rails.logger.info "✅ Order #{id} is awaiting print"
       end
     end
 
     event :fail_printing do
-      transitions from: :printing, to: :printing_failed
-      transitions from: :order_created, to: :printing_failed
+      transitions to: :printing_failed
       after do
-        Rails.logger.error "Printing failed for order #{id}"
+        Rails.logger.error "⚠️ Printing failed for order #{id}"
       end
     end
 
@@ -108,21 +126,21 @@ class Order < ApplicationRecord
       transitions from: :printing, to: :printing_cancelled
       transitions from: :order_created, to: :printing_cancelled
       after do
-        Rails.logger.error "Printing cancelled for order #{id}"
+        Rails.logger.error "⚠️ Printing cancelled for order #{id}"
       end
     end
 
     event :print do
       transitions from: :printing, to: :printed
       after do
-        Rails.logger.info "Order #{id} has been printed"
+        Rails.logger.info "✅ Order #{id} has been printed"
       end
     end
 
     event :ship do
       transitions from: :printed, to: :shipped
       after do
-        Rails.logger.info "Order #{id} has been shipped"
+        Rails.logger.info "✅✅ Order #{id} has been shipped"
       end
     end
   end

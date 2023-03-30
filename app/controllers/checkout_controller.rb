@@ -35,7 +35,7 @@ class CheckoutController < ApplicationController
   def build_stripe_session(order_estimate, photo_album, order)
     @session = Stripe::Checkout::Session
       .create({
-        success_url: "#{DOMAIN}/photo_albums/#{photo_album.id}?success=true",
+        success_url: "#{DOMAIN}/photo_albums/#{photo_album.id}?success=true&order_id=#{order.id}",
         cancel_url: "#{DOMAIN}/photo_albums/#{photo_album.id}?cancel=true&order_id=#{order.id}",
         payment_method_types: ['card'],
         automatic_tax: { enabled: true }, # TODO: I may want to disable this depending onw how Stipe collects the tax
