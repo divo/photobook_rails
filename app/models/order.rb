@@ -79,10 +79,8 @@ class Order < ApplicationRecord
       after do
         # Create the order with gelato
         order_client = OrderClient.new(self.id, self.photo_album.user, self.photo_album.id)
-        # DO NOT CHECK THIS IN
-        #res = order_client.place_order(self, self.photo_album.content_page_count)
-        # if res.success?
-        if true
+        res = order_client.place_order(self, self.photo_album.content_page_count)
+        if res.success?
           save_order_details(res)
           self.order_created!
           Rails.logger.info "✅ Order #{id} created"
