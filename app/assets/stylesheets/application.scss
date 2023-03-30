@@ -47,6 +47,17 @@
     height: auto;
     aspect-ratio: 1;
   }
+
+  .specification-mobile {
+    margin-top: 1rem;
+    max-width: 20rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.card-width {
+  max-width: 20rem;
 }
 
 div .photo-book {
