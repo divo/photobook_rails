@@ -31,14 +31,14 @@
 
       <% album_hash['pages'].each_slice(2) do |left, right| %>
         <div class="row g-0">
-          <div class="col">
+          <div class="col-md-6">
             <div class="row">
               <div class="col">
                 <%= render 'photos/photo_page', page: left, style: "margin-right: 0px !important;", pos_class: 'clip-left' %>
               </div>
             </div>
             <div class="row justify-content-center">
-              <div class="col col-md-6 mt-4">
+              <div class="col col-md-6 mt-4 margin-hack-left">
                 <div class="row g-0 mb-3">
                   <div class="col">
                     <% if left['page_class'] == 'photo-content' %>
@@ -62,7 +62,7 @@
           </div>
 
 
-          <div class="col">
+          <div class="col-md-6">
             <% if right %>
               <div class="row">
                 <div class="col">
@@ -70,7 +70,7 @@
                 </div>
               </div>
               <div class="row justify-content-center">
-                <div class="col col-md-6 mt-4">
+                <div class="col col-md-6 mt-4 margin-hack-right">
                   <div class="row g-0 mb-3">
                     <div class="col">
                       <% if right['page_class'] == 'photo-content' %>

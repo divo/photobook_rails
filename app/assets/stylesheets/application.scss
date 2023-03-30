@@ -15,15 +15,23 @@
  */
 @import "bootstrap";
 
-@media (min-width: 801px) {
+@media (min-width: 1401px) {
   div .page {
     margin: auto;
     width: 600px;
     height: 600px;
   }
+
+  .margin-hack-left {
+    margin-left: 45px;
+  }
+
+  .margin-hack-right {
+    margin-right: 45px;
+  }
 }
 
-@media (max-width: 800px){
+@media (max-width: 1400px){
   div .page {
     margin: auto;
     width: 100%;
