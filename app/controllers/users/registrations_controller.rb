@@ -8,6 +8,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def send_signup_mail
     RegistrationMailer.user_signup(current_user).deliver_later
+    AdminMailer.user_signup(current_user).deliver_later
   end
 
   protected
