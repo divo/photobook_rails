@@ -4,6 +4,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
   before_action :set_orders, only: [:show, :edit]
+  after_action :send_signup_mail, only: [:create]
+
+  def send_signup_mail
+    RegistrationMailer.user_signup(current_user).deliver_later
+  end
 
   protected
 
