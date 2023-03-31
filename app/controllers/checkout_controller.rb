@@ -44,7 +44,7 @@ class CheckoutController < ApplicationController
           {
             shipping_rate_data: {
               type: 'fixed_amount',
-              tax_behavior: 'inclusive',
+              tax_behavior: 'exclusive',
               fixed_amount: {
                 amount: unit_amount_to_cents(order_estimate.shipping_price),
                 currency: order_estimate.currency.downcase
