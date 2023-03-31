@@ -140,6 +140,7 @@ class Order < ApplicationRecord
     event :ship do
       transitions from: :printed, to: :shipped
       after do
+        OrderMailer.order_shipped(self).deliver_later
         Rails.logger.info "✅✅ Order #{id} has been shipped"
       end
     end
