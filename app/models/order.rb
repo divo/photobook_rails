@@ -66,6 +66,7 @@ class Order < ApplicationRecord
         res = order_client.cover_dimensions(self.photo_album.final_page_count)
 
         OrderMailer.order_confirmation(self).deliver_later
+        AdminMailer.order_placed(self).deliver_later
 
         if res.success? && res['spineSize']
           RenderAlbumJob.perform_later(photo_album.present { |image| image.url }, self, res['spineSize']['width'])
