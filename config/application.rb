@@ -23,5 +23,7 @@ module PhotobookRails
     config.active_storage.variant_processor = :vips
 
     config.active_job.queue_adapter = :sidekiq
+
+    ISO3166.configuration.enable_currency_extension!
   end
 end

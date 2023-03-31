@@ -33,7 +33,7 @@
         </tr>
         <tr>
           <td style="border: 1px solid #ccc; padding: 10px;">Order Total:</td>
-          <td style="border: 1px solid #ccc; padding: 10px;"><%= @order.currency_symbol %><%= @order.total_price_incl_vat %></td>
+          <td style="border: 1px solid #ccc; padding: 10px;"><%= @order.currency_symbol %><%= @order.order_estimate.total %></td>
         </tr>
       </table>
       <h2 style="font-size: 22px; margin-top: 30px; margin-bottom: 10px;">Shipping Information</h2>

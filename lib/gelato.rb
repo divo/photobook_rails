@@ -8,12 +8,12 @@ module Gelato
     { 'X-API-KEY' => Rails.application.credentials[:gelato_api_key] }
   end
 
-  def order_params(order_ref, order, user, item_ref, page_count)
+  def order_params(order_ref, order, user, item_ref, page_count, currency)
     {
       orderType: 'order',
       orderReferenceId: order_ref,
       customerReferenceId: user.id,
-      currency: 'EUR', # TODO: Currency needs to be dynamic,
+      currency: currency,
       shippingMethodUid: order.order_estimate.shipping_method_uuid,
       items: [
         {
@@ -34,7 +34,7 @@ module Gelato
     {
       orderReferenceId: order_ref,
       customerReferenceId: user.id,
-      currency: 'EUR', # TODO: Currency needs to be dynamic
+      currency: user.currency_iso,
       allowMultipleQuotes: false,
       recipient: {
         "country": user.country_code

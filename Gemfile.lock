@@ -354,6 +354,7 @@ DEPENDENCIES
   bootstrap (~> 5.0)
   byebug
   capybara
+  countries (~> 5.3)
   country_select (~> 8.0)
   debug
   devise

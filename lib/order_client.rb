@@ -29,10 +29,10 @@ class OrderClient
         .tap { |response| raise "Error: #{response}" unless response.success? }
   end
 
-  def place_order(order, page_count)
+  def place_order(order, page_count, currency)
     self.class
         .post(ORDER_URL,
-              body: order_params(@order_ref, order, @user, @item_ref, page_count).to_json,
+              body: order_params(@order_ref, order, @user, @item_ref, page_count, currency).to_json,
               headers: {
                 'Content-Type' => 'application/json'
               }.merge(api_key_header))

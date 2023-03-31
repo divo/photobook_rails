@@ -82,7 +82,7 @@ class Order < ApplicationRecord
       after do
         # Create the order with gelato
         order_client = OrderClient.new(self.id, self.photo_album.user, self.photo_album.id)
-        res = order_client.place_order(self, self.photo_album.content_page_count)
+        res = order_client.place_order(self, self.photo_album.content_page_count, self.order_estimate.currency)
         if res.success?
           save_order_details(res)
           self.order_created!
