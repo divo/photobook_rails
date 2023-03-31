@@ -25,5 +25,7 @@ module PhotobookRails
     config.active_job.queue_adapter = :sidekiq
 
     ISO3166.configuration.enable_currency_extension!
+
+    config.action_mailer.asset_host = "https://mementos.ink"
   end
 end
