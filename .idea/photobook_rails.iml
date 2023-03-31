@@ -167,6 +167,8 @@
   <component name="RailsGeneratorsCache">
     <option name="generators">
       <list>
+        <option value="aasm" />
+        <option value="active_record:aasm" />
         <option value="active_record:application_record" />
         <option value="active_record:devise" />
         <option value="active_record:multi_db" />
@@ -191,7 +193,9 @@
         <option value="migration" />
         <option value="model" />
         <option value="money_rails:initializer" />
+        <option value="mongoid:aasm" />
         <option value="mongoid:devise" />
+        <option value="nobrainer:aasm" />
         <option value="resource" />
         <option value="responders:install" />
         <option value="responders_controller" />
@@ -212,6 +216,8 @@
     </option>
     <option name="myGenerators">
       <list>
+        <option value="aasm" />
+        <option value="active_record:aasm" />
         <option value="active_record:application_record" />
         <option value="active_record:devise" />
         <option value="active_record:multi_db" />
@@ -236,7 +242,9 @@
         <option value="migration" />
         <option value="model" />
         <option value="money_rails:initializer" />
+        <option value="mongoid:aasm" />
         <option value="mongoid:devise" />
+        <option value="nobrainer:aasm" />
         <option value="resource" />
         <option value="responders:install" />
         <option value="responders_controller" />
