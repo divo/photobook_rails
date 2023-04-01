@@ -26,7 +26,7 @@ class CheckoutController < ApplicationController
 
   def create_order(photo_album)
     estimate = photo_album.order_estimate.dup
-    order = Order.new(photo_album: photo_album).tap { |order| order.save }
+    order = Order.new(photo_album: photo_album, currency: estimate.currency).tap { |order| order.save }
     estimate.estimateable = order
     estimate.save!
     order
