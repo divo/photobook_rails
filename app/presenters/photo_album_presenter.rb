@@ -19,6 +19,7 @@ module PhotoAlbumPresenter
 
   def valid_cover?(image)
     return false if image['width'].nil? || image['height'].nil?
+
     image['width'] - 100 >= image['height']
   end
 

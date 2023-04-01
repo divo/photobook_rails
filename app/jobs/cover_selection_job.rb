@@ -8,10 +8,16 @@ class CoverSelectionJob < Gush::Job
   end
 
   def select_cover(photo_album)
-    image = photo_album.images.first { |i| self.valid_cover?({ 'width' => i.blob.metadata['width'], 'height' => i.blob.metadata['height'] }) } # Ugh
-    if image
-      image.blob.metadata['cover'] = true
-      image.save
-    end
+    image = photo_album.images.first { |i| photo_album.valid_cover?(quack_image(i)) }
+    return unless image
+
+    image.blob.metadata['cover'] = true
+    image.save
+  end
+
+  private
+
+  def quack_image(image)
+    { 'width' => image.blob.metadata['width'], 'height' => image.blob.metadata['height'] }
   end
 end
