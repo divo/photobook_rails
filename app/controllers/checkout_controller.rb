@@ -19,6 +19,7 @@ class CheckoutController < ApplicationController
 
     order = create_order(photo_album)
     build_stripe_session(order_estimate, photo_album, order)
+    Rails.logger.info "✅ Order #{order.id} created, redirecting to Stripe checkout session"
     redirect_to @session.url, status: 303, allow_other_host: true
   end
 

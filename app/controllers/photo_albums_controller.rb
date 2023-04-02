@@ -13,16 +13,16 @@ class PhotoAlbumsController < ApplicationController
     # TODO: Update the order estimate if it's over a day old
     if cancel_params[:cancel] == 'true'
       order = @photo_album.orders.find(cancel_params[:order_id])
-      Rails.logger.info("Canceling order #{order.id}")
+      Rails.logger.info("ℹ️  Canceling order #{order.id}")
       order.cancel_draft!
 
-      redirect_to photo_album_url(@photo_album), alert: "Order cancelled"
+      redirect_to photo_album_url(@photo_album), alert: 'Order cancelled'
     elsif success_params[:success] == 'true'
       order = @photo_album.orders.find(success_params[:order_id])
-      Rails.logger.info("Order #{order.id} checkout success")
+      Rails.logger.info("✅ Order #{order.id} checkout success")
       order.checkout! unless order.paid?
 
-      redirect_to photo_album_url(@photo_album), notice: "Order placed successfully. You can track your order from your account overview"
+      redirect_to photo_album_url(@photo_album), notice: 'Order placed successfully. You can track your order from your account overview'
     end
   end
 

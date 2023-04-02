@@ -3,7 +3,7 @@ class StripeWebhooksController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
-    Rails.logger.info("Stripe webhook received")
+    Rails.logger.info("✅ Stripe webhook received")
     payload = request.body.read
     sig_header = request.env['HTTP_STRIPE_SIGNATURE']
     event = nil
@@ -21,6 +21,7 @@ class StripeWebhooksController < ApplicationController
         payload, sig_header, secret
       )
     rescue JSON::ParserError => e
+      Rails.logger.error "⚠️  Webhook failed, bad message: #{e.message}"
       return head :bad_request
     rescue Stripe::SignatureVerificationError => e
       Rails.logger.error "⚠️  Webhook signature verification failed: #{e.message}"
@@ -89,15 +90,15 @@ class StripeWebhooksController < ApplicationController
       Rails.logger.info("Webhook #{session.id} metadata: #{session.metadata}")
       order = Order.find(session.metadata.order_id)
 
-      Rails.logger.error("Order not found! #{session}") unless order
+      Rails.logger.error("⚠️  Order not found! #{session}") unless order
 
       if session.payment_status == 'paid'
-        Rails.logger.info("Webhook #{session.id} Order paid!")
+        Rails.logger.info("✅ Webhook #{session.id} Order paid!")
         address = Address.build_from_stripe(session.shipping_details, session.customer_email, order)
         address.save!
         order.pay!
       else
-        Rails.logger.warn("Webhook #{session.id} Order payment failed")
+        Rails.logger.warn("⚠️  Webhook session: #{session.id} Order: #{order.id} payment failed")
         order.payment_failed!
       end
     end

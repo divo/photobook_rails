@@ -5,27 +5,26 @@ class RenderAlbumJob < ApplicationJob
     # Do something later
     render_client = RenderClient.new(photo_album, spine_width)
     # Wait for rendering to finish
-    logger.info "Begin rendering album #{photo_album['id']}"
+    logger.info "✅ Begin rendering album #{photo_album['id']}"
 
     begin
       response = render_client.render_album(self.job_id)
     rescue => e
-      logger.error "Error rendering album #{photo_album['id']}: #{e}"
+      logger.error "⚠️ Error rendering album #{photo_album['id']}: #{e}"
       order.render_failed!
       return
     end
 
     if response.success?
-      logger.info "Finished rendering album #{photo_album['id']}"
+      logger.info "✅ Finished rendering album #{photo_album['id']}"
       # Store the rendered album in the order
       save_rendered_album(order, response)
 
       order.render!
     else
-      raise "Error rendering album #{photo_album['id']} with response #{response}"
       order.render_failed!
+      raise "⚠️ Error rendering album #{photo_album['id']} with response #{response}"
     end
-    # then download the created album
   end
 
   private
