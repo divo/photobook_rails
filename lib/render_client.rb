@@ -14,13 +14,9 @@ class RenderClient
   end
 
   def render_album(job_id)
-    # TODO: Create a record of the render request, an 'Order'
     options = @photo_album.merge(job_id: job_id)
     options[:size] = [206, 206] # Passing the bleed here, doesn't scale correctly in the render app
     options[:spine_width] = @spine_width
-    # TODO: Stop abusing long timeout. If I need to serve any level of
-    # concurrency I need to use a queueing system, with something to
-    # track and check job progress
     response = self.class.post("/api/render_album",
                     body: options.to_json,
                     headers: { 'Content-Type' => 'application/json' },

@@ -1,6 +1,6 @@
 class OrderEstimate < ApplicationRecord
   belongs_to :estimateable, polymorphic: true
-  validates :gelato_price, numericality: { greater_than: 0 } # TODO: Enable and handle this
+  validates :gelato_price, numericality: { greater_than: 0 }
 
   # Broadcast to the photo_album channel. There is no order channel
   after_commit -> { broadcast_replace_to estimateable, partial: "order_estimates/order_estimate", locals: { order_estimate: self }, target: "estimate" }

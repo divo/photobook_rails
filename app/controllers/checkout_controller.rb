@@ -39,7 +39,7 @@ class CheckoutController < ApplicationController
         success_url: "#{DOMAIN}/photo_albums/#{photo_album.id}?success=true&order_id=#{order.id}",
         cancel_url: "#{DOMAIN}/photo_albums/#{photo_album.id}?cancel=true&order_id=#{order.id}",
         payment_method_types: ['card'],
-        automatic_tax: { enabled: true }, # TODO: I may want to disable this depending onw how Stipe collects the tax
+        automatic_tax: { enabled: true },
         shipping_address_collection: { allowed_countries: [current_user.country_code] }, # TODO: Allow user to change this, they are gifts after all
         shipping_options: [
           {

@@ -6,7 +6,6 @@ class SectionImgJob < Gush::Job
     # Download section images and add them to the album in the correct positions
     photo_album.images.each do |image|
       unless image.blob.metadata['geocode']
-        # TODO: Cut these out and put at the start with some sort of filler
         Rails.logger.error "#{self.class}: #{image.blob.metadata}"
       end
     end

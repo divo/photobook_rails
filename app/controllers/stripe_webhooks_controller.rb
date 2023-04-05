@@ -8,7 +8,6 @@ class StripeWebhooksController < ApplicationController
     sig_header = request.env['HTTP_STRIPE_SIGNATURE']
     event = nil
 
-    # TODO: Change the prod secret to live secret before going live
     secret =
       if Rails.env.development?
         Rails.application.credentials[:stripe][:webhook_secret_dev]

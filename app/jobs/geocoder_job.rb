@@ -20,7 +20,6 @@ class GeocoderJob < Gush::Job
     end
 
     # This is using nominatim (Open streetmap) by default.
-    # TODO: Switch to a provider that allows more than 1 req/s
     lat = image.blob.metadata.fetch("latitude")
     lng = image.blob.metadata.fetch("longitude")
     geocode = Geocoder.search([lat, lng])

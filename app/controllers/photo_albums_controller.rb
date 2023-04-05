@@ -102,8 +102,6 @@ class PhotoAlbumsController < ApplicationController
     end
   end
 
-  # TODO: Move to dedicated controller? My hacky datamodel makes this
-  # requirement ambiguous. But I'll continue to ignore it
   def set_page_caption
     photo_album = current_user.photo_albums.find(params[:photo_album_id])
     image = photo_album.images.find(params[:image_id])
