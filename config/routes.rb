@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   }
 
   root 'static_pages#home'
+  get 'getting_started', to: 'static_pages#getting_started', as: 'getting_started'
+
   resources :photos
   resources :photo_albums do
     put 'pages/:image_id/set_caption', to: 'photo_albums#set_page_caption', as: 'set_caption'
