@@ -32,6 +32,20 @@
       </div>
     </nav>
     <!-- Mashead header-->
-    <%= render "static_pages/started_section", text_left: false, heading: "Selecting Your Photos" , text: "Selecting photos is easy, whether you're using an iOS device or a computer. From the Photos app on your iOS device, you can quickly favorite or add photos to a specific album." , media_url: "https://divo-photobook-pdf-public.s3.eu-west-1.amazonaws.com/mementos_step_1.mp4"%>
+    <div class="masthead">
+      <div class="container px-5">
+        <div class="row gx-5 align-items-center">
+          <div class="my-5 mb-lg-0 text-center text-lg-start">
+            <h1 class="display-4 lh-4 mb-3 newsreader">Create Beautiful Photo Albums with Ease</h1>
+            <p class="lead fw-normal text-muted mb-5 newsreader">Memetos makes it easy to create stunning photo albums without the hassle of organizing, labeling, or designing layouts. Simply select your favorite photos, and we'll take care of the rest.</p>
+            <p class="lead fw-normal text-muted mb-5 newsreader">To get started, simply build an album on your device and export it to Memetos. With just a few clicks, your photo album will be ready to purchase.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%= render "static_pages/started_section", text_left: false, heading: "Selecting Your Photos" , text: "Selecting photos is easy, whether you're using an mobile device or a computer. From the Photos app on your iOS device, you can quickly favorite or add photos to a specific album." , media_url: "https://divo-photobook-pdf-public.s3.eu-west-1.amazonaws.com/mementos_step_1.gif"%>
+    <%= render "static_pages/started_section", text_left: true, heading: "Ensuring Accurate Location Information" , text: "Memetos uses location data to organize and label your photos. If your smartphone has GPS, location information will be automatically added to your photos. If not, simply tap the ⓘ  icon on your iOS device and add a location manually.", media_url: "https://divo-photobook-pdf-public.s3.eu-west-1.amazonaws.com/mementos_location_step.gif"%>
+    <%= render "static_pages/started_section", text_left: false, heading: "Uploading Your Photos", text: "Create a new album in Memetos and upload your selected photos. Drag select multiple photos at once to speed up the process. Once your photos are uploaded, tap 'Create Photo Album' to let Memetos generate your album.", media_url: "https://divo-photobook-pdf-public.s3.eu-west-1.amazonaws.com/mementos_upload.gif" %>
   </body>
 </html>
