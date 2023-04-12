@@ -1,0 +1,21 @@
+<div class="masthead">
+  <div class="container px-5">
+    <div class="row gx-5 align-items-center">
+      <% if text_left %>
+      <div class="col-lg-6">
+        <%= render "static_pages/instruction", heading: heading, text: text %>
+      </div>
+      <div class="col-lg-6">
+        <%= render "static_pages/video", media_url: media_url %>
+      </div>
+    <% else %>
+      <div class="col-lg-6">
+        <%= render "static_pages/video", media_url: media_url %>
+      </div>
+      <div class="col-lg-6">
+        <%= render "static_pages/instruction", heading: heading, text: text %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
