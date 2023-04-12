@@ -5,7 +5,7 @@
     <%= form.text_field :name, class: "form-control" %>
   </div>
 
-  <div class="mb-6 form-group">
+  <div class="mb-2 form-group">
     <%= form.label :images, class: "col-form-label" %>
     <div class="dropzone dropzone-default dz-clickable form-control" data-controller="dropzone">
       <%= form.file_field :images, multiple: true, direct_upload: true, data: { dropzone_target: 'input' } %>
