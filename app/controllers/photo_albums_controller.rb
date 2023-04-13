@@ -2,6 +2,7 @@ class PhotoAlbumsController < ApplicationController
   include ActiveStorage::SetCurrent
   before_action :set_photo_album, only: %i[ show edit update destroy print set_cover delete_page]
   before_action :authenticate_user!
+  before_action :validate_destroy, only: %i[destroy]
 
   # GET /photo_albums or /photo_albums.json
   def index
@@ -115,6 +116,12 @@ class PhotoAlbumsController < ApplicationController
   end
 
   private
+
+  def validate_destroy
+    return if @photo_album.orders.reject { |o| o.state == 'draft' }.empty?
+
+    redirect_to photo_album_url(@photo_album), alert: 'Cannot delete a photo album with an open order. Contact support if you need to delete this album.'
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_photo_album
