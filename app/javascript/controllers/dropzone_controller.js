@@ -61,6 +61,8 @@ export default class extends Controller {
   updateProgress() {
     findElement("#progress-bar").style.width = `${(this.completedFiles / this.totalFiles) * 100}%`;
 
+    findElement("#uploaded_count").innerHTML = this.completedFiles;
+
     if (this.completedFiles === this.totalFiles) {
       setTimeout(function(){
         findElement("#progress-container").style.opacity = 0;
