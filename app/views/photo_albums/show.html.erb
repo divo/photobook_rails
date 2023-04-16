@@ -20,7 +20,9 @@
 <%= turbo_stream_from @photo_album %>
 
 <% if @photo_album.building? %>
-  <div id="photo_album_content" data-controller="album" class="masthead-small"></div>
+  <div id="photo_album_content" data-controller="album" class="masthead-small">
+    <%= render 'photo_album', photo_album: @photo_album %>
+  </div>
   <div id='album_building', class="fader overlay", style="display: block">
     <%= render 'album_building', data_controller: 'album' %>
   </div>
