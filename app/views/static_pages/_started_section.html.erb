@@ -14,16 +14,15 @@
 
       <% else %>
 
-          <% if defined?(media_url) %>
-            <div class="col-lg-6">
-              <%= render "static_pages/video", media_url: media_url %>
-            </div>
-          <% end %>
-
+        <% if defined?(media_url) %>
           <div class="col-lg-6">
-            <%= render "static_pages/instruction", heading: heading, text: text %>
+            <%= render "static_pages/video", media_url: media_url %>
           </div>
+        <% end %>
 
+        <div class="col-lg-6">
+          <%= render "static_pages/instruction", heading: heading, text: text %>
+        </div>
       <% end %>
     </div>
   </div>
