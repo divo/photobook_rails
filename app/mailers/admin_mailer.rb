@@ -18,4 +18,14 @@ class AdminMailer < ApplicationMailer
          body: "An order has been placed: #{order.id}",
          content_type: "text/html")
   end
+
+  def order_failed(order)
+    @order = order
+    mail(to: Rails.application.credentials.dig(:admin, :email),
+         subject: '⚠️ ⚠️  Order Failed ⚠️ ⚠️',
+         from: Rails.application.credentials.dig(:smtp, :username),
+         reply_to: Rails.application.credentials.dig(:smtp, :username),
+         body: "An order has been failed: #{order.id}",
+         content_type: "text/html")
+  end
 end

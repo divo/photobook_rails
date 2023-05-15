@@ -72,6 +72,7 @@ class Order < ApplicationRecord
           RenderAlbumJob.perform_later(photo_album.present { |image| image.url }, self, res['spineSize']['width'])
         else
           Rails.logger.error "⚠️  Order #{id} render failed, unable to get spine size."
+          AdminMailer.order_failed(self).deliver_later
           self.render_failed!
         end
       end
@@ -89,6 +90,7 @@ class Order < ApplicationRecord
           Rails.logger.info "✅ Order #{id} created"
         else
           Rails.logger.error "⚠️  Order #{id} creation failed"
+          AdminMailer.order_failed(self).deliver_later
           self.order_creation_failed!
         end
       end
@@ -97,8 +99,8 @@ class Order < ApplicationRecord
     event :payment_failed do
       transitions to: :payment_failed
       after do
-        # TODO: Send email to me and probably the user
         Rails.logger.error "⚠️  Payment failed for order #{id}"
+        AdminMailer.order_failed(self).deliver_later
       end
     end
 
@@ -106,6 +108,7 @@ class Order < ApplicationRecord
       transitions to: :render_failed
       after do
         Rails.logger.error "⚠️  Render failed for order #{id}"
+        AdminMailer.order_failed(self).deliver_later
       end
     end
 
@@ -120,6 +123,7 @@ class Order < ApplicationRecord
       transitions to: :printing_failed
       after do
         Rails.logger.error "⚠️  Printing failed for order #{id}"
+        AdminMailer.order_failed(self).deliver_later
       end
     end
 
@@ -128,6 +132,7 @@ class Order < ApplicationRecord
       transitions from: :order_created, to: :printing_cancelled
       after do
         Rails.logger.error "⚠️  Printing cancelled for order #{id}"
+        AdminMailer.order_failed(self).deliver_later
       end
     end
 
