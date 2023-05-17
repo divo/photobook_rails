@@ -21,7 +21,8 @@ class Order < ApplicationRecord
     printing_failed: 9,
     printing_cancelled: 10,
     printed: 11,
-    shipped: 12
+    shipped: 12,
+    verified: 13 # Manual approval by Admin, initally
   }
 
   aasm column: :state, enum: true do
@@ -32,6 +33,7 @@ class Order < ApplicationRecord
     state :payment_failed
     state :rendered
     state :render_failed
+    state :verified
     state :order_created
     state :order_creation_failed
     state :draft_canceled
@@ -81,17 +83,26 @@ class Order < ApplicationRecord
     event :render do
       transitions from: :paid, to: :rendered
       after do
+        # Send email to admin to verify order
+        AdminMailer.order_verification(self).deliver_later
+      end
+    end
+
+    event :verify do
+      transitions from: :rendered, to: :verified
+      after do
+        Rails.logger.info "✅ Order #{id} verified"
         # Create the order with gelato
-        order_client = OrderClient.new(self.id, self.photo_album.user, self.photo_album.id)
-        res = order_client.place_order(self, self.photo_album.content_page_count, self.order_estimate.currency)
+        order_client = OrderClient.new(id, photo_album.user, photo_album.id)
+        res = order_client.place_order(self, photo_album.content_page_count, order_estimate.currency)
         if res.success?
           save_order_details(res)
-          self.order_created!
+          order_created!
           Rails.logger.info "✅ Order #{id} created"
         else
           Rails.logger.error "⚠️  Order #{id} creation failed"
           AdminMailer.order_failed(self).deliver_later
-          self.order_creation_failed!
+          order_creation_failed!
         end
       end
     end

@@ -28,4 +28,13 @@ class AdminMailer < ApplicationMailer
          body: "An order has been failed: #{order.id}",
          content_type: "text/html")
   end
+
+  def order_verification(order)
+    @order = order
+    mail(to: Rails.application.credentials.dig(:admin, :email),
+         subject: '⚠️ ⚠️  Verify Order',
+         from: Rails.application.credentials.dig(:smtp, :username),
+         reply_to: Rails.application.credentials.dig(:smtp, :username),
+         template_name: 'order_verification')
+  end
 end

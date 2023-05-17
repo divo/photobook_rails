@@ -31,4 +31,7 @@ Rails.application.routes.draw do
   resources :stripe_webhooks, only: [:create]
 
   resources :gelato_webhooks, only: [:create]
+
+  get 'orders/:order_id/verify/', to: 'orders#verify', as: 'verify_order'
+  post 'orders/:order_id/verify/', to: 'orders#verify_order', as: 'verify_order_post'
 end

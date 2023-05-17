@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
+  <div class="container px-5">
+    <a class="navbar-brand fw-bold" href="/">  Mementos</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="bi-list"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="masthead text-center">
+  <div class="container d-flex align-items-center flex-column">
+    <h1 class="masthead-heading text-uppercase mb-0">Mementos</h1>
+    <p class="masthead-subheading font-weight-light mb-0">Order Confirmation</p>
+    <p>Is this order: <%= @order.id %> ready for print?</p>
+    <%= form_tag do %>
+      <%= submit_tag "Ready for print", class: "btn btn-primary my-3" %>
+    <% end %>
+    <p style="margin-bottom: 20px;">PDF URL: <%= link_to "Album PDF URL", @order.rendered_album.url %></p>
+    <embed src=<%= @order.rendered_album.url %> width="800px" height="2100px" />
+  </div>
+</div>
