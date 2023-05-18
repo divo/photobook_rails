@@ -1,9 +1,11 @@
 <div class="masthead">
   <div class="container px-5">
     <div class="row gx-5 align-items-center">
+      <% adendum = defined?(adendum) ? adendum : nil %>
+
       <% if text_left %>
         <div class="col-lg-6">
-          <%= render "static_pages/instruction", heading: heading, text: text %>
+          <%= render "static_pages/instruction", heading: heading, text: text, adendum: adendum %>
         </div>
 
         <% if defined?(media_url) %>
@@ -21,7 +23,7 @@
         <% end %>
 
         <div class="col-lg-6">
-          <%= render "static_pages/instruction", heading: heading, text: text %>
+          <%= render "static_pages/instruction", heading: heading, text: text, adendum: adendum%>
         </div>
       <% end %>
     </div>

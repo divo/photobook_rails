@@ -45,8 +45,19 @@
     </div>
 
     <%= render "static_pages/started_section", text_left: false, heading: "Selecting Your Photos" , text: "Selecting photos is easy, whether you're using an mobile device or a computer. From the Photos app on your iOS device, you can quickly favorite or add photos to a specific album." , media_url: "https://divo-photobook-pdf-public.s3.eu-west-1.amazonaws.com/mementos_step_1.gif"%>
-    <%= render "static_pages/started_section", text_left: true, heading: "Ensuring Accurate Location Information" , text: "Mementos uses location data to organize and label your photos. If your smartphone has GPS, location information will be automatically added to your photos. If not, simply tap the ⓘ  icon on your iOS device and add a location manually. Photos shared over messaging may lack location data. We only use location data to generate captions.", media_url: "https://divo-photobook-pdf-public.s3.eu-west-1.amazonaws.com/mementos_location_step.gif"%>
+    <%= render "static_pages/started_section", text_left: true, heading: "Ensuring Accurate Location Data" , text: "Mementos uses location data to organize and label your photos. If your smartphone has GPS, location information will be automatically added to your photos. If not, simply tap the ⓘ  icon on your iOS device and add a location manually. Photos shared over messaging may lack location data.", adendum: "We only use location data to generate captions.", media_url: "https://divo-photobook-pdf-public.s3.eu-west-1.amazonaws.com/mementos_location_step.gif"%>
     <%= render "static_pages/started_section", text_left: false, heading: "Uploading Your Photos", text: "Create a new album in Mementos and upload your selected photos. Drag select multiple photos at once to speed up the process. Once your photos are uploaded, tap 'Create Photo Album' to let Mementos generate your album.", media_url: "https://divo-photobook-pdf-public.s3.eu-west-1.amazonaws.com/mementos_upload.gif" %>
     <%= render "static_pages/started_section", text_left: true, heading: "We do the rest", text: "Mementos will automatically generate a beautiful photo album for you in around 1 minute, ready for order immediately. You can customize your album by changing the cover photo and updating captions", media_url: "https://divo-photobook-pdf-public.s3.eu-west-1.amazonaws.com/mementos_order_step.gif" %>
+
+    <div class="masthead">
+      <div class="container px-5">
+        <div class="row align-items-center">
+          <div class="my-5 mb-lg-0 text-center text-lg-start">
+            <h1 class="display-4 lh-4 mb-3 newsreader text-center">Get started now</h1>
+            <p class="lead fw-normal text-muted mb-5 newsreader text-center"><%= link_to "New photo album", new_photo_album_path, class: "button btn btn-primary rounded-pill px-3 py-2 mb-2 mb-lg-0" %></p>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
