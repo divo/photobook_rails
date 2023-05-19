@@ -6,6 +6,9 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# TODO: move to env
+DEFAULT_HOST = "https://mementos.ink"
+
 module PhotobookRails
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -26,6 +29,6 @@ module PhotobookRails
 
     ISO3166.configuration.enable_currency_extension!
 
-    config.action_mailer.asset_host = "https://mementos.ink"
+    config.action_mailer.asset_host = HOST
   end
 end
