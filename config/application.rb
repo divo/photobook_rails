@@ -29,6 +29,6 @@ module PhotobookRails
 
     ISO3166.configuration.enable_currency_extension!
 
-    config.action_mailer.asset_host = HOST
+    config.action_mailer.asset_host = DEFAULT_HOST
   end
 end
