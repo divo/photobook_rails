@@ -1,4 +1,6 @@
 class AdminMailer < ApplicationMailer
+  include ActiveStorage::SetCurrent
+
   def user_signup(user)
     @user = user
     mail(to: Rails.application.credentials.dig(:admin, :email),
