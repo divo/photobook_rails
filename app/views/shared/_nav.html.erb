@@ -1,0 +1,19 @@
+<!-- Navigation-->
+<nav class="nav navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
+  <div class="container px-5">
+    <a class="navbar-brand fw-bold" href="/">Mementos</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="bi-list"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+        <li class="nav-item"><a class="nav-link me-lg-3 <%= action_name == 'getting_started' ? "active" : "" %>" href="/getting_started">Getting Started</a></li>
+        <li class="nav-item"><a class="nav-link me-lg-3 <%= controller_name == 'photo_albums' ? "active" : "" %>" href="/photo_albums">My Albums</a></li>
+        <li class="nav-item"><%= link_to  edit_user_registration_path(current_user), class: "button btn btn-outline-secondary rounded-pill px-3 mx-lg-3 mb-lg-0 " + (controller_name == 'registrations' ? "active" : "") do %>
+          <i class="bi-person-circle"></i>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>
