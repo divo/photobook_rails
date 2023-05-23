@@ -1,21 +1,3 @@
-<nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
-  <div class="container px-5">
-    <%= link_to "<  Mementos", root_path, class: "navbar-brand fw-bold"%>
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      Menu
-      <i class="bi-list"></i>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
-        <li class="nav-item button btn btn-outline-secondary disabled rounded-pill px-3 mx-3 mb-lg-0">
-          <i class="bi-person-circle"></i>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
 <div class="container masthead">
   <%= render "devise/shared/error_messages", resource: resource %>
   <%= render "shared/notice" %>
