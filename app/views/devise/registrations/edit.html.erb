@@ -56,7 +56,7 @@
         </div>
       <% end %>
 
-      <div class="navbar navbar-expand-lg navbar-light bg-light container mt-3">
+      <div class="navbar navbar-expand-lg navbar-light container mt-5">
         <%= button_to "Sign out", destroy_user_session_path(current_user), method: :delete, class: "button btn btn-secondary" %>
         <%= link_to "Cancel my account", registration_path(resource_name), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, method: :delete, class: "button btn btn-danger mx-3" %>
       </div>
