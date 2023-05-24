@@ -13,6 +13,15 @@
  *= require_tree .
  *= require_self
  */
+/*! Bootstrap 5 custom build by Themestr.app */
+
+$primary:#5D55FA;
+$secondary:#A2A5FC;
+$success:#27AB83;
+$info:#BCCCDC;
+$danger:#F86A6A;
+$warning:#F7C948;
+
 @import "bootstrap";
 
 @media (min-width: 1401px) {
