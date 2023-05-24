@@ -19,7 +19,7 @@
               <b><%= "#{album_hash[:pages].count}" %></b> pages <br/>
               <b>170gsm</b>, silk finish<br/>
               <%= render 'order_estimates/order_estimate', order_estimate: photo_album.order_estimate %>
-              <%= button_to "Order", checkout_create_path(photo_album_id: @photo_album.id), form: { 'data-turbo': false }, class: "button btn btn-primary px-4 mb-lg-0 mt-3" %>
+              <%= button_to "Order", checkout_create_path(photo_album_id: photo_album.id), form: { 'data-turbo': false }, class: "button btn btn-primary px-4 mb-lg-0 mt-3" %>
             </div>
           </div>
         </div>
