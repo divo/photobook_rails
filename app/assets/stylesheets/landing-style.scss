@@ -11349,10 +11349,10 @@ section {
   color: #212529;
 }
 #mainNav .navbar-nav .nav-item .nav-link:hover {
-  color: #6c757d;
+  color: $secondary;
 }
 #mainNav .navbar-nav .nav-item .nav-link.active {
-  color: #2937f0;
+  color: $primary;
 }
 
 .photo-book {
