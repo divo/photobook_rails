@@ -30,6 +30,10 @@ class PhotoAlbumsController < ApplicationController
   # GET /photo_albums/new
   def new
     @photo_album = PhotoAlbum.new
+    is_ios = request.user_agent =~ /iPhone|iPad/i
+    if is_ios
+      flash.now[:alert] = 'iOS devices remove GPS data from photos. Please use a desktop browser'
+    end
   end
 
   # GET /photo_albums/1/edit

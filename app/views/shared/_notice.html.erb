@@ -1,7 +1,7 @@
 <% flash.each do |message_type, message| %>
   <% alert_class = (message_type == "alert") ? "warning" : "success" %>
   <% class_tags = defined?(locals) ? locals[:class] : '' %>
-  <div id=<%= message_type %> class="<%="container col-6 notice alert alert-dismissible alert-#{alert_class} #{class_tags}"%>">
+  <div id=<%= message_type %> class="<%="container col-lg-6 col-sm-12 notice alert alert-dismissible alert-#{alert_class} #{class_tags}"%>">
     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     <div class=mb-0"><%= message %></div></aside>
   </div>
