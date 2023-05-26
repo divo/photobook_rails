@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActiveStorage
   class Analyzer::ImageAnalyzer < Analyzer
     def metadata
@@ -16,21 +18,19 @@ module ActiveStorage
     private
 
     def gps_from_exif(image)
-      #      return unless image.type == 'JPEG'
-      if exif = Exif::Data.new(image.get_value("exif-data"))
-        result = { date:  exif.date_time }
+      if (exif = Exif::Data.new(image.get_value('exif-data')))
+        result = { date: exif.date_time }
 
         if exif.gps_latitude && exif.gps_longitude
           result.merge!({
-            latitude:  convert_coord(exif.gps_latitude),
-            longitude: convert_coord(exif.gps_longitude),
+            latitude: convert_coord(exif.gps_latitude),
+            longitude: convert_coord(exif.gps_longitude)
           })
-          result[:latitude] *= -1 if exif.gps_latitude_ref == "S"
-          result[:longitude]  *= -1 if exif.gps_longitude_ref == "W"
-
+          result[:latitude] *= -1 if exif.gps_latitude_ref == 'S'
+          result[:longitude] *= -1 if exif.gps_longitude_ref == 'W'
         end
 
-        return result
+        result
       end
     rescue ::Vips::Error, ::Exif::Error
       {}

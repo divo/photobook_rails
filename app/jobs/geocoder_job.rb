@@ -1,18 +1,21 @@
+# frozen_string_literal: true
+
 class String
   def is_i?
     !!(self =~ /\A[-+]?[0-9]+\z/)
   end
 end
 
+# Use GPS to pull place names from MapBox
 class GeocoderJob < Gush::Job
-  PLACE_TYPES = ['address', 'place', 'region', 'country']
+  PLACE_TYPES = %w[address place region country].freeze
 
   def perform
     image = PhotoAlbum.find(params[:photo_album_id]).images.find(params[:image_id])
     image.analyze
 
-    unless image.blob.metadata.include?("latitude") &&
-      image.blob.metadata.include?("longitude")
+    unless image.blob.metadata.include?('latitude') &&
+           image.blob.metadata.include?('longitude')
       Rails.logger.error "#{params[:photo_album_id]}:#{params[:image_id]} No GPS data found"
       image.blob.metadata['geocode'] = { country: nil }
       image.blob.save
@@ -20,13 +23,11 @@ class GeocoderJob < Gush::Job
     end
 
     # This is using nominatim (Open streetmap) by default.
-    lat = image.blob.metadata.fetch("latitude")
-    lng = image.blob.metadata.fetch("longitude")
+    lat = image.blob.metadata.fetch('latitude')
+    lng = image.blob.metadata.fetch('longitude')
     geocode = Geocoder.search([lat, lng])
 
-    if geocode.empty?
-      Rails.logger.error "#{self.class}: #{geocode.first.data}"
-    end
+    Rails.logger.error "#{self.class}: #{geocode.first.data}" if geocode.empty?
 
     image.blob.metadata['geocode'] = extract_geocode_info(geocode)
     image.blob.save # This info is nice to have
@@ -42,7 +43,7 @@ class GeocoderJob < Gush::Job
     address_string = address.data['text']
 
     # If it's just a road number try again
-    if address_string.chars.count { |x| x.is_i? }.to_f / address_string.chars.count > 0.5
+    if address_string.chars.count(&:is_i?).to_f / address_string.chars.count > 0.5
       address = extract_principle_address(geocode, PLACE_TYPES.drop(1))
       address_string = address.data['text']
     end
@@ -58,10 +59,10 @@ class GeocoderJob < Gush::Job
     # `country` is used to create sections, the string is never displayed
     # For these Countries, the region is so big we can present them like
     # countries.
-    if country_code == 'us' || country_code == 'gb'
+    if %w[us gb].include?(country_code)
       country_string = region_string
     elsif address_string != region_string
-      address_string = address_string + ", " + region_string
+      address_string = "#{address_string}, #{region_string}"
     end
 
     { address: address_string, country: country_string }
