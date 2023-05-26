@@ -4,11 +4,8 @@ class SectionImgJob < Gush::Job
   def perform
     photo_album = PhotoAlbum.find(params[:photo_album_id])
     # Download section images and add them to the album in the correct positions
-    photo_album.images.each do |image|
-      unless image.blob.metadata['geocode']
-        Rails.logger.error "#{self.class}: #{image.blob.metadata}"
-      end
-    end
+
+    return unless validate(photo_album)
 
     countries = photo_album.images.uniq { |image| image.blob.metadata['geocode']['country'] }
     # TODO: Break this out into it's own job
@@ -38,5 +35,15 @@ class SectionImgJob < Gush::Job
 
   def image_url(lat, lon, zoom = 7)
     "https://api.mapbox.com/styles/v1/divodivenson/clbfjkloe000k14qmi08wnngl/static/#{lon},#{lat},#{zoom},0/1280x1280@2x?access_token=#{Rails.application.credentials[:mapbox_key]}"
+  end
+
+  def validate(photo_album)
+    no_geocode = photo_album.images.reject { |x| x.blob.metadata['geocode'] }
+    no_geocode.each { |image| Rails.logger.error "#{self.class}: Geocode not found #{image.blob.metadata}" }
+    if no_geocode.count == photo_album.images.count
+      Rails.logger.error "#{self.class}: No geocode found for any images"
+      return false
+    end
+    true
   end
 end
