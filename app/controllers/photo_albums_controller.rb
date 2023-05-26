@@ -122,7 +122,7 @@ class PhotoAlbumsController < ApplicationController
   private
 
   def validate_destroy
-    return if @photo_album.orders.reject { |o| o.state == 'draft' }.empty?
+    return if @photo_album.orders.reject { |o| o.state == 'draft' }.reject { |o| o.state == 'draft_canceled' }.empty?
 
     redirect_to photo_album_url(@photo_album), alert: 'Cannot delete a photo album with an open order. Contact support if you need to delete this album.'
   end
