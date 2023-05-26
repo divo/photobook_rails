@@ -6,7 +6,11 @@ class SectionImgJob < Gush::Job
     photo_album = PhotoAlbum.find(params[:photo_album_id])
     return unless validate(photo_album)
 
-    countries = photo_album.images.uniq { |image| image.blob.metadata['geocode']['country'] }
+    countries =
+      photo_album.images
+                 .select { |image| image.blob.metadata['geocode'] }
+                 .uniq { |image| image.blob.metadata['geocode']['country'] }
+
     # TODO: Break this out into it's own job
     # Use the GPS data from the first image in each country to get a map
     countries.each do |image|
