@@ -11,7 +11,7 @@ class GeocoderJob < Gush::Job
   PLACE_TYPES = %w[address place region country].freeze
 
   def perform
-    image = PhotoAlbum.find(params[:photo_album_id]).images.find(params[:image_id])
+    image = PhotoAlbum.find(params[:photo_album_id]).images[params[:idx]]
     image.analyze
 
     unless image.blob.metadata.include?('latitude') &&
