@@ -1,10 +1,9 @@
 require 'down'
 
+# Download section images and add them to the album in the correct positions
 class SectionImgJob < Gush::Job
   def perform
     photo_album = PhotoAlbum.find(params[:photo_album_id])
-    # Download section images and add them to the album in the correct positions
-
     return unless validate(photo_album)
 
     countries = photo_album.images.uniq { |image| image.blob.metadata['geocode']['country'] }
