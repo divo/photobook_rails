@@ -2,7 +2,7 @@ class BuildAlbumWorkflow < Gush::Workflow
   def configure(photo_album_id)
     photo_album = PhotoAlbum.find(photo_album_id)
 
-    run VariantJob, params: { photo_album_id: photo_album.id }
+    run FormatJob, params: { photo_album_id: photo_album.id }
 
     # Need to pass indexs because VariantJob will replace any non-jpegs.
     # All that matters here is a GeocoderJob for each image
