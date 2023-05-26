@@ -3,7 +3,7 @@
 class FormatJob < Gush::Job
   def perform
     photo_album = PhotoAlbum.find(params[:photo_album_id])
-    Rails.logger.info "Starting VariantJob for photo_album #{photo_album.id}"
+    Rails.logger.info "Starting FormatJob for photo_album #{photo_album.id}"
 
     convert_files(photo_album)
     photo_album.reload # Reload the object as we have updated the images
