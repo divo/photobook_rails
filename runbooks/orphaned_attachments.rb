@@ -1,3 +1,6 @@
+# Yeah don't use this yet
+
+
 s3 = Aws::S3::Resource.new({
   region: "eu-west-1",
   access_key_id: Rails.application.credentials.dig(:aws, :access_key_id),
@@ -14,8 +17,12 @@ as_keys = ActiveStorage::Attachment.all.map(&:key)
 s3_oprhans = s3_keys - as_keys
 as_orphans = as_keys - s3_keys
 
+# Do some manual verification here
+
 s3_oprhans.each do |key|
+  puts "Deleting #{key}"
   s3_bucket.objects(prefix:'', delimiter: '').to_a.first { |x| x.key == key }.delete
+  sleep(0.1)
 end
 
 as_orphans.each do |key|
