@@ -21,16 +21,18 @@
     </div>
   <% else %>
     <div id="photo_albums" class="container">
-      <div class="row pt-5">
-        <div class="col text-center">
-          <div class="card border-primary mb-3 mx-auto" style="max-width: 20rem;">
-            <div class="card-body">
-              <h4 class="card-title"><i class="bi bi-plus-square-dotted display-6 my-float text-primary"></i></h4>
-              <%= link_to " New Album", new_photo_album_path, class: "button btn btn-primary nav-pills display-6 px-3 mb-2" %>
+      <% unless @mobile_app %>
+        <div class="row pt-5">
+          <div class="col text-center">
+            <div class="card border-primary mb-3 mx-auto" style="max-width: 20rem;">
+              <div class="card-body">
+                <h4 class="card-title"><i class="bi bi-plus-square-dotted display-6 my-float text-primary"></i></h4>
+                <%= link_to " New Album", new_photo_album_path, class: "button btn btn-primary nav-pills display-6 px-3 mb-2" %>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      <% end %>
       <% @photo_albums.each do |photo_album| %>
         <div class="row">
           <div class="col">

@@ -17,7 +17,9 @@
   </head>
 
   <body>
-    <%= render "shared/nav" %>
+    <% unless @mobile_app %>
+      <%= render "shared/nav" %>
+    <% end %>
     <%= yield %>
   </body>
 
