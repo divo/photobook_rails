@@ -20,7 +20,8 @@ class FormatJob < Gush::Job
   def convert_files(photo_album)
     images_to_delete = [] # Can I delete inline?
     photo_album.images.each do |image|
-      next if image.blob.content_type == 'image/jpeg'
+      extension = image.blob.filename.extension.downcase # Convert the image if the file extension is incorrect
+      next if image.blob.content_type == 'image/jpeg' && (extension == 'jpg' || extension == 'jpeg')
 
       Rails.logger.info "Converting #{image.blob.filename} to a JPEG"
       jpeg_blob = convert_to_jpg(image)
