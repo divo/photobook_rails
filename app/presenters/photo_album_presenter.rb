@@ -59,25 +59,40 @@ module PhotoAlbumPresenter
   end
 
   def sort_by_country(pages)
-    # Sort by country, then place each section_page and the start of each group
+    content_pages, section_pages = split_content_section(pages)
+    content_pages.each do |key, value|
+      value.sort_by! { |x| safe_date(x) }
+      # Add the section images (maps) to the start of each content group
+      value.unshift(section_pages[key].first) if section_pages[key].present?
+    end
+
+    content_pages.sort_by do |_key, content|
+      safe_date(content.first)
+    end
+
+    content_pages.values.flatten
+  end
+
+  def safe_date(entry)
+    Date.parse(entry[:date])
+  rescue Date::Error
+    Date.new(0) # Not sure why some dates are failing to parse, they look fine
+  end
+
+  # Sort by country, then place each section_page and the start of each group
+  def split_content_section(pages)
     content_pages, section_pages = pages.partition { |page| page[:page_class] == 'photo-content' }
-    # section_pages, content_pages = pages.partition { |page| page[:page_class] == SECTION_CLASS_TAG }
     section_pages = section_pages.group_by { |page| page[:country] }
     content_pages = content_pages.group_by { |page| page[:country] }
 
     # Insert section of nil country to capture photos without gps data
     # Place it at the start of the hash
-    section_pages = {'' => []}.merge(section_pages) if content_pages[''].present?
-
-    content_pages.each do |key, value|
-      value.sort_by! do |x|
-        Date.parse x[:date]
-      rescue Date::Error
-        Date.new(0) # Not sure why some dates are failing to parse, they look fine
-      end
-      value.unshift(section_pages[key].first) if section_pages[key].present?
+    if content_pages[''].present?
+      section_pages = { '' => [] }.merge(section_pages)
+      content_pages = { '' => [] }.merge(content_pages) 
     end
-    content_pages.values.flatten
+
+    [content_pages, section_pages]
   end
 
   def remove_adjacent_addresses(pages)
