@@ -5,53 +5,73 @@
     <!-- This needs to be moved into a card. Cards should look like albums. -->
     <div class="<%= @masthead_small_tag %> container px-5">
       <div class="row gx-5 align-items-center">
-        <div class="col-lg-6">
-          <!-- Mashead text and app badges-->
-          <div class="mb-5 mb-lg-0 text-center text-lg-start">
-            <h1 class="display-5 lh-1 mb-3">Create your first photo albums in just a few minutes.</h1>
-            <p class="lead fw-normal text-muted mb-5">View <a href="/getting_started">Getting Started</a> to learn how to prepare your photos, or click <%= link_to "New photo album", new_photo_album_path, class: "button btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" %> to upload and create your album.</p>
+        <% if @mobile_app %>
+          <div class="col-lg-6">
+            <!-- Mashead text and app badges-->
+            <div class="mb-5 mb-lg-0 text-center text-lg-start">
+              <h1 class="display-5 lh-1 mb-3">Create your first photo albums in just a few minutes.</h1>
+            </div>
           </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="features-device-mockup">
-            <%= image_tag "photo-book.png", class: "photo-book" %>
+          <div class="col text-center">
+            <div class="card border-primary mb-3 mx-auto" style="max-width: 20rem;">
+              <div class="card-body">
+                <h4 class="card-title"><i class="bi bi-plus-square-dotted display-6 my-float text-primary"></i></h4>
+                <% if @mobile_app %>
+                  <%= link_to "New Album", "navigate://new_album/", class: "button btn btn-primary nav-pills display-6 px-3 mb-2" %>
+                <% else %>
+                  <%= link_to " New Album", new_photo_album_path, class: "button btn btn-primary nav-pills display-6 px-3 mb-2" %>
+                <% end %>
+              </div>
+            </div>
+          <% else %>
+            <div class="col-lg-6">
+              <!-- Mashead text and app badges-->
+              <div class="mb-5 mb-lg-0 text-center text-lg-start">
+                <h1 class="display-5 lh-1 mb-3">Create your first photo albums in just a few minutes.</h1>
+                <p class="lead fw-normal text-muted mb-5">View <a href="/getting_started">Getting Started</a> to learn how to prepare your photos, or click <%= link_to "New photo album", new_photo_album_path, class: "button btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" %> to upload and create your album.</p>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="features-device-mockup">
+                <%= image_tag "photo-book.png", class: "photo-book" %>
+              </div>
+            </div>
+          <% end %>
           </div>
-        </div>
       </div>
-    </div>
-  <% else %>
-    <div id="photo_albums" class="container">
-      <div class="row pt-5">
-        <div class="col text-center">
-          <div class="card border-primary mb-3 mx-auto" style="max-width: 20rem;">
-            <div class="card-body">
-              <h4 class="card-title"><i class="bi bi-plus-square-dotted display-6 my-float text-primary"></i></h4>
-              <% if @mobile_app %>
-                <%= link_to "New Album", "navigate://new_album/", class: "button btn btn-primary nav-pills display-6 px-3 mb-2" %>
-              <% else %>
-                <%= link_to " New Album", new_photo_album_path, class: "button btn btn-primary nav-pills display-6 px-3 mb-2" %>
-              <% end %>
+    <% else %>
+      <div id="photo_albums" class="container">
+        <div class="row pt-5">
+          <div class="col text-center">
+            <div class="card border-primary mb-3 mx-auto" style="max-width: 20rem;">
+              <div class="card-body">
+                <h4 class="card-title"><i class="bi bi-plus-square-dotted display-6 my-float text-primary"></i></h4>
+                <% if @mobile_app %>
+                  <%= link_to "New Album", "navigate://new_album/", class: "button btn btn-primary nav-pills display-6 px-3 mb-2" %>
+                <% else %>
+                  <%= link_to " New Album", new_photo_album_path, class: "button btn btn-primary nav-pills display-6 px-3 mb-2" %>
+                <% end %>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <% @photo_albums.each do |photo_album| %>
-        <div class="row">
-          <div class="col">
-            <p>
-            <% if @mobile_app %>
-              <%= link_to "navigate://show_album/#{photo_album.id}?name=#{photo_album.name}" do %>
-                <%= render 'photos/cover', photo_album: photo_album.present(with_pages: false) { |image| rails_storage_proxy_path(image.variant(resize_to_fit: [600, 600])) } %>
+        <% @photo_albums.each do |photo_album| %>
+          <div class="row">
+            <div class="col">
+              <p>
+              <% if @mobile_app %>
+                <%= link_to "navigate://show_album/#{photo_album.id}?name=#{photo_album.name}" do %>
+                  <%= render 'photos/cover', photo_album: photo_album.present(with_pages: false) { |image| rails_storage_proxy_path(image.variant(resize_to_fit: [600, 600])) } %>
+                <% end %>
+              <% else %>
+                <%= link_to photo_album do %>
+                  <%= render 'photos/cover', photo_album: photo_album.present(with_pages: false) { |image| rails_storage_proxy_path(image.variant(resize_to_fit: [600, 600])) } %>
+                <% end %>
               <% end %>
-            <% else %>
-              <%= link_to photo_album do %>
-                <%= render 'photos/cover', photo_album: photo_album.present(with_pages: false) { |image| rails_storage_proxy_path(image.variant(resize_to_fit: [600, 600])) } %>
-              <% end %>
-            <% end %>
-            </p>
+              </p>
+            </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
+    <% end %>
     </div>
-  <% end %>
-</div>
