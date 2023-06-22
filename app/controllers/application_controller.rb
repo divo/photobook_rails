@@ -3,6 +3,8 @@
 class ApplicationController < ActionController::Base
   before_action :user_agent
   before_action :mobile_app
+  before_action :masthead_tag
+  before_action :masthead_small_tag
 
   def user_agent
     @user_agent ||= request.user_agent
