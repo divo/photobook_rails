@@ -1,9 +1,9 @@
 <p style="color: green"><%= notice %></p>
 
-<div class="masthead-small">
+<div class="<%= @masthead_small_tag %>">
   <% if @photo_albums.empty? %>
     <!-- This needs to be moved into a card. Cards should look like albums. -->
-    <div class="masthead-small container px-5">
+    <div class="<%= @masthead_small_tag %> container px-5">
       <div class="row gx-5 align-items-center">
         <div class="col-lg-6">
           <!-- Mashead text and app badges-->

@@ -17,7 +17,7 @@
   </head>
   <body id="page-top">
    <!-- Mashead header-->
-    <div class="masthead text-center bg-gradient-primary-to-secondary text-white">
+   <div class="<%= @masthead_tag %> text-center bg-gradient-primary-to-secondary text-white">
       <div class="container px-5">
         <div class="row gx-5 align-items-center justify-content-center">
           <div class="my-5 mb-lg-0 text-center ">
@@ -34,7 +34,7 @@
     <%= render "static_pages/started_section", text_left: false, heading: "Uploading Your Photos", text: "Create a new album in Mementos and upload your selected photos. Drag select multiple photos at once to speed up the process. Once your photos are uploaded, tap 'Create Photo Album' to let Mementos generate your album.", media_url: "https://divo-photobook-pdf-public.s3.eu-west-1.amazonaws.com/mementos_upload.gif" %>
     <%= render "static_pages/started_section", text_left: true, heading: "We do the rest", text: "Mementos will automatically generate a beautiful photo album for you in around 1 minute, ready for order immediately. You can customize your album by changing the cover photo and updating captions", media_url: "https://divo-photobook-pdf-public.s3.eu-west-1.amazonaws.com/mementos_order_step.gif" %>
 
-    <div class="masthead">
+    <div class="<%= @masthead_tag %>">
       <div class="container px-5">
         <div class="row align-items-center">
           <div class="my-5 mb-lg-0 text-center text-lg-start">

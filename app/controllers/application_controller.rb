@@ -11,4 +11,12 @@ class ApplicationController < ActionController::Base
   def mobile_app
     @mobile_app ||= @user_agent == 'Mementos-iOS'
   end
+
+  def masthead_tag
+    @masthead_tag ||= @mobile_app ? 'masthead-app' : 'masthead'
+  end
+
+  def masthead_small_tag
+    @masthead_tag ||= @mobile_app ? 'masthead-app' : 'masthead-small'
+  end
 end

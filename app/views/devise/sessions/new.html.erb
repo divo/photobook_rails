@@ -1,5 +1,4 @@
-<% masthead = @mobile_app ? "masthead-app" : "masthead" %>
-<div class="container <%= masthead %>">
+<div class="container <%= @masthead_tag %>">
   <%= render "devise/shared/error_messages", resource: resource %>
   <%= render "shared/notice" %>
   <div class="row justify-content-center">
