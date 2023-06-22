@@ -37,8 +37,14 @@
         <div class="row">
           <div class="col">
             <p>
-            <%= link_to photo_album do %>
-              <%= render 'photos/cover', photo_album: photo_album.present(with_pages: false) { |image| rails_storage_proxy_path(image.variant(resize_to_fit: [600, 600])) } %>
+            <% if @mobile_app %>
+              <%= link_to "navigate://photo_albums/#{photo_album.id}" do %>
+                <%= render 'photos/cover', photo_album: photo_album.present(with_pages: false) { |image| rails_storage_proxy_path(image.variant(resize_to_fit: [600, 600])) } %>
+              <% end %>
+            <% else %>
+              <%= link_to photo_album do %>
+                <%= render 'photos/cover', photo_album: photo_album.present(with_pages: false) { |image| rails_storage_proxy_path(image.variant(resize_to_fit: [600, 600])) } %>
+              <% end %>
             <% end %>
             </p>
           </div>
