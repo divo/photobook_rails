@@ -19,6 +19,6 @@ class ApplicationController < ActionController::Base
   end
 
   def masthead_small_tag
-    @masthead_tag ||= @mobile_app ? 'masthead-app' : 'masthead-small'
+    @masthead_small_tag ||= @mobile_app ? 'masthead-app' : 'masthead-small'
   end
 end
