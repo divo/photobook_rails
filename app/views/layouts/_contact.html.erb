@@ -1,9 +1,11 @@
 <!-- Feedback Modal-->
-<button class="at-float btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" id="at-menu-support">
-  <%= mail_to 'support@mementos.ink' do %>
-  <span class="d-flex align-items-center" style="color:#fff">
-    <i class="bi bi-envelope-open my-float"></i>
-    <span class="small mx-1">Contact Us</span>
-  </span>
-  <% end %>
-</button>
+<% if !@mobile_app %>
+  <button class="at-float btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" id="at-menu-support">
+    <%= mail_to 'support@mementos.ink' do %>
+      <span class="d-flex align-items-center" style="color:#fff">
+        <i class="bi bi-envelope-open my-float"></i>
+        <span class="small mx-1">Contact Us</span>
+      </span>
+    <% end %>
+  </button>
+<% end %>
