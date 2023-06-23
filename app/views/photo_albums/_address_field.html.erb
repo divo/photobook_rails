@@ -1,11 +1,11 @@
-
 <turbo-frame id="input_field_<%= image['id'] %>">
   <div>
     <% caption = image['caption'].present? ? image['caption'] : image['address'] %>
+    <% visible = defined?(visible) && !visible ? 'hidden' : 'visible' %>
     <%= text_field_tag :address,
       params["#{image['id']}_address".to_sym],
       class: "form-control simple-field",
-      style: "text-align: center;",
+      style: "text-align: center; visibility: #{visible};",
       autocomplete: "new-password",
       role: "presentation",
       value: caption,

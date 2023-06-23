@@ -45,13 +45,11 @@
               <div class="col col-md-6 mt-4 margin-hack-left">
                 <div class="row g-0 mb-3">
                   <div class="col">
-                    <% if left['page_class'] == 'photo-content' %>
-                      <%= render 'photo_albums/address_field', photo_album: photo_album, image: left %>
-                    <% end%>
+                    <%= render 'photo_albums/address_field', photo_album: photo_album, image: left, visible: left['page_class'] == 'photo-content' %>
                   </div>
                 </div>
 
-                <div class="row g-0 justify-content-around">
+                <div class="row g-0 justify-content-around mb-5">
                   <div class="col" align="center">
                     <%= render 'photo_albums/delete_button', photo_album: photo_album, image: left %>
                   </div>
@@ -77,9 +75,7 @@
                 <div class="col col-md-6 mt-4 margin-hack-right">
                   <div class="row g-0 mb-3">
                     <div class="col">
-                      <% if right['page_class'] == 'photo-content' %>
-                        <%= render 'photo_albums/address_field', photo_album: photo_album, image: right %>
-                      <% end %>
+                      <%= render 'photo_albums/address_field', photo_album: photo_album, image: right, visible: right['page_class'] == 'photo-content' %>
                     </div>
                   </div>
 
