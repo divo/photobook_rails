@@ -21,6 +21,18 @@
       <%= render "shared/nav" %>
     <% end %>
     <%= yield %>
+
+    <dialog id="turbo-confirm" class="dialog">
+        <div class="dialog__content">
+          <form method="dialog">
+            <p class="dialog__title" id="dialog-message">Are your sure?</p>
+            <div>
+              <button value="cancel" class="btn btn-secondary">Cancel</button>
+              <button value="confirm" class="btn btn-danger">Confirm</button>
+            </div>
+          </form>
+        </div>
+    </dialog>
   </body>
 
   <footer>

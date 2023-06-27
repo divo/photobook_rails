@@ -1,0 +1,39 @@
+@import "application";
+
+.dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  background-color: #fff;
+  border-radius: 5px;
+  border-color: $primary;
+  padding: 20px;
+  max-width: 500px;
+}
+.dialog__title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: $blue-grey-9;
+}
+.dialog__content {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+.dialog__button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+.dialog__button:hover {
+  background-color: #0062cc;
+}
