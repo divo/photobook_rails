@@ -11,30 +11,32 @@ class GeocoderJob < Gush::Job
   PLACE_TYPES = %w[address place region country].freeze
 
   def perform
-    Rails.logger.info("[#{self.id} Starting Geocode for album: #{params[:photo_album_id]} image: #{params[:idx]}")
+    Rails.logger.info("[#{self.id} Starting Geocode for album: #{params[:photo_album_id]}")
 
-    image = PhotoAlbum.find(params[:photo_album_id]).images[params[:idx]]
-    image.analyze
+    album = PhotoAlbum.find(params[:photo_album_id])
+    album.images.each do |image|
+      image.analyze
 
-    Rails.logger.info("#{self.id} Geocode found image: #{image.id}")
+      Rails.logger.info("#{self.id} Geocode found image: #{image.id}")
 
-    unless image.blob.metadata.include?('latitude') &&
-           image.blob.metadata.include?('longitude')
-      Rails.logger.error "#{self.id} Geocode #{params[:photo_album_id]}:#{params[:image_id]} No GPS data found"
-      image.blob.metadata['geocode'] = { country: nil }
-      image.blob.save
-      return
+      unless image.blob.metadata.include?('latitude') &&
+        image.blob.metadata.include?('longitude')
+        Rails.logger.error "#{self.id} Geocode #{params[:photo_album_id]}:#{params[:image_id]} No GPS data found"
+        image.blob.metadata['geocode'] = { country: nil }
+        image.blob.save
+        return
+      end
+
+      # This is using nominatim (Open streetmap) by default.
+      lat = image.blob.metadata.fetch('latitude')
+      lng = image.blob.metadata.fetch('longitude')
+      geocode = Geocoder.search([lat, lng])
+
+      Rails.logger.error "#{self.id} Geocode #{self.class}: #{geocode.first.data}" if geocode.empty?
+
+      image.blob.metadata['geocode'] = extract_geocode_info(geocode)
+      image.blob.save # This info is nice to have
     end
-
-    # This is using nominatim (Open streetmap) by default.
-    lat = image.blob.metadata.fetch('latitude')
-    lng = image.blob.metadata.fetch('longitude')
-    geocode = Geocoder.search([lat, lng])
-
-    Rails.logger.error "#{self.id} Geocode #{self.class}: #{geocode.first.data}" if geocode.empty?
-
-    image.blob.metadata['geocode'] = extract_geocode_info(geocode)
-    image.blob.save # This info is nice to have
   end
 
   private

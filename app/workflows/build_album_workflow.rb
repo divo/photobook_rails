@@ -4,14 +4,9 @@ class BuildAlbumWorkflow < Gush::Workflow
 
     run FormatJob, params: { photo_album_id: photo_album.id }
 
-    # Need to pass indexs because FormatJob will replace any non-jpegs.
-    # All that matters here is a GeocoderJob for each image
-    # This is not greaaat though
-    geocode_jobs = photo_album.images.each_with_index.map do |_image, index|
-      run GeocoderJob, params: { photo_album_id: photo_album.id, idx: index }, after: FormatJob
-    end
+    run GeocoderJob, params: { photo_album_id: photo_album.id }, after: FormatJob
 
-    run CoverSelectionJob, params: { photo_album_id: photo_album.id }, after: geocode_jobs
+    run CoverSelectionJob, params: { photo_album_id: photo_album.id }, after: GeocoderJob
 
     run SectionImgJob, params: { photo_album_id: photo_album.id }, after: CoverSelectionJob
 
