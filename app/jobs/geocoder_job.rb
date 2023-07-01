@@ -16,7 +16,7 @@ class GeocoderJob < Gush::Job
     image = PhotoAlbum.find(params[:photo_album_id]).images[params[:idx]]
     image.analyze
 
-    Rails.logger.info.("#{self.id} Geocode found image: #{image.id}")
+    Rails.logger.info("#{self.id} Geocode found image: #{image.id}")
 
     unless image.blob.metadata.include?('latitude') &&
            image.blob.metadata.include?('longitude')
