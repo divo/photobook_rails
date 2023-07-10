@@ -7,8 +7,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   after_action :send_signup_mail, only: [:create]
 
   def send_signup_mail
-    RegistrationMailer.user_signup(current_user).deliver_later
-    AdminMailer.user_signup(current_user).deliver_later
+    RegistrationMailer.user_signup(resource).deliver_later
+    AdminMailer.user_signup(resource).deliver_later
+  end
+
+  def destroy
+    resource.email = "#{resource.email}_deleted_#{Time.now.to_i}"
+    resource.soft_delete
+    resource.send_deletion_email
+    Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+    set_flash_message :notice, :destroyed if is_navigational_format?
+    respond_with_navigational(resource) { redirect_to after_sign_out_path_for(resource_name) }
   end
 
   protected

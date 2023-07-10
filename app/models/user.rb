@@ -16,4 +16,11 @@ class User < ApplicationRecord
   def send_deletion_email
     RegistrationMailer.user_delete(self).deliver_later
   end
+
+  def validate_deletability
+    return if photo_albums
+              .reject { |o| o.state == 'draft' }
+              .reject { |o| o.state == 'draft_canceled' }
+              .empty?
+  end
 end
