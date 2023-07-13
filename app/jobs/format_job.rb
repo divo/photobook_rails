@@ -20,9 +20,8 @@ class FormatJob < Gush::Job
   def convert_files(photo_album)
     images_to_delete = [] # Can I delete inline?
     photo_album.images.each do |image|
-      extension = image.blob.filename.extension.downcase # Convert the image if the file extension is incorrect
-      next if image.blob.content_type == 'image/jpeg' && (extension == 'jpg' || extension == 'jpeg')
-
+      # Always convert, the file extention can confuse some browsers if incorrect
+      # and node-canvas doesn't respect orientation metadata
       Rails.logger.info "Converting #{image.blob.filename} to a JPEG"
       jpeg_blob = convert_to_jpg(image)
       images_to_delete << image
