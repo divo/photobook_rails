@@ -49,6 +49,7 @@ module PhotoAlbumPresenter
       caption: image.blob.metadata['caption'],
       country: image.blob.metadata['geocode']&.fetch('country', nil) || '',
       page_class: image.blob.metadata['section_page'] ? SECTION_CLASS_TAG : type,
+      transform: transform(image.blob.metadata['orientation']),
       date: image.blob.metadata['date'] || Date.new(0).to_s # Some images don't have a date
     }
   end
@@ -115,5 +116,26 @@ module PhotoAlbumPresenter
         seen_address.push(page[:address])
       end
     }
+  end
+
+  def transform(orientation)
+    case orientation
+    when 2
+      '0,-1,1'
+    when 3
+      '180,1,1'
+    when 4
+      '0,1,-1'
+    when 5
+      '90,-1,1'
+    when 6
+      '90,1,1'
+    when 7
+      '270,-1,1'
+    when 8
+      '270,1,1'
+    else
+      '0,1,1'
+    end
   end
 end

@@ -8,7 +8,9 @@ module ActiveStorage
           { width: image.height, height: image.width }
         else
           { width: image.width, height: image.height }
-        end.merge(gps_from_exif(image) || {})
+        end
+          .merge(gps_from_exif(image) || {})
+          .merge(orientation: orientation(image))
       end
     rescue LoadError
       logger.error "Skipping image analysis because the mini_magick gem isn't installed"
@@ -38,6 +40,13 @@ module ActiveStorage
 
     def convert_coord(coord)
       coord[0].to_f + coord[1].to_f / 60 + coord[2].to_f / 3600
+    end
+
+    def orientation(image)
+      # I haven't done enough reading to know if I can always expect this format
+      image.get('exif-ifd0-Orientation').first.to_i
+    rescue ::Vips::Error
+      1
     end
   end
 end
