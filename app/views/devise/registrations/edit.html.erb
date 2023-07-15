@@ -12,11 +12,20 @@
 
       <div class="d-flex justify-content-center mb-5">
         <button class="btn btn-primary pill px-3 mb-4 mb-lg-0" id="at-menu-support">
-          <%= mail_to 'support@mementos.ink' do %>
-            <span class="d-flex align-items-center" style="color:#fff">
-              <i class="bi bi-envelope-open my-float"></i>
-              <span class="small mx-1">Need help? Contact Us</span>
-            </span>
+          <% if @mobile_app %>
+            <%= link_to "mailto:support@mementos.ink", target: "_blank" do %>
+              <span class="d-flex align-items-center" style="color:#fff">
+                <i class="bi bi-envelope-open my-float"></i>
+                <span class="small mx-1">Need help? Contact Us</span>
+              </span>
+            <% end %>
+          <% else %>
+            <%= mail_to 'support@mementos.ink' do %>
+              <span class="d-flex align-items-center" style="color:#fff">
+                <i class="bi bi-envelope-open my-float"></i>
+                <span class="small mx-1">Need help? Contact Us</span>
+              </span>
+            <% end %> 
           <% end %>
         </button>
       </div>
