@@ -32,7 +32,7 @@ class PhotoAlbumsController < ApplicationController
     @photo_album = PhotoAlbum.new
     is_ios = request.user_agent =~ /iPhone|iPad/i
     if is_ios
-      flash.now[:alert] = 'iOS devices remove GPS data from photos. Please use a desktop browser'
+      flash.now[:alert_ios_upload] = 'iOS web upload removes GPS data from photos.'
     end
   end
 

@@ -1,8 +1,15 @@
 <% flash.each do |message_type, message| %>
-  <% alert_class = (message_type == "alert") ? "warning" : "success" %>
+  <% alert_class = (message_type.include?("alert")) ? "warning" : "success" %>
   <% class_tags = defined?(locals) ? locals[:class] : '' %>
   <div id=<%= message_type %> class="<%="container col-lg-6 col-sm-12 notice alert alert-dismissible alert-#{alert_class} #{class_tags}"%>">
     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    <div class=mb-0"><%= message %></div></aside>
+    <div class=mb-0">
+      <%= message %>
+      <% if message_type == "alert_ios_upload" %>
+        <%= link_to 'Check out Mementos in the app store', 'https://apps.apple.com/ie/app/mementos-albums/id6450715256' %>
+       or use a desktop browser.
+      <% end %>
+    </div>
+    </aside>
   </div>
 <% end %>
