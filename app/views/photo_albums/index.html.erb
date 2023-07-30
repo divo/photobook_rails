@@ -1,6 +1,7 @@
-<p style="color: green"><%= notice %></p>
-
 <div class="<%= @masthead_small_tag %>">
+  <div class="mt-5"%>
+    <%= render "shared/notice" %>
+  </div>
   <% if @photo_albums.empty? %>
     <!-- This needs to be moved into a card. Cards should look like albums. -->
     <div class="<%= @masthead_small_tag %> container px-5">
