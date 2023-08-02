@@ -17,6 +17,9 @@ services:
       - redis
     ports:
       - '3000:3000'
+    environment:
+      RENDER_APP_URL: host.docker.internal
+      RENDER_APP_PORT: 3001
 
   redis:
     image: redis:7.0
@@ -36,6 +39,10 @@ services:
     links:
       - postgres
       - redis
+    environment:
+      RENDER_APP_URL: host.docker.internal
+      RENDER_APP_PORT: 3001
+
 #    env_file:
 #      - .env
         #
