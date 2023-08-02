@@ -11,10 +11,43 @@ services:
     build:
       context: .
     volumes:
-      - ./photobook_rails:/opt/app
+      - 'photobook_rails-storage:/docker/app/'
     links:
       - postgres
       - redis
     ports:
       - '3000:3000'
 
+  redis:
+    image: redis:7.0
+    ports:
+      - '6379:6379'
+    volumes:
+      - photobook_rails-redis:/var/lib/redis/data # Get rid of dedicated volumes
+
+  sidekiq:
+    depends_on:
+      - 'redis'
+    build:
+      context: .
+    command: bundle exec sidekiq 
+    volumes:
+      - 'photobook_rails-storage:/docker/app/'
+    links:
+      - postgres
+      - redis
+#    env_file:
+#      - .env
+        #
+        #  nginx:
+        #    build:
+        #      context: .
+        #      dockerfile: ./Dockerfile.nginx
+        #    links:
+        #      - drkiq
+        #    ports:
+        #      - '8020:8020'
+
+volumes:
+  photobook_rails-redis:
+  photobook_rails-storage:

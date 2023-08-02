@@ -1,0 +1,5 @@
+.git
+.dockerignore
+.env
+photobook_rails/vendor/bundle/
+photobook_rails/tmp/

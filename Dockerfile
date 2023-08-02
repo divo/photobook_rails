@@ -14,4 +14,4 @@ RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
-CMD [ "bundle","exec", "puma", "config.ru"]
+CMD [ "bundle", "exec", "puma", "config.ru"]
