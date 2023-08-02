@@ -23,10 +23,10 @@ rails_env = ENV.fetch("RAILS_ENV") { "development" }
 environment rails_env
 
 if %w[production staging].member?(rails_env)
-    app_dir = ENV.fetch("APP_DIR") { "photobook_rails/current" }
+    app_dir = ENV.fetch("APP_DIR") { "photobook_rails" }
     directory app_dir
 
-    shared_dir = ENV.fetch("SHARED_DIR") { "photobook_rails/shared" }
+    shared_dir = ENV.fetch("SHARED_DIR") { "photobook_rails" }
 
     # Logging
     stdout_redirect "#{shared_dir}/log/photobook_puma.stdout.log", "#{shared_dir}/log/photobook_puma.stderr.log", true
