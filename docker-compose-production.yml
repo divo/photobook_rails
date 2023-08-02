@@ -34,4 +34,5 @@ services:
         #      - '8020:8020'
 
 volumes:
+  # create with: docker volume create --name photobook_rails-storage
   photobook_rails-storage:
