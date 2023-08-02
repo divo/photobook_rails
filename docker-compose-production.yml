@@ -32,3 +32,6 @@ services:
         #      - drkiq
         #    ports:
         #      - '8020:8020'
+
+volumes:
+  photobook_rails-storage:
