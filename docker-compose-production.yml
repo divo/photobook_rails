@@ -12,8 +12,6 @@ services:
       RENDER_APP_PORT: 3001
 
   sidekiq:
-    depends_on:
-      - 'redis'
     build:
       context: .
     command: bundle exec sidekiq 
