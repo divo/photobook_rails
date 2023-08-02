@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  rails:
+    build:
+      context: .
+    volumes:
+      - 'photobook_rails-storage:/docker/app/'
+    ports:
+      - '3000:3000'
+    environment:
+      RENDER_APP_URL: host.docker.internal
+      RENDER_APP_PORT: 3001
+
+  sidekiq:
+    depends_on:
+      - 'redis'
+    build:
+      context: .
+    command: bundle exec sidekiq 
+    volumes:
+      - 'photobook_rails-storage:/docker/app/'
+    links:
+      - postgres
+      - redis
+    environment:
+      RENDER_APP_URL: host.docker.internal
+      RENDER_APP_PORT: 3001
+
+#    env_file:
+#      - .env
+        #
+        #  nginx:
+        #    build:
+        #      context: .
+        #      dockerfile: ./Dockerfile.nginx
+        #    links:
+        #      - drkiq
+        #    ports:
+        #      - '8020:8020'
