@@ -19,9 +19,6 @@ services:
     command: bundle exec sidekiq 
     volumes:
       - 'photobook_rails-storage:/docker/app/'
-    links:
-      - postgres
-      - redis
     environment:
       RENDER_APP_URL: host.docker.internal
       RENDER_APP_PORT: 3001
