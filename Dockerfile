@@ -5,7 +5,7 @@ WORKDIR /docker/app
 
 RUN gem install bundler
 COPY Gemfile* ./
-RUN bundle install --jobs 20 --retry 5 --without development test
+RUN bundle install --jobs 20 --retry 5
 
 COPY . /docker/app
 # COPY sockets/. /shared/sockets/
