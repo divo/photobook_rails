@@ -22,7 +22,4 @@ port ENV.fetch("PORT") { 3000 }
 rails_env = ENV.fetch("RAILS_ENV") { "development" }
 environment rails_env
 
-bind "tcp://0.0.0.0:#{ENV.fetch("PORT") { "3000" }}"
-
-pidfile "tmp/pids/puma.pid"
 plugin :tmp_restart
