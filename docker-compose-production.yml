@@ -1,6 +1,3 @@
-# setup git
-# checkout git repos
-# docker-compose -f docker-compose-production.yml build
 version: "3.9"
 services:
   rails:
@@ -28,15 +25,14 @@ services:
     env_file:
       - .env
 
-        #
-        #  nginx:
-        #    build:
-        #      context: .
-        #      dockerfile: ./Dockerfile.nginx
-        #    links:
-        #      - drkiq
-        #    ports:
-        #      - '8020:8020'
+  nginx:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.nginx
+    links:
+      - rails
+    ports:
+      - '80:80'
 
 volumes:
   # create with: docker volume create --name photobook_rails-storage
