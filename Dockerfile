@@ -7,7 +7,8 @@ RUN gem install bundler
 COPY Gemfile* ./
 RUN bundle install
 
-ADD . /docker/app
+COPY . /docker/app
+COPY sockets/. /shared/sockets/
 
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
