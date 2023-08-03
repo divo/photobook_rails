@@ -9,6 +9,7 @@ RUN bundle install
 
 COPY . /docker/app
 COPY sockets/. /shared/sockets/
+COPY log/. /shared/log/
 
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
