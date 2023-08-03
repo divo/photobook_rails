@@ -25,15 +25,6 @@ services:
     env_file:
       - .env
 
-  nginx:
-    build:
-      context: .
-      dockerfile: ./Dockerfile.nginx
-    links:
-      - rails
-    ports:
-      - '80:80'
-
 volumes:
   # create with: docker volume create --name photobook_rails-storage
   photobook_rails-storage:
