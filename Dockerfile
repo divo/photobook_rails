@@ -8,8 +8,8 @@ COPY Gemfile* ./
 RUN bundle install --jobs 20 --retry 5
 
 COPY . /docker/app
-# COPY sockets/. /shared/sockets/
-# COPY log/. /shared/log/
+COPY sockets/. /shared/sockets/
+COPY log/. /shared/log/
 
 RUN bundle exec rake assets:precompile
 
