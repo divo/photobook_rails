@@ -5,15 +5,14 @@ WORKDIR /docker/app
 
 RUN gem install bundler
 COPY Gemfile* ./
-RUN bundle install
+RUN bundle install --jobs 20 --retry 5 --without development test
 
 COPY . /docker/app
-COPY sockets/. /shared/sockets/
-COPY log/. /shared/log/
+# COPY sockets/. /shared/sockets/
+# COPY log/. /shared/log/
 
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
+RUN bundle exec rake assets:precompile
+
 EXPOSE 3000
 
 CMD [ "bundle", "exec", "puma", "config.ru"]
