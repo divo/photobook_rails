@@ -4,7 +4,7 @@ services:
     build:
       context: .
     volumes:
-      - 'photobook_rails-storage:/docker/app/'
+      - 'photobook_rails-storage:/docker/app/storage'
     ports:
       - '3000:3000'
     environment:
@@ -18,7 +18,7 @@ services:
       context: .
     command: bundle exec sidekiq 
     volumes:
-      - 'photobook_rails-storage:/docker/app/'
+      - 'photobook_rails-storage:/docker/app/storage'
     environment:
       RENDER_APP_URL: host.docker.internal
       RENDER_APP_PORT: 3001

@@ -11,7 +11,7 @@ services:
     build:
       context: .
     volumes:
-      - 'photobook_rails-storage:/docker/app/'
+      - 'photobook_rails-storage:/docker/app/storage'
     links:
       - postgres
       - redis
@@ -35,7 +35,7 @@ services:
       context: .
     command: bundle exec sidekiq 
     volumes:
-      - 'photobook_rails-storage:/docker/app/'
+      - 'photobook_rails-storage:/docker/app/storage'
     links:
       - postgres
       - redis
