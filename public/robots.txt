@@ -1,2 +1,2 @@
-Sitemap: http://www.example.com/sitemap.xml.gz
+Sitemap: https://www.mementos.ink/sitemap.xml.gz
 
