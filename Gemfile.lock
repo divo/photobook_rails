@@ -301,6 +301,8 @@ GEM
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
       redis-client (>= 0.11.0)
+    sitemap_generator (6.3.0)
+      builder (~> 3.0)
     soft_deletion (1.8.0)
       activerecord (>= 5.0.0, < 7.1)
     sprockets (4.2.0)
@@ -383,6 +385,7 @@ DEPENDENCIES
   sassc-rails
   selenium-webdriver
   sidekiq
+  sitemap_generator
   soft_deletion
   sprockets-rails
   stimulus-rails

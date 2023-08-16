@@ -101,6 +101,9 @@ group :development, :test do
 
   # dotenv for config
   gem 'dotenv-rails'
+
+  # sitemap generation
+  gem 'sitemap_generator'
 end
 
 group :development do
