@@ -1,11 +1,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="canonical" href="https://mementos.ink/" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Momento - Personal photo albums in a few clicks</title>
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Google fonts-->
@@ -27,13 +25,13 @@
               <p class="lead fw-normal text-muted mb-5 newsreader">Our best memories are tucked away on our phones. In just a few minutes you can have a beautiful physical photo album to share.</p>
               <div class="d-flex flex-column flex-lg-row align-items-center">
                 <!--<a class="me-lg-3 mb-4 mb-lg-0" href="#!"><img class="app-badge" src="assets/google-play-badge.svg" alt="..." /></a>-->
-                <a href="https://apps.apple.com/ie/app/mementos-albums/id6450715256"><%= image_tag "app-store-badge.svg", class: "app-badge" %></a>
+                <a href="https://apps.apple.com/ie/app/mementos-albums/id6450715256"><%= image_tag "app-store-badge.svg", class: "app-badge", alt: "iOS App store badge" %></a>
               </div>
             </div>
           </div>
           <div class="col-lg-6">
             <div class="features-device-mockup">
-              <%= image_tag "photo-book.png", class: "photo-book" %>
+              <%= image_tag "photo-book.png", class: "photo-book", alt: "A stylized photo album with the scene coming out of the page", title: "Photo album diorama" %>
             </div>
           </div>
         </div>
@@ -101,7 +99,7 @@
    <footer class="bg-black text-center py-5">
       <div class="container px-5">
         <div class="text-white-50 small">
-          <div class="mb-2">&copy; Mementos 2022. All Rights Reserved.</div>
+          <div class="mb-2">&copy; Mementos 2023. All Rights Reserved.</div>
           <a href="/privacy">Privacy</a>
           <span class="mx-1">&middot;</span>
           <a href="#!">Terms</a>
