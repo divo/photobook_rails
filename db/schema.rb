@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_10_105613) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_04_191612) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -57,6 +57,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_105613) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_addresses_on_order_id"
+  end
+
+  create_table "geocodes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "photo_album_id", null: false
+    t.uuid "active_storage_blob_id", null: false
+    t.string "geocode"
+    t.string "lat"
+    t.string "lng"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["active_storage_blob_id"], name: "index_geocodes_on_active_storage_blob_id"
+    t.index ["photo_album_id"], name: "index_geocodes_on_photo_album_id"
   end
 
   create_table "order_estimates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -131,5 +143,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_105613) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "orders"
+  add_foreign_key "geocodes", "active_storage_blobs"
+  add_foreign_key "geocodes", "photo_albums"
   add_foreign_key "orders", "photo_albums"
 end
