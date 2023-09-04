@@ -34,8 +34,9 @@ class GeocoderJob < Gush::Job
 
       Rails.logger.error "#{id} Geocode #{self.class}: #{geocode.first.data}" if geocode.empty?
 
-      image.blob.metadata['geocode'] = extract_geocode_info(geocode)
-      image.blob.save # This info is nice to have
+      geocode = extract_geocode_info(geocode)
+      geo_record = Geocode.create(photo_album: album, active_storage_blob: image.blob, geocode: geocode.to_json, lat: lat, lng: lng)
+      geo_record.save!
     end
   end
 
