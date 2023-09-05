@@ -24,7 +24,7 @@ class GeocoderJob < Gush::Job
         Rails.logger.error "#{self.id} Geocode #{params[:photo_album_id]}:#{params[:image_id]} No GPS data found"
         image.blob.metadata['geocode'] = { country: nil }
         image.blob.save
-        return
+        next
       end
 
       # This is using nominatim (Open streetmap) by default.
