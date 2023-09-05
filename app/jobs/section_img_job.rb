@@ -6,29 +6,30 @@ class SectionImgJob < Gush::Job
     photo_album = PhotoAlbum.find(params[:photo_album_id])
     return unless validate(photo_album)
 
-    countries = photo_album.geocodes
-                           .select(&:present?)
-                           .uniq { |geo| geo.to_h['country'] }
+    countries =
+      photo_album.images
+                 .select { |image| image.blob.metadata['geocode'] }
+                 .uniq { |image| image.blob.metadata['geocode']['country'] }
 
     # TODO: Break this out into it's own job
     # Use the GPS data from the first image in each country to get a map
-    countries.each do |geocode|
+    countries.each do |image|
       # Treat images without GPS data as if they are in the same "nil" country
-      geo_h = geocode.to_h
-      next if geo_h['country'].nil?
+      next if image.blob.metadata['geocode']['country'] == nil
 
-      url = image_url(geocode.lat, geocode.lng)
+      # Fetch each country image and store it
+      lat, lon = image.blob.metadata.values_at('latitude', 'longitude')
+      url = image_url(lat, lon)
 
       # TODO: Check response
 
       img_file = Down.download(url, extension: 'png')
       blob = ActiveStorage::Blob.create_and_upload!(
         io: File.open(img_file),
-        filename: "#{geo_h['country']}.png"
+        filename: "#{image.blob.metadata['geocode']['country']}.png",
       )
-      Geocode.new(photo_album: photo_album, active_storage_blob: geocode.active_storage_blob, geocode: geo_h.to_json, lat: geocode.lat, lng: geocode.lng).save!
-
-      blob.metadata['section_page'] = true # I wonder is this failing to save too?
+      blob.metadata['geocode'] = { 'country' => image.blob.metadata['geocode']['country'] } # Copy over the country
+      blob.metadata['section_page'] = true
       blob.save! # TODO: Handle adding more section than allowed max_image. Probably just stop the job here
 
       photo_album.images.attach(blob)
@@ -40,7 +41,8 @@ class SectionImgJob < Gush::Job
   end
 
   def validate(photo_album)
-    no_geocode = photo_album.geocodes.reject(&:present?)
+    no_geocode = photo_album.images.reject { |x| x.blob.metadata['geocode'] }
+    no_geocode.each { |image| Rails.logger.error "#{self.class}: Geocode not found #{image.blob.metadata}" }
     if no_geocode.count == photo_album.images.count
       Rails.logger.error "#{self.class}: No geocode found for any images"
       return false
