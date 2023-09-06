@@ -17,26 +17,80 @@
   </head>
   <body id="page-top">
     <!-- Mashead header-->
-    <div class="<%= @masthead_tag %>">
+    <div class="<%= @masthead_small_tag %>">
+      <section id="overview" class="white">
+        <div class="container px-5">
+          <div class="row gx-5 align-items-center">
+            <div class="col-lg-6">
+              <%= image_tag("example_album.jpeg", class: "img-fluid rounded mb-5 mb-lg-0") %>
+              <p> TODO: This looks awful, replace it <p>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="my-5 mb-lg-0 text-center text-lg-start">
+                <h2 class="lh-4 mb-2">Photo Album</h2>
+                <p class="fw-normal text-muted mb-1">
+                Mementos is your gateway to making your favorite digital photos comes to life as physical photo albums you can share, gift and cherish forever.
+                <%= link_to "See details", photo_book_path(anchor: "details") %>
+                </p>
+                <p class="fw-light text-muted fs-7">Starting at €25 (including VAT) </p>
+                <p class="lead fw-normal text-muted mt-4 mb-5 text-center">
+                <%= link_to "Create a new photo album", new_photo_album_path, class: "button btn btn-primary rounded-pill px-5 py-2 mb-2 mb-lg-0" %>
+                </p>
+              </div>    
+            </div>
+          </div>
+        </div>
+      </section>
+
       <div class="container px-5">
         <div class="row gx-5 align-items-center">
           <div class="col-lg-6">
-            <%= image_tag("example_album.jpeg", class: "img-fluid rounded mb-5 mb-lg-0") %>
-            <p> TODO: This looks awful, replace it. Also need more than one image<p>
+            <%= content_tag(:a, '', :name => 'details') %>
+            <div class="my-5 mb-lg-0 text-center text-lg-start">
+              <h2 class="lh-4 mb-4">Create a collection of memories in just a few minutes</h2>
+              <p class="fw-normal text-muted mb-1">
+              <ul>
+                <li>Easy to use, ready to order in just a few minutes</li>
+                <li>Images are captioned automatically</li>
+                <li>High quality photographic paper with silk finish</li>
+                <li>Starts at 30 pages, up to 150 pages</li>
+                <li>Automatic generation of chapters with beautiful title art</li>
+              </ul>
+              </p>
+
+              <h5 class="lh-4 mb-1 mt-5">Easy to use</h5>
+              <p class="fw-normal mb-3">
+              Mementos is designed to have an album ready to order in just a few minutes. Instead of fiddling with layouts and writing captions we do all of it for you.
+              </p>
+
+              <h5 class="lh-4 mb-1">Tell your story</h5>
+              <p class="fw-normal mb-3">
+              Your smartphone is a treasure trove of stories waiting to be told. From selfies to travel adventures, capture these moments in beautifully printed photo books. The GPS data in your photos metadata is used to caption photos automatically and create chapters for each country you've visited. Each chapter is introduced with a beautiful abstract map.
+              </p>
+
+              <h5 class="lh-4 mb-1">Gallery quality printing</h5>
+              <p class="fw-normal mb-3">
+              Your photos deserve the best, which is why we use high-end materials to ensure your memories shine on paper. Each book is 20x20cm with a high quality 270 gsm silk finished cover. The contents are 170 gsm paper also with a silk finish.
+              </p>
+
+              <h5 class="lh-4 mb-1">Effortless ordering</h5>
+              <p class="fw-normal mb-3">
+              We've simplified the process, so you can focus on reliving your moments. It only takes a few taps to go from your phone's gallery to a professionally bound photo book.
+              </p>
+
+              <h5 class="lh-4 mb-1">The perfect gift</h5>
+              <p class="fw-normal mb-3">
+              These photo books aren't just for you. Share the joy with loved ones by gifting them a piece of your story. It's a tangible, heartfelt gesture that goes beyond digital exchanges.
+              </p>
+
+
+            </div>    
           </div>
 
           <div class="col-lg-6">
-            <div class="my-5 mb-lg-0 text-center text-lg-start">
-              <h2 class="lh-4 mb-2">Photo Album</h2>
-              <p class="fw-normal text-muted mb-1">
-                Mementos is your gateway to making your favorite digital photos comes to life as physical photo albums you can share, gift and cherish forever.
-                <%= link_to "See details", photo_book_path(anchor: "details") %>
-              </p>
-              <p class="fw-light text-muted fs-7">Starting at €25 (including VAT) </p>
-              <p class="lead fw-normal text-muted mt-4 mb-5 text-center">
-               <%= link_to "Create a new photo album", new_photo_album_path, class: "button btn btn-primary rounded-pill px-5 py-2 mb-2 mb-lg-0" %>
-              </p>
-            </div>    
+            <%= image_tag("example_album.jpeg", class: "img-fluid rounded mb-5 mb-lg-0") %>
+            <p> TODO: This looks awful, replace it. Show off the map pages<p>
           </div>
         </div>
       </div>
