@@ -26,7 +26,7 @@
     <% end %>
   </head>
 
-  <body>
+  <body class="d-flex flex-column vh-100">
     <% unless @mobile_app %>
       <%= render "shared/nav" %>
     <% end %>
@@ -43,9 +43,6 @@
           </form>
         </div>
     </dialog>
-  </body>
-
-  <footer>
     <%= render "layouts/contact" %>
-  </footer>
+  </body>
 </html>
