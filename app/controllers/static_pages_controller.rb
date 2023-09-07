@@ -3,6 +3,9 @@ class StaticPagesController < ApplicationController
     @home = true
   end
 
-  def getting_started
+  def getting_started 
+  end
+
+  def photo_books
   end
 end

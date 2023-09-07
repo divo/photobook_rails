@@ -22,21 +22,35 @@
         <div class="container px-5">
           <div class="row gx-5 align-items-center">
             <div class="col-lg-6">
-              <%= image_tag("photos_open.jpeg", class: "img-fluid rounded mb-5 mb-lg-0") %>
+              <%= image_tag("photos_open.jpeg", class: "img-fluid rounded mb-0 mb-lg-0") %>
             </div>
 
             <div class="col-lg-6">
-              <div class="my-5 mb-lg-0 text-center text-lg-start">
-                <h2 class="lh-4 mb-2">Photo Album</h2>
-                <p class="fw-normal text-muted mb-1">
-                Mementos is your gateway to making your favorite digital photos comes to life as physical photo albums you can share, gift and cherish forever.
-                <%= link_to "See details", photo_book_path(anchor: "details") %>
-                </p>
-                <p class="fw-light text-muted fs-7">Starting at €25 (including VAT) </p>
-                <p class="lead fw-normal text-muted mt-4 mb-5 text-center">
-                <%= link_to "Create a new photo album", new_photo_album_path, class: "button btn btn-primary rounded-pill px-5 py-2 mb-2 mb-lg-0" %>
-                </p>
-              </div>    
+              <div class="row gx-5 align-items-center">
+                <div class="my-5 mb-lg-0 text-center text-lg-start">
+                  <h2 class="lh-4 mb-2">Photo Album</h2>
+                  <p class="fw-normal text-muted mb-1">
+                  Mementos is your gateway to making your favorite digital photos comes to life as physical photo albums you can share, gift and cherish forever.
+                  <%= link_to "See details", photo_book_path(anchor: "details") %>
+                  </p>
+                  <p class="fw-light text-muted fs-7">Starting at €25 (including VAT) </p>
+                  <p class="lead fw-normal text-muted mt-4 mb-5 text-center">
+
+                  <div class="row gx-5 align-items-center">
+                    <%= link_to "Create a new photo album", new_photo_album_path, class: "button btn btn-primary rounded-pill px-5 py-2 mb-2 mb-lg-0" %>
+                  </div>
+
+                  <div class="row gx-5 align-items-center mt-3">
+                    <hr class="hr hr-blurry">
+                  </div>
+
+                  <div class="row gx-5 align-items-center">
+                    <%= link_to "View your albums", photo_albums_url, class: "button btn btn-secondary rounded-pill px-5 py-2 mb-2 mb-lg-0" %>
+                  </div>
+
+                  </p>
+                </div>    
+              </div>
             </div>
           </div>
         </div>
