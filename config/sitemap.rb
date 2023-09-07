@@ -26,6 +26,7 @@ SitemapGenerator::Sitemap.create do
   #   end
   add '/', :changefreq => 'never', :priority => 0.9
   add '/getting_started', :changefreq => 'monthly', :priority => 0.5
+  add '/photo-books', :changefreq => 'monthly', :priority => 0.9
   add '/photo_albums', :changefreq => 'daily', :priority => 0.9
   add '/users/sign_in', :changefreq => 'never', :priority => 0.5
   add '/users/edit', :changefreq => 'weekly', :priority => 0.5
