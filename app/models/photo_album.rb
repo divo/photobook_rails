@@ -8,7 +8,7 @@ class PhotoAlbum < ApplicationRecord
   validate :min_images
   validate :max_images, on: :app
   before_save :update_final_page_count
-  after_save :broadcast_album_built
+  after_save :after_save_hook
 
   enum :build_status, %i(uploaded images_converted build_complete)
 
@@ -33,8 +33,11 @@ class PhotoAlbum < ApplicationRecord
     end
   end
 
-  def broadcast_album_built
-    if saved_changes['build_status'] == ["uploaded", "build_complete"]
+  def after_save_hook
+    if saved_changes['build_status'] == ["uploaded", "images_converted"]
+      flow = BuildAlbumWorkflow.create(id)
+      flow.start!
+    elsif saved_changes['build_status'] == ["images_converted", "build_complete"]
       broadcast_action :build_complete
     end
   end

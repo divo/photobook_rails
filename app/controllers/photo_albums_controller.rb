@@ -46,7 +46,9 @@ class PhotoAlbumsController < ApplicationController
 
     respond_to do |format|
       if @photo_album.save(context: :app)
-        flow = BuildAlbumWorkflow.create(@photo_album.id)
+        # Start the image format job, PhotoAlbum model will
+        # kick of subsequent workflows itself
+        flow = FormatImagesWorkflow.create(@photo_album.id)
         flow.start!
         format.html { redirect_to photo_album_url(@photo_album), notice: "Photo album was successfully created." }
         format.json { render :show, status: :created, location: @photo_album }
