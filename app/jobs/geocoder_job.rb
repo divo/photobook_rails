@@ -11,32 +11,31 @@ class GeocoderJob < Gush::Job
   PLACE_TYPES = %w[address place region country].freeze
 
   def perform
-    Rails.logger.info("[#{id} Starting Geocode for album: #{params[:photo_album_id]}")
+    Rails.logger.info("[#{id} Starting Geocode for album: #{params[:photo_album_id]} and image: #{params[:image_id]}")
 
     album = PhotoAlbum.find(params[:photo_album_id])
-    album.images.each do |image|
-      image.analyze
+    image = album.images.find(params[:image_id])
 
-      Rails.logger.info("#{id} Geocode found image: #{image.id}")
+    image.analyze
 
-      unless image.blob.metadata.include?('latitude') &&
-             image.blob.metadata.include?('longitude')
-        Rails.logger.error "#{self.id} Geocode #{params[:photo_album_id]}:#{params[:image_id]} No GPS data found"
-        image.blob.metadata['geocode'] = { country: nil }
-        image.blob.save
-        next
-      end
+    Rails.logger.info("#{id} Geocode found image: #{image.id}")
 
-      # This is using nominatim (Open streetmap) by default.
-      lat = image.blob.metadata.fetch('latitude')
-      lng = image.blob.metadata.fetch('longitude')
-      geocode = Geocoder.search([lat, lng])
-
-      Rails.logger.error "#{id} Geocode #{self.class}: #{geocode.first.data}" if geocode.empty?
-
-      image.blob.metadata['geocode'] = extract_geocode_info(geocode)
-      image.blob.save # This info is nice to have
+    unless image.blob.metadata.include?('latitude') &&
+           image.blob.metadata.include?('longitude')
+      Rails.logger.error "#{id} Geocode #{params[:photo_album_id]}:#{params[:image_id]} No GPS data found"
+      image.blob.metadata['geocode'] = { country: nil }
+      image.blob.save
+      return
     end
+
+    lat = image.blob.metadata.fetch('latitude')
+    lng = image.blob.metadata.fetch('longitude')
+    geocode = Geocoder.search([lat, lng])
+
+    Rails.logger.error "#{id} Geocode #{self.class}: #{geocode.first.data}" if geocode.empty?
+
+    image.blob.metadata['geocode'] = extract_geocode_info(geocode)
+    image.blob.save # This info is nice to have
   end
 
   private
