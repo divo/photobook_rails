@@ -17,6 +17,6 @@
 
 # you can override concurrency based on environment
 production:
-  :concurrency: 10
+  :concurrency: 2
 development:
   :concurrency: 3
