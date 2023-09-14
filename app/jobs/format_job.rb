@@ -7,7 +7,7 @@ class FormatJob < Gush::Job
     Rails.logger.info "Starting FormatJob for photo_album #{photo_album.id} and image #{image.id}}"
 
     new_image = convert_file(photo_album, image)
-    create_vatiant(image)
+    create_vatiant(new_image)
     photo_album.save!
   end
 
