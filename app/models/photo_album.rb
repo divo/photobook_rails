@@ -10,6 +10,8 @@ class PhotoAlbum < ApplicationRecord
   before_save :update_final_page_count
   after_save :broadcast_album_built
 
+  enum :build_status, %i(uploaded images_converted build_complete)
+
   def self.min_images
     30
   end
@@ -32,13 +34,13 @@ class PhotoAlbum < ApplicationRecord
   end
 
   def broadcast_album_built
-    if saved_changes['build_complete'] == [false, true]
+    if saved_changes['build_status'] == ["uploaded", "build_complete"]
       broadcast_action :build_complete
     end
   end
 
   def building?
-    !build_complete
+    build_status != "build_complete"
   end
 
   def set_cover(cover_id)
@@ -61,7 +63,7 @@ class PhotoAlbum < ApplicationRecord
   end
 
   def update_final_page_count
-    update_column(:final_page_count, calculate_final_page_count) if build_complete
+    update_column(:final_page_count, calculate_final_page_count) if build_status == 'build_complete'
   end
 
   # Gelato requires the _content_ page count to create a quote

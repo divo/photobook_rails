@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_10_105613) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_14_131239) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -103,8 +103,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_105613) do
     t.integer "final_page_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "build_complete", default: false
     t.uuid "user_id"
+    t.integer "build_status", default: 0
     t.index ["user_id"], name: "index_photo_albums_on_user_id"
   end
 
