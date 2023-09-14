@@ -3,35 +3,30 @@
 class FormatJob < Gush::Job
   def perform
     photo_album = PhotoAlbum.find(params[:photo_album_id])
-    Rails.logger.info "Starting FormatJob for photo_album #{photo_album.id}"
+    image = photo_album.images.find(params[:image_id])
+    Rails.logger.info "Starting FormatJob for photo_album #{photo_album.id} and image #{image.id}}"
 
-    convert_files(photo_album)
-    photo_album.reload # Reload the object as we have updated the images
-    create_vatiants(photo_album)
+    new_image = convert_file(photo_album, image)
+    create_vatiant(image)
     photo_album.save!
   end
 
-  def create_vatiants(photo_album)
-    photo_album.images.each do |image|
-      image.variant(resize_to_fit: [600, 600]).processed
-    end
+  def create_vatiant(image)
+    image.variant(resize_to_fit: [600, 600]).processed
   end
 
-  def convert_files(photo_album)
-    images_to_delete = [] # Can I delete inline?
-    photo_album.images.each do |image|
-      # Always convert, the file extention can confuse some browsers if incorrect
-      # and node-canvas doesn't respect orientation metadata
-      Rails.logger.info "Converting #{image.blob.filename} to a JPEG"
-      jpeg_blob = convert_to_jpg(image)
-      images_to_delete << image
-      photo_album.images.attach(jpeg_blob)
-      photo_album.save!
-    end
-
-    images_to_delete.each(&:destroy!)
-
+  def convert_file(photo_album, image)
+    # Always convert, the file extention can confuse some browsers if incorrect
+    # and node-canvas doesn't respect orientation metadata
+    Rails.logger.info "Converting #{image.blob.filename} to a JPEG"
+    jpeg_blob = convert_to_jpg(image)
+    photo_album.images.attach(jpeg_blob)
     photo_album.save!
+
+    image.destroy!
+    photo_album.save! # Is this needed?
+
+    jpeg_blob
   end
 
   def convert_to_jpg(image)
