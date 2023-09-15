@@ -126,6 +126,11 @@ div .photo-book {
   background-color: $grey-10;
 }
 
+.masthead-no-bg {
+  padding-top: 5rem;
+  background-color: unset;
+}
+
 .background-transparent {
   background-color: transparent;
 }

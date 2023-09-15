@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'getting_started', to: 'static_pages#getting_started', as: 'getting_started'
   get 'privacy', to: 'static_pages#privacy', as: 'privacy'
   get 'photo-books', to: 'static_pages#photo_book', as: 'photo_book'
+  get 'create-an-album', to: 'static_pages#create_an_album', as: 'create_an_album'
 
   resources :photos
   resources :photo_albums do

@@ -8,7 +8,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
-        <li class="nav-item"><a class="nav-link me-lg-3 <%= action_name == 'getting_started' ? "active" : "" %>" href="/getting_started">Getting Started</a></li>
+        <li class="nav-item"><a class="nav-link me-lg-3 <%= action_name == 'getting_started' ? "active" : "" %>" href="/create-an-album">Getting Started</a></li>
         <li class="nav-item"><a class="nav-link me-lg-3 <%= action_name == 'photo_book' ? "active" : "" %>" href="/photo-books">Photo Books</a></li>
         <li class="nav-item"><%= link_to  edit_user_registration_path(current_user), class: "btn btn-outline-primary btn-no-border rounded-pill" + (controller_name == 'registrations' ? "active" : "") do %>
           <i class="bi-person-circle h4"></i>
