@@ -9,7 +9,9 @@ class FormatJob < Gush::Job
     return unless needs_conversion?(image)
 
     new_image = convert_file(photo_album, image)
-    # create_vatiant(new_image) # Do I need this really? Likely a loading tradeoff vs canvas requesting image tradeoff
+    # Create the vairants ahread of time to improve on page experience
+    # it takes far to long to create them when the page is loaded, looks very poor.
+    create_vatiant(new_image)
     photo_album.save!
   end
 
