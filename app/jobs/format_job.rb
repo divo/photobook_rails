@@ -6,9 +6,23 @@ class FormatJob < Gush::Job
     image = photo_album.images.find(params[:image_id])
     Rails.logger.info "Starting FormatJob for photo_album #{photo_album.id} and image #{image.id}}"
 
+    return unless needs_conversion?(image)
+
     new_image = convert_file(photo_album, image)
-    create_vatiant(new_image)
+    # create_vatiant(new_image) # Do I need this really? Likely a loading tradeoff vs canvas requesting image tradeoff
     photo_album.save!
+  end
+
+  # Need to convert files that 1) Have rotation applied in exif data as node-canvas
+  # doesn't apply it 2) None jpegs, look at exif and file extension as the latter can confuse browers
+  def needs_conversion?(image)
+    result = image.blob.metadata[:orientation] != 1 ||
+             image.blob.content_type != 'image/jpeg' ||
+             image.blob.filename.extension != 'jpeg' ||
+             image.blob.filename.extension != 'jpg'
+
+    Rails.logger.info "Image #{image.blob.filename} needs conversion: #{result}" if result
+    result
   end
 
   def create_vatiant(image)
