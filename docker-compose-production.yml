@@ -13,6 +13,21 @@ services:
     env_file:
       - .env
 
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${RDS_USER}
+      POSTGRES_PASSWORD: ${RDS_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7.0
+    ports:
+      - '6379:6379'
+    volumes:
+      - photobook_rails-redis:/var/lib/redis/data # Get rid of dedicated volumes
+
   sidekiq:
     build:
       context: .
@@ -28,3 +43,5 @@ services:
 volumes:
   # create with: docker volume create --name photobook_rails-storage
   photobook_rails-storage:
+  photobook_rails-redis:
+  pgdata:
