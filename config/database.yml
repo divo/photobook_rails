@@ -26,5 +26,5 @@ production:
   database: database-1  # Which you have entered you creating database
   username: <%= ENV['RDS_USERNAME'] %>
   password: <%= ENV['RDS_PASSWORD'] %>
-  host: <%= ENV['RDS_HOST'] %>
+  host: <%= ENV.fetch("POSTGRES_HOST") { 'postgres' } %>
   post: 5432
