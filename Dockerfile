@@ -11,6 +11,7 @@ COPY . /docker/app
 COPY shared/. /shared/
 
 RUN bundle exec rake assets:precompile
+RUN bundle exec rails db:migrate
 
 EXPOSE 3000
 

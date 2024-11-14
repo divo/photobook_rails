@@ -34,6 +34,8 @@
             <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control simple-field" %>
           </div>
 
+          <div class="cf-turnstile mb-3" data-controller="cloudflare-turnstile" data-sitekey="<%= Rails.application.credentials.dig(:cloudflare_turnstile, :site_key) %>" data-callback="cloudflareTurnstileCallback"></div>
+
           <div class="actions mb-3">
             <%= f.submit "Sign up", class: "button btn btn-primary" %>
           </div>

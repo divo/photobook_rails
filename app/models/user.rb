@@ -3,6 +3,9 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  # Only validate reCAPTCHA on sign-up
+  validate :validate_recaptcha, on: :create
+
   has_soft_deletion default_scope: true
   before_soft_delete :validate_deletability
   after_soft_delete :send_deletion_email
@@ -10,7 +13,7 @@ class User < ApplicationRecord
   has_many :photo_albums, dependent: :destroy
 
   def currency_iso
-    ISO3166::Country[self.country_code.downcase].currency.iso_code
+    ISO3166::Country[country_code.downcase].currency.iso_code
   end
 
   def send_deletion_email
@@ -18,9 +21,9 @@ class User < ApplicationRecord
   end
 
   def validate_deletability
-    return if photo_albums
-              .reject { |o| o.state == 'draft' }
-              .reject { |o| o.state == 'draft_canceled' }
-              .empty?
+    nil if photo_albums
+           .reject { |o| o.state == 'draft' }
+           .reject { |o| o.state == 'draft_canceled' }
+           .empty?
   end
 end
